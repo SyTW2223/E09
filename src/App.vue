@@ -1,20 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <signUp></signUp>
+<div><router-view/></div>
 </template>
 
 
 <script>
-import signUp from "./components/singUp.vue";
 export default {
   name: 'App',
-  components: {
-    signUp
-  }
 }
 </script>
 
-<style>
+<!--style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -23,4 +18,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-</style>
+.logo {
+  width: 400px;
+  height: 200px;
+}
+
+</style-->
