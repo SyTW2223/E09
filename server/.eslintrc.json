@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": "standard-with-typescript",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "require-jsdoc": "off",
+        "valid-jsdoc": "off",
+        "eol-last": "off",
+        "no-multi-str":"off",
+        "prefer-const":"off",
+        "max-len":"off",
+        "new-cap":"off"
+    }
+}
