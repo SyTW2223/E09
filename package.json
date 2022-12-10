@@ -11,8 +11,6 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^1.0.0",
-    "bootstrap": "^5.2.3",
-    "bootstrap-vue": "^2.1.0",
     "core-js": "^3.8.3",
     "dotenv": "^16.0.3",
     "roboto-fontface": "*",
@@ -29,15 +27,12 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "bootstrap": "^4.3.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "mongoose": "^6.7.3",
     "popper.js": "^1.16.0",
-    "portal-vue": "^2.1.6",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
-    "vue-cli-plugin-bootstrap": "~0.4.0",
     "webpack-plugin-vuetify": "^2.0.0-alpha.0"
   },
   "eslintConfig": {
