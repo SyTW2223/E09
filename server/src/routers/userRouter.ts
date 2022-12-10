@@ -5,26 +5,42 @@ import {JuicerApiCRUD} from '../JuicerApiCRUD';
 export const userRouter = express.Router();
 
 // POST
-userRouter.post('/api/users', (req, res) => {
+userRouter.post('/api/signup', (req, res) => {
   const user = new User(req.body);
-  JuicerApiCRUD.post(res, user);
+  JuicerApiCRUD.postSignUp(res, user);
+});
+
+userRouter.post('/api/login', (req, res) => {
+  if (req.body.email) {
+    const filter = {email: req.body.email.toString(), password: req.body.password.toString()};
+    JuicerApiCRUD.postLogIn(res, filter, User);
+  }
+});
+
+userRouter.post('/api/password-reset', (req, res) => {
+  JuicerApiCRUD.postPasswordReset(res, req, User);
 });
 
 // GET
+userRouter.get('/api/user', (req, res) => {
+  JuicerApiCRUD.getUser(req, res);
+});
+
 userRouter.get('/api/users', (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
   JuicerApiCRUD.get(res, filter, User);
 });
 
+/*
 userRouter.get('/api/users/:id', (req, res) => {
   JuicerApiCRUD.idGet(req, res, User);
-});
+});*/
 
 // PATCH
  userRouter.patch('/api/users', (req, res) => {
-  if (!req.query.name) {
+  if (!req.headers['authorization']) {
     res.status(400).send({
-      error: 'A name must be provided',
+      error: 'A token must be provided',
     });
   }
   const allowedUpdates = ['name', 'email', 'password', 'description', 'following', 'followers', 'likes', 'age'];
@@ -40,9 +56,7 @@ userRouter.get('/api/users/:id', (req, res) => {
   JuicerApiCRUD.patch(req, res, User);
 });
 
-/**
- * Actualiza la canción por id
- */
+/*
 userRouter.patch('/api/users/:id', (req, res) => {
   const allowedUpdates = ['name', 'email', 'password', 'description', 'following', 'followers', 'likes', 'age'];
   const actualUpdates = Object.keys(req.body);
@@ -70,3 +84,5 @@ userRouter.delete('/api/users', (req, res) => {
 userRouter.delete('/api/users/:id', async (req, res) => {
   JuicerApiCRUD.idDelete(req, res, User);
 });
+
+*/
