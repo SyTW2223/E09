@@ -5,7 +5,7 @@ import * as nodemailer from 'nodemailer';
 
 const HOST = 'juicerappofficial@gmail.com'// email host
 const USER = 'juicerappofficial@gmail.com'// email id
-const PASS = 'Juicer2022'// email password
+const PASS = 'plsoovkmdwvujbgb'// email password
 const SERVICE = 'Gmail'// email service
 
 
@@ -195,6 +195,6 @@ async function sendEmail(res: any, req: any, token: string) {
     });
     return res.status(200).send("email sent sucessfully");
   } catch (error) {
-    return res.status(500).send("email not sent");
+    return res.status(500).send(error);
   }
 }
