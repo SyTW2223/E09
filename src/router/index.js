@@ -1,27 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/homeView.vue'
-import SignIn from '../views/signinView.vue'
-import SignUp from '../views/signupView.vue'
+import HomeView from '../views/homeView.vue'
+import SignInView from '../views/signinView.vue'
+import SignUpView from '../views/signupView.vue'
+import ForgotView from '../views/forgotView.vue'
+
+const mode = 'history';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: HomeView
   },
   {
     path: '/signin',
     name: 'SignIn',
-    component: SignIn
+    component: SignInView
   },
   {
     path: '/signup',
     name: 'SignUp',
-    component: SignUp
+    component: SignUpView
+  },
+  {
+    path: '/forgot',
+    name: 'Forgot',
+    component: ForgotView
   }
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  mode
 })
 export default router

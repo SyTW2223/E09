@@ -10,11 +10,8 @@ userRouter.post('/api/signup', (req, res) => {
   JuicerApiCRUD.postSignUp(res, user);
 });
 
-userRouter.post('/api/login', (req, res) => {
-  if (req.body.email) {
-    const filter = {email: req.body.email.toString(), password: req.body.password.toString()};
-    JuicerApiCRUD.postLogIn(res, filter, User);
-  }
+userRouter.post('/api/signin', (req, res) => {
+  JuicerApiCRUD.postSignIn(res, req, User);
 });
 
 userRouter.post('/api/password-reset', (req, res) => {

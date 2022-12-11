@@ -20,12 +20,12 @@ export class JuicerApiCRUD {
     }
   }
  
-  public static async postLogIn(res: any, filter: any, model: any) {
+  public static async postSignIn(res: any, req: any, model: any) {
     try {
-      const element = await model.findOne(filter);
+      const element = await model.findOne({email:req.body.email, password:req.body.password});
 
       if (element) {
-        jwt.sign({user: element}, 'secretkey', {'expiresIn': '300s'}, (err: any, token: any) => {
+        jwt.sign({element}, 'secretkey', {'expiresIn': '300s'}, (err: any, token: any) => {
           if (err) {
             return res.status(500).send(err);
           } else {
@@ -54,7 +54,7 @@ export class JuicerApiCRUD {
           }
       });
     } else{
-        res.sendStatus(403);
+        res.status(403).send();
     }
   }
 
@@ -63,7 +63,7 @@ export class JuicerApiCRUD {
       const element = await model.findOne({email: req.body.email});
 
       if (element) {
-        jwt.sign({user: element}, 'secretkey', {'expiresIn': '300s'}, (err: any, token: any) => {
+        jwt.sign({element}, 'secretkey', {'expiresIn': '300s'}, (err: any, token: any) => {
           if (err) {
             return res.status(500).send(err);
           } else {

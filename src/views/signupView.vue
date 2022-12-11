@@ -1,15 +1,15 @@
 <template>
   <div>
-    <signUp></signUp>
+    <SignUp></SignUp>
   </div>
 </template>
 
 <script>
-import signUp from "../components/singUp.vue";
+import SignUp from "../components/SingUp.vue";
 export default {
-  name: 'signUpView',
+  name: 'SignUpView',
   components: {
-    signUp
+    SignUp
   }
 }
 </script>

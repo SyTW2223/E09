@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper fadeInDown">
-  <div id="formContent">
+  <div id="formContent" padding="20px">
     <!-- Tabs Titles -->
 
     <!-- Icon -->
@@ -9,42 +9,45 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="email" placeholder="Correo electrónico">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
-      <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
+    <form @submit.prevent="signUp" >
+      <input v-model=user.name type="text" id="username" class="fadeIn second" name="username" placeholder="Nombre de usuario">
+      <input v-model=user.email type="text" id="email" class="fadeIn second" name="email" placeholder="Correo electrónico">
+      <input v-model=user.password type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+      <input type="submit" class="fadeIn fourth" value="Registarse">
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
-      <br>
-      <router-link class="underlineHover" to="/signup">Registrarse</router-link>
+      <router-link class="underlineHover" to="/signin">Iniciar sesión</router-link>
     </div>
 
   </div>
-</div>
+  </div>
 </template>
- 
+  
 <script>
   export default {
-    data() {
-      return {
-        data: {
-          name: '',
-          email: '',
-          password: ''
+      name: 'SingUp',
+      data() {
+        return {
+          user: {
+            name: '',
+            email: '',
+            password: ''
+          }
         }
-      }
-    },
-    methods: {
-      signIn() {
-        this.$store.dispatch('signIn', this.data);
-      }
-    }
+      },
+      methods: {
+        signUp() {
+          this.$store.dispatch('signUp', this.user);
+          this.$store.dispatch('postSignUp');
+        },
+      },
+      computed: {
+      },
   }
 </script>
- 
+
 <style>
 		html {
   background-color: #56baed;
@@ -334,4 +337,4 @@ input[type=password]:placeholder {
 #icon {
   width:60%;
 }
-</style>
+</style>  
