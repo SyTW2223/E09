@@ -2,7 +2,7 @@
   <div class="auth">
     <div class="header">
       <router-link to="/">
-        <div class="logo">
+        <div>
           <img height="100" src="../assets/juicer_icon.png" alt="Logo de Juicer">
         </div>
       </router-link>
@@ -27,7 +27,7 @@
             <p>
               ¿Ya tienes cuenta?
               <router-link to="signin">
-                Inicia sesi&oacute;n
+                Iniciar sesi&oacute;n
               </router-link>
             </p>
             <p>
@@ -80,7 +80,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #f0f0f0;
-  background-image: linear-gradient(#e48532, #c3744d);
+  background-image: linear-gradient(to right,#f12711, #f5af19);
   background-size: cover;
   background-position: center center;
   position: relative;
