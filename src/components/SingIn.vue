@@ -1,57 +1,47 @@
 <template>
   <div class="wrapper fadeInDown">
-  <div id="formContent" padding="20px">
-    <!-- Tabs Titles -->
+  <div id="formContent">
 
-    <!-- Icon -->
     <div class="fadeIn first">
       <router-link to="/"><img src="../assets/juicer-logo.png" id="icon" alt="User Icon" /></router-link>
     </div>
 
-    <!-- Login Form -->
-    <form>
-      <input v-model=user.name type="text" id="username" class="fadeIn second" name="username" placeholder="Nombre de usuario">
-      <input v-model=user.email type="text" id="email" class="fadeIn second" name="email" placeholder="Correo electrónico">
-      <input v-model=user.password type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
-      <input @click="signUp()" type="submit" class="fadeIn fourth" value="Registarse">
+    <form @submit.prevent="signIn">
+      <input type="text" v-model=user.email id="login" class="fadeIn second" name="email" placeholder="Correo electrónico">
+      <input type="password"  v-model=user.password id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+      <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
     </form>
 
-    <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
+      <router-link class="underlineHover" to="/forgot">Olvidaste la contraseña?</router-link>
       <br>
-      <router-link class="underlineHover" to="/signin">Iniciar sesión</router-link>
+      <router-link class="underlineHover" to="/signup">Registrarse</router-link>
     </div>
 
   </div>
-</div>
+  </div>
 </template>
-  
+ 
 <script>
   export default {
-      data() {
-        return {
-          user: {
-            name: '',
-            email: '',
-            password: ''
-          }
+    name: 'SingIn',
+    data() {
+      return {
+        user: {
+          email: '',
+          password: ''
         }
-      },  
-      mounted() {
-        //this.$store.dispatch("postUsers");
-      },
-      methods: {
-        signUp() {
-          this.$store.dispatch('signUp', this.user);
-          this.$store.dispatch('postUsers');
-        },
-      },
-      computed: {
-      },
+      }
+    },
+    methods: {
+      signIn() {
+        this.$store.dispatch('signIn', this.user);
+        this.$store.dispatch('postSignIn');
+      }
+    }
   }
 </script>
-
+ 
 <style>
 		html {
   background-color: #56baed;
@@ -341,4 +331,4 @@ input[type=password]:placeholder {
 #icon {
   width:60%;
 }
-</style>  
+</style>

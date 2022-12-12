@@ -21,6 +21,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   email: {
     type: String,
+    unique: true,
     required: true,
     trim: true,
     validate: (value: string) => {
