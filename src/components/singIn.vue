@@ -1,16 +1,16 @@
 <template>
 <div class="auth">
-  <div class="auth__header">
+  <div class="header">
     <router-link to="/">
-      <div class="auth__logo">
+      <div class="logo">
         <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
       </div>
     </router-link>
   </div>
-  <div class="auth__body">
-    <form class="auth__form" autocomplete="off">
-      <div class="auth__form_body">
-        <h3 class="auth__form_title">Inicia sesi&oacute;n</h3>
+  <div class="body">
+    <form class="form" autocomplete="off">
+      <div class="body">
+        <h3 class="title">Inicia sesi&oacute;n</h3>
         <div>
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Correo electrónico">
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="auth__form_actions">
+      <div class="actions">
         <button class="btn btn-primary btn-lg btn-block">
           Inicar sesión
         </button>
@@ -61,12 +61,13 @@
 </script>
  
 <style>
+
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 body {
   font-family: "Roboto", sans-serif;
 }
 
-.auth__header {
+.auth .header {
   padding: 13vh 1rem;
   display: flex;
   align-items: center;
@@ -79,7 +80,7 @@ body {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
-.auth__logo {
+.auth .logo {
   position: relative;
   z-index: 18;
   background: #fff;
@@ -88,10 +89,10 @@ body {
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
-.auth__body {
+.auth .body {
   padding-bottom: 2rem;
 }
-.auth__form {
+.auth .form {
   min-width: 280px;
   max-width: 340px;
   margin: auto;
@@ -100,26 +101,26 @@ body {
   position: relative;
   z-index: 9;
 }
-.auth__form_body {
+.auth .form .body {
   padding: 0.7rem 1.5rem 35px;
   border-radius: 0.5rem;
   background: #fff;
   border: 1px solid #eee;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
-.auth__form_title {
+.auth .form .title {
   font-size: 1.3rem;
   text-align: center;
   font-weight: bold;
   margin-bottom: 0.8rem;
   color: #e48532
 }
-.auth__form_actions {
+.auth .form .actions {
   text-align: center;
   padding: 0 2rem;
   margin-top: -25px;
 }
-.auth__form_actions .btn {
+.auth .form .actions .btn {
   border-radius: 30px;
   box-shadow: 0 2px 12px rgba(50, 128, 228, 0.5);
 }
