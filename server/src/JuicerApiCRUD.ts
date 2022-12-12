@@ -191,7 +191,7 @@ async function sendEmail(res: any, req: any, token: string) {
       from: USER,
       to: req.body.email,
       subject: 'Password reset',
-      text: `Click here to reset password: http://localhost:8080/password-reset/${token}`,
+      text: `Click here to reset password: http://10.6.130.29/password-reset/${token}`,
     });
     return res.status(200).send("email sent sucessfully");
   } catch (error) {

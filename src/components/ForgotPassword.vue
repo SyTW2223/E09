@@ -9,14 +9,14 @@
     </div>
 
     <!-- Login Form -->
-    <form>
+    <form @submit.prevent="sendResetPasswordEmail()">
       <input type="text" v-model=email id="login" class="fadeIn second" name="email" placeholder="Correo electrónico">
-      <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
+      <input type="submit" class="fadeIn fourth" value="Enviar">
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <router-link class="underlineHover" to="/forgot">Olvidaste la contraseña?</router-link>
+      <router-link class="underlineHover" to="/signin">Iniciar sesión</router-link>
       <br>
       <router-link class="underlineHover" to="/signup">Registrarse</router-link>
     </div>
@@ -31,6 +31,11 @@
     data() {
       return {
         email: ''
+      }
+    },
+    methods: {
+      sendResetPasswordEmail() {
+        this.$store.dispatch('sendResetPasswordEmail', this.email);
       }
     }
   }

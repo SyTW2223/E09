@@ -15,16 +15,16 @@ export const userModel = {
     age: 0
   }),
   mutations: {
-    CH_NAME(state, name) {
+    SET_NAME(state, name) {
       state.name = name;
     },
-    CH_EMAIL(state, email) {
+    SET_EMAIL(state, email) {
       state.email = email;
     },
-    CH_PASSWORD(state, password) {
+    SET_PASSWORD(state, password) {
       state.password = password;
     },
-    CH_DESC(state, description) {
+    SET_DESC(state, description) {
       state.description = description;
     },
     SIGN_IN(state, user) {
@@ -83,6 +83,15 @@ export const userModel = {
         console.log(error);
       }
     },
+    async sendResetPasswordEmail({ getters }) {
+      try {
+        await axios.post('password-reset', {
+          email: getters.email
+        })
+      } catch (error) {
+        alert(error);
+      }
+    },
     signUp({commit}, user) {
       commit('SIGN_UP', user);
     },
@@ -92,17 +101,17 @@ export const userModel = {
     setUser({commit}, user) {
       commit('SET_USER', user);
     },
-    changeName({commit}, name) {
-      commit('CH_NAME', name);
+    setName({commit}, name) {
+      commit('SET_NAME', name);
     },
-    changeEmail({commit}, email) {
-      commit('CH_EMAIL', email);
+    setEmail({commit}, email) {
+      commit('SET_EMAIL', email);
     },
-    changePassword({commit}, password) {
-      commit('CH_PASSWORD', password);
+    setPassword({commit}, password) {
+      commit('SET_PASSWORD', password);
     },
-    changeDesc({commit}, description) {
-      commit('CH_DESC', description);
+    setDesc({commit}, description) {
+      commit('SET_DESC', description);
     },
   },
   getters: {
