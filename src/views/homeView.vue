@@ -1,7 +1,15 @@
 <template>
   <div>
-    <h1>ESTAS EN EL HOME</h1>
-    <router-link to="/signin">Sign In</router-link> |
-    <router-link to="/signup">Sign Up</router-link>
+    <SignedIn/>
   </div>
 </template>
+
+<script>
+import SignedIn from "../components/SignedIn.vue";
+export default {
+  name: 'HomeView',
+  components: {
+    SignedIn
+  }
+}
+</script>

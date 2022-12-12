@@ -8,7 +8,7 @@
       </router-link>
     </div>
     <div class="body">
-      <form class="form" autocomplete="off">
+      <form class="form" autocomplete="off" @submit.prevent="signUp">
         <div class="body">
           <h3 class="title">¡Bienvenido a Juicer!</h3>
           <div>
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="actions">
-          <button @click="signUp()" class="btn btn-primary btn-lg btn-block">
+          <button type="sumbit" class="btn btn-primary btn-lg btn-block">
             Registrarse
           </button>
           <div class="mt-2">
@@ -30,21 +30,17 @@
                 Iniciar sesi&oacute;n
               </router-link>
             </p>
-            <p>
-              <router-link to="">
-                ¿Olvidaste tu contrase&ntilde;a?
-              </router-link>
-            </p>
           </div>
         </div>
       </form>
     </div>
   </div>
-  </template>
+</template>
    
   
 <script>
   export default {
+      name: 'SingUp',
       data() {
         return {
           user: {
@@ -53,14 +49,11 @@
             password: ''
           }
         }
-      },  
-      mounted() {
-        //this.$store.dispatch("postUsers");
       },
       methods: {
         signUp() {
           this.$store.dispatch('signUp', this.user);
-          this.$store.dispatch('postUsers');
+          this.$store.dispatch('postSignUp');
         },
       },
       computed: {

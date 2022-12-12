@@ -8,18 +8,18 @@
     </router-link>
   </div>
   <div class="body">
-    <form class="form" autocomplete="off">
+    <form class="form" autocomplete="off" @submit.prevent="signIn">
       <div class="body">
         <h3 class="title">Iniciar sesi&oacute;n</h3>
         <div>
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Correo electrónico">
-            <input type="password" class="form-control" placeholder="Contraseña">
+            <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico">
+            <input type="password"  v-model=user.password class="form-control" placeholder="Contraseña">
           </div>
         </div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-lg btn-block">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
           Acceder
         </button>
         <div class="mt-2">
@@ -30,7 +30,7 @@
             </router-link>
           </p>
           <p>
-            <router-link to="">
+            <router-link to="forgot">
               ¿Olvidaste tu contrase&ntilde;a?
             </router-link>
           </p>
@@ -38,15 +38,15 @@
       </div>
     </form>
   </div>
-</div>
+  </div>
 </template>
  
 <script>
   export default {
+    name: 'SingIn',
     data() {
       return {
-        data: {
-          name: '',
+        user: {
           email: '',
           password: ''
         }
@@ -54,7 +54,8 @@
     },
     methods: {
       signIn() {
-        this.$store.dispatch('signIn', this.data);
+        this.$store.dispatch('signIn', this.user);
+        this.$store.dispatch('postSignIn');
       }
     }
   }

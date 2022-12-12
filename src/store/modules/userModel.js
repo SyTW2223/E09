@@ -1,13 +1,12 @@
 import axios from "axios"
-const proxyIP = '10.6.130.29';
+import router from '../../router/index'
 
 export const userModel = {
   state: () => ({
-    must: {
-      name: '',
-      email: '',
-      password: '',
-    },
+    user : null,
+    name: '',
+    email: '',
+    password: '',
     id: 0,
     description: '',
     following: 0,
@@ -16,66 +15,124 @@ export const userModel = {
     age: 0
   }),
   mutations: {
-    CH_NAME(state, name) {
-      state.must.name = name
+    SET_NAME(state, name) {
+      state.name = name;
     },
-    CH_EMAIL(state, email) {
-      state.must.email = email
+    SET_EMAIL(state, email) {
+      state.email = email;
     },
-    CH_PASSWORD(state, password) {
-      state.must.password = password
+    SET_PASSWORD(state, password) {
+      state.password = password;
     },
-    CH_DESC(state, description) {
-      state.must.description = description
+    SET_DESC(state, description) {
+      state.description = description;
     },
-    SIGN_IN(state, name, password) {
-      state.must.name = name
-      state.must.password = password
+    SIGN_IN(state, user) {
+      state.email = user.email;
+      state.password = user.password;
     },
-    SIGN_UP(state, must) {
-      state.must = must
+    SIGN_UP(state, user) {
+      state.name = user.name;
+      state.email = user.email;
+      state.password = user.password;
     },
+    SET_USER(state, user) {
+      state.user = user;
+    }
   },
   actions: {
-    async postUsers({ getters }) {
+    async postSignUp({ getters }) {
       try {
-        await axios.post(`http://${proxyIP}/api/users`, {
-          name: getters.must.name,
-          email: getters.must.email,
-          password: getters.must.password,
+        await axios.post('signup', {
+          name: getters.name,
+          email: getters.email,
+          password: getters.password,
           description: getters.description,
           following: getters.following,
           followers: getters.followers,
           likes: getters.likes,
           age: getters.age,
         })
+        router.push('/signin');
       } catch (error) {
         alert(error);
+      }
+    },
+    async postSignIn({ getters, dispatch }) {
+      try {
+        const response = await axios.post('signin', {
+          email: getters.email,
+          password: getters.password,
+        })
+        localStorage.setItem('token', response.data.token);
+        dispatch('getUser');
+      } catch (error) {
+        alert(error);
+      }
+    },
+    async getUser({ dispatch }) {
+      try {
+        const response = await axios.get('user', {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('setUser', response.data);
+        router.push('/');
+      } catch (error) {
         console.log(error);
       }
-      console.log("ENVIE POST");
     },
-    signUp({commit}, must) {
-      commit('SIGN_UP', must)
+    async sendResetPasswordEmail({ getters }) {
+      try {
+        await axios.post('password-reset', {
+          email: getters.email
+        })
+      } catch (error) {
+        alert(error);
+      }
     },
-    signIn({commit}, must) {
-      commit('SIGN_IN', must)
+    async resetPassword({ getters }, token) {
+      try {
+        await axios.patch('users',{
+          password: getters.password
+        }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+        router.push('/signin');
+      } catch (error) {
+        alert(error);
+      }
     },
-    changeName({commit}, name) {
-      commit('CH_NAME', name)
+    signUp({commit}, user) {
+      commit('SIGN_UP', user);
     },
-    changeEmail({commit}, email) {
-      commit('CH_EMAIL', email)
+    signIn({commit}, user) {
+      commit('SIGN_IN', user);
     },
-    changePassword({commit}, password) {
-      commit('CH_PASSWORD', password)
+    setUser({commit}, user) {
+      commit('SET_USER', user);
     },
-    changeDesc({commit}, description) {
-      commit('CH_DESC', description)
+    setName({commit}, name) {
+      commit('SET_NAME', name);
+    },
+    setEmail({commit}, email) {
+      commit('SET_EMAIL', email);
+    },
+    setPassword({commit}, password) {
+      commit('SET_PASSWORD', password);
+    },
+    setDesc({commit}, description) {
+      commit('SET_DESC', description);
     },
   },
   getters: {
-    must: state => state.must,
+    user: state => state.user,
+    name: state => state.name,
+    email: state => state.email,
+    password: state => state.password,
     id: state => state.id,
     description: state => state.description,
     following: state => state.following,
