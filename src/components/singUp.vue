@@ -3,7 +3,7 @@
     <div class="auth__header">
       <router-link to="/">
         <div class="auth__logo">
-          <img height="100" src="../assets/juicer_icon.png" alt="">
+          <img height="100" src="../assets/juicer_icon.png" alt="Logo de Juicer">
         </div>
       </router-link>
     </div>
@@ -75,6 +75,7 @@ body {
 }
 
 .auth__header {
+  padding: 13vh 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,14 +86,7 @@ body {
   position: relative;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
-.auth__header:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
+
 .auth__logo {
   position: relative;
   z-index: 18;
