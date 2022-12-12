@@ -36,7 +36,7 @@ export const userModel = {
       state.email = user.email;
       state.password = user.password;
     },
-    GET_USER(state, user) {
+    SET_USER(state, user) {
       state.user = user;
     }
   },
@@ -53,21 +53,34 @@ export const userModel = {
           likes: getters.likes,
           age: getters.age,
         })
-        router.push('/signin')
+        router.push('/signin');
       } catch (error) {
         alert(error);
       }
     },
-    async postSignIn({ getters }) {
+    async postSignIn({ getters, dispatch }) {
       try {
         const response = await axios.post('signin', {
           email: getters.email,
           password: getters.password,
         })
         localStorage.setItem('token', response.data.token);
-        router.push('/');
+        dispatch('getUser');
       } catch (error) {
         alert(error);
+      }
+    },
+    async getUser({ dispatch }) {
+      try {
+        const response = await axios.get('user', {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('setUser', response.data);
+        router.push('/');
+      } catch (error) {
+        console.log(error);
       }
     },
     signUp({commit}, user) {
@@ -76,8 +89,8 @@ export const userModel = {
     signIn({commit}, user) {
       commit('SIGN_IN', user);
     },
-    getUser({commit}, user) {
-      commit('GET_USER', user);
+    setUser({commit}, user) {
+      commit('SET_USER', user);
     },
     changeName({commit}, name) {
       commit('CH_NAME', name);

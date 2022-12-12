@@ -33,7 +33,7 @@
     methods: {
       signOut() {
         localStorage.removeItem('token');
-        this.$store.dispatch('getUser', null);
+        this.$store.dispatch('setUser', null);
         this.$router.push('/');
       }
     },

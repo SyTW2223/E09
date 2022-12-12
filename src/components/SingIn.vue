@@ -11,7 +11,7 @@
     <!-- Login Form -->
     <form @submit.prevent="signIn">
       <input type="text" v-model=user.email id="login" class="fadeIn second" name="email" placeholder="Correo electrónico">
-      <input type="text"  v-model=user.password id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+      <input type="password"  v-model=user.password id="password" class="fadeIn third" name="password" placeholder="Contraseña">
       <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
     </form>
 
