@@ -3,7 +3,7 @@
     <div class="auth__header">
       <router-link to="/">
         <div class="auth__logo">
-          <img height="100" src="../assets/juicer_new_logo.png" alt="">
+          <img height="100" src="../assets/juicer_icon.png" alt="">
         </div>
       </router-link>
     </div>

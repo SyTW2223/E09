@@ -3,14 +3,14 @@
   <div class="auth__header">
     <router-link to="/">
       <div class="auth__logo">
-        <img height="90" src="https://cdn-icons-png.flaticon.com/512/135/135620.png" alt="">
+        <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
       </div>
     </router-link>
   </div>
   <div class="auth__body">
     <form class="auth__form" autocomplete="off">
       <div class="auth__form_body">
-        <h3 class="auth__form_title">Juicer</h3>
+        <h3 class="auth__form_title">Inicia sesi&oacute;n</h3>
         <div>
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Correo electrónico">
@@ -67,7 +67,7 @@ body {
 }
 
 .auth__header {
-  padding: 13vh 1rem calc(11vh + 35px);
+  padding: 13vh 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,20 +78,13 @@ body {
   position: relative;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
-.auth__header:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
+
 .auth__logo {
   position: relative;
   z-index: 18;
   background: #fff;
-  padding: 10px;
-  border-radius: 50%;
+  padding: 5px;
+  border-radius: 80%;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
@@ -102,7 +95,7 @@ body {
   min-width: 280px;
   max-width: 340px;
   margin: auto;
-  margin-top: -40px;
+  margin-top: -70px;
   padding: 0 10px;
   position: relative;
   z-index: 9;
@@ -118,7 +111,8 @@ body {
   font-size: 1.3rem;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #e48532
 }
 .auth__form_actions {
   text-align: center;
