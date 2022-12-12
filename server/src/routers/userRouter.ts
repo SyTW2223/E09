@@ -35,11 +35,6 @@ userRouter.get('/api/users/:id', (req, res) => {
 
 // PATCH
  userRouter.patch('/api/users', (req, res) => {
-  if (!req.headers['authorization']) {
-    res.status(400).send({
-      error: 'A token must be provided',
-    });
-  }
   const allowedUpdates = ['name', 'email', 'password', 'description', 'following', 'followers', 'likes', 'age'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
@@ -49,8 +44,9 @@ userRouter.get('/api/users/:id', (req, res) => {
     res.status(400).send({
       error: 'Update is not permitted',
     });
+  } else {
+    JuicerApiCRUD.patch(req, res, User);
   }
-  JuicerApiCRUD.patch(req, res, User);
 });
 
 /*

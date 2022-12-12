@@ -1,14 +1,11 @@
 <template>
   <div class="wrapper fadeInDown">
   <div id="formContent" padding="20px">
-    <!-- Tabs Titles -->
 
-    <!-- Icon -->
     <div class="fadeIn first">
       <router-link to="/"><img src="../assets/juicer-logo.png" id="icon" alt="User Icon" /></router-link>
     </div>
 
-    <!-- Login Form -->
     <form @submit.prevent="signUp" >
       <input v-model=user.name type="text" id="username" class="fadeIn second" name="username" placeholder="Nombre de usuario">
       <input v-model=user.email type="text" id="email" class="fadeIn second" name="email" placeholder="Correo electrónico">
@@ -16,7 +13,6 @@
       <input type="submit" class="fadeIn fourth" value="Registarse">
     </form>
 
-    <!-- Remind Passowrd -->
     <div id="formFooter">
       <router-link class="underlineHover" to="/signin">Iniciar sesión</router-link>
     </div>

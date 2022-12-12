@@ -92,6 +92,20 @@ export const userModel = {
         alert(error);
       }
     },
+    async resetPassword({ getters }, token) {
+      try {
+        await axios.patch('users',{
+          password: getters.password
+        }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+        router.push('/signin');
+      } catch (error) {
+        alert(error);
+      }
+    },
     signUp({commit}, user) {
       commit('SIGN_UP', user);
     },

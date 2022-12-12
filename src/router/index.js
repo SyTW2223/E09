@@ -3,6 +3,7 @@ import HomeView from '../views/homeView.vue'
 import SignInView from '../views/signinView.vue'
 import SignUpView from '../views/signupView.vue'
 import ForgotView from '../views/forgotView.vue'
+import ResetView from '../views/resetView.vue'
 
 const mode = 'history';
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/forgot',
     name: 'Forgot',
     component: ForgotView
+  },
+  {
+    path: '/reset/:token',
+    name: 'Reset',
+    component: ResetView
   }
 ]
 const router = createRouter({

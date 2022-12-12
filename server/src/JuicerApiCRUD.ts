@@ -44,17 +44,17 @@ export class JuicerApiCRUD {
     const bearerHeader =  req.headers['authorization'];
 
     if (typeof bearerHeader !== 'undefined'){
-        const bearerToken = bearerHeader.split(" ")[1];
+      const bearerToken = bearerHeader.split(" ")[1];
 
-        jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
-          if (err){
-              res.status(403).send();
-          } else{
-              res.send(authData);
-          }
+      jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
+        if (err){
+          return res.status(403).send();
+        } else {
+          return res.send(authData);
+        }
       });
     } else{
-        res.status(403).send();
+      return res.status(400).send({error: 'A token must be provided'});
     }
   }
 
@@ -104,28 +104,32 @@ export class JuicerApiCRUD {
   }*/
 
   public static async patch(req: any, res: any, model: any) {
-    try {
-      const bearerHeader =  req.headers['authorization'];
+    const bearerHeader =  req.headers['authorization'];
+    if (typeof bearerHeader !== 'undefined') {
       const bearerToken = bearerHeader.split(" ")[1];
 
       jwt.verify(bearerToken, 'secretkey', async (err: any, authData: any) => {
         if (err) {
-          res.status(403).send();
+          return res.status(403).send();
         } else {
-          const element = await model.findOneAndUpdate({email: authData.user.email.toString()}, req.body, {
-            new: true,
-            runValidators: true,
-          });
-    
-          if (!element) {
-            return res.status(404).send();
+          try {
+            const element = await model.findOneAndUpdate({email: authData.element.email}, req.body, {
+              new: true,
+              runValidators: true,
+            });
+      
+            if (!element) {
+              return res.status(404).send();
+            }
+        
+            return res.send(element);
+          } catch (error) {
+            return res.status(500).send(error);
           }
-    
-          return res.send(element);
         }
       });
-    } catch (error) {
-      return res.status(400).send(error);
+    } else {
+      return res.status(400).send({error: 'A token must be provided'});
     }
   }
   /*
@@ -191,7 +195,7 @@ async function sendEmail(res: any, req: any, token: string) {
       from: USER,
       to: req.body.email,
       subject: 'Password reset',
-      text: `Click here to reset password: http://10.6.130.29/password-reset/${token}`,
+      text: `Click here to reset password: http://10.6.130.29/reset/${token}`,
     });
     return res.status(200).send("email sent sucessfully");
   } catch (error) {
