@@ -1,24 +1,42 @@
 <template>
-  <div class="wrapper fadeInDown">
-  <div id="formContent">
-
-    <div class="fadeIn first">
-      <router-link to="/"><img src="../assets/juicer-logo.png" id="icon" alt="User Icon" /></router-link>
-    </div>
-
-    <form @submit.prevent="sendResetPasswordEmail()">
-      <input type="text" v-model=email id="login" class="fadeIn second" name="email" placeholder="Correo electrónico">
-      <input type="submit" class="fadeIn fourth" value="Enviar">
+<div class="auth">
+  <div class="header">
+    <router-link to="/">
+      <div>
+        <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
+      </div>
+    </router-link>
+  </div>
+  <div class="body">
+    <form class="form" autocomplete="off" @submit.prevent="sendResetPasswordEmail()">
+      <div class="body">
+        <h3 class="title">¿Has olvidado tu cuenta?</h3>
+        <p>
+          Introduce tu correo electr&oacute;nico para cambiar tu contrase&ntilde;a.
+        </p>
+        <div>
+          <div class="form-group">
+            <input type="email" v-model=email class="form-control" placeholder="Correo electrónico">
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+          Enviar
+        </button>
+        <div class="mt-2">
+          <p>
+            &oacute;
+            <br>
+            <router-link to="signin">
+              Inicia sesi&oacute;n
+            </router-link>
+          </p>
+        </div>
+      </div>
     </form>
-
-    <div id="formFooter">
-      <router-link class="underlineHover" to="/signin">Iniciar sesión</router-link>
-      <br>
-      <router-link class="underlineHover" to="/signup">Registrarse</router-link>
-    </div>
-
   </div>
-  </div>
+</div>
 </template>
 
 <script>
