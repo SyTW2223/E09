@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx tsc; node dist/index.js;",
     "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js\"",
+    "test": "env-cmd -f ./config/test.env mocha --exit",
     "run": "yarn tsc"
   },
   "keywords": [],
