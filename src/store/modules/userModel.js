@@ -3,7 +3,8 @@ import router from '../../router/index'
 
 export const userModel = {
   state: () => ({
-    user : null,
+    user: null,
+    error: null,
     name: '',
     email: '',
     password: '',
@@ -15,6 +16,12 @@ export const userModel = {
     age: 0
   }),
   mutations: {
+    SET_USER(state, user) {
+      state.user = user;
+    },
+    SET_ERROR(state, error) {
+      state.error = error;
+    },
     SET_NAME(state, name) {
       state.name = name;
     },
@@ -35,13 +42,10 @@ export const userModel = {
       state.name = user.name;
       state.email = user.email;
       state.password = user.password;
-    },
-    SET_USER(state, user) {
-      state.user = user;
     }
   },
   actions: {
-    async postSignUp({ getters }) {
+    async postSignUp({ getters, dispatch }) {
       try {
         await axios.post('signup', {
           name: getters.name,
@@ -55,7 +59,7 @@ export const userModel = {
         })
         router.push('/signin');
       } catch (error) {
-        alert(error);
+        dispatch('setError', error);
       }
     },
     async postSignIn({ getters, dispatch }) {
@@ -67,7 +71,7 @@ export const userModel = {
         localStorage.setItem('token', response.data.token);
         dispatch('getUser');
       } catch (error) {
-        alert(error);
+        dispatch('setError', error);
       }
     },
     async getUser({ dispatch }) {
@@ -80,19 +84,19 @@ export const userModel = {
         dispatch('setUser', response.data);
         router.push('/');
       } catch (error) {
-        console.log(error);
+        dispatch('setError', error);
       }
     },
-    async sendResetPasswordEmail({ getters }) {
+    async sendResetPasswordEmail({ getters, dispatch }) {
       try {
         await axios.post('password-reset', {
           email: getters.email
         })
       } catch (error) {
-        alert(error);
+        dispatch('setError', error);
       }
     },
-    async resetPassword({ getters }, token) {
+    async resetPassword({ getters, dispatch }, token) {
       try {
         await axios.patch('users',{
           password: getters.password
@@ -103,7 +107,7 @@ export const userModel = {
         });
         router.push('/signin');
       } catch (error) {
-        alert(error);
+        dispatch('setError', error);
       }
     },
     signUp({commit}, user) {
@@ -114,6 +118,9 @@ export const userModel = {
     },
     setUser({commit}, user) {
       commit('SET_USER', user);
+    },
+    setError({commit}, error) {
+      commit('SET_ERROR', error);
     },
     setName({commit}, name) {
       commit('SET_NAME', name);
@@ -130,6 +137,7 @@ export const userModel = {
   },
   getters: {
     user: state => state.user,
+    error: state => state.error,
     name: state => state.name,
     email: state => state.email,
     password: state => state.password,

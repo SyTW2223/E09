@@ -10,13 +10,14 @@
   <div class="body">
     <form class="form" autocomplete="off" @submit.prevent="sendResetPasswordEmail()">
       <div class="body">
+        <ErrorMsg v-if="error"/>
         <h3 class="title">¿Has olvidado tu cuenta?</h3>
         <p>
           Introduce tu correo electr&oacute;nico para cambiar tu contrase&ntilde;a.
         </p>
         <div>
           <div class="form-group">
-            <input type="email" v-model=email class="form-control" placeholder="Correo electrónico">
+            <input type="email" v-model=email class="form-control" placeholder="Correo electrónico" required>
           </div>
         </div>
       </div>
@@ -40,18 +41,29 @@
 </template>
 
 <script>
+  import ErrorMsg from './ErrorMsg.vue'
+  import { mapGetters } from 'vuex';
   export default {
     name: 'ForgotPassword',
+    compute: {
+      ErrorMsg
+    },
     data() {
       return {
         email: ''
       }
+    },
+    created() {
+      this.$store.dispatch('setError', null);
     },
     methods: {
       sendResetPasswordEmail() {
         this.$store.dispatch('setEmail', this.email);
         this.$store.dispatch('sendResetPasswordEmail');
       }
+    },
+    computed: {
+      ...mapGetters(['error'])
     }
   }
 </script>
