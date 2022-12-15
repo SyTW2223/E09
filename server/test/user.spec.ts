@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { User } from '../models/user';
+import { User } from '../src/models/user';
 
 /**
  * Eliminación de todos los usuarios
