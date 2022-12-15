@@ -3,7 +3,7 @@
   <div class="header">
     <router-link to="/">
       <div>
-        <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
+        <img height="185" src="../assets/logoblanco.png" alt="Logo de Juicer">
       </div>
     </router-link>
   </div>
@@ -13,8 +13,9 @@
         <h3 class="title">Iniciar sesi&oacute;n</h3>
         <div>
           <div class="form-group">
-            <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico">
-            <input type="password"  v-model=user.password class="form-control" placeholder="Contraseña">
+            <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
+            <input type="password"  v-model=user.password class="form-control" placeholder="Contraseña" required>
+            <input type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
           </div>
         </div>
       </div>
@@ -48,7 +49,8 @@
       return {
         user: {
           email: '',
-          password: ''
+          password: '',
+          confirm_password: ''
         }
       }
     },

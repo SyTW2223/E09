@@ -3,7 +3,7 @@
   <div class="header">
     <router-link to="/">
       <div>
-        <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
+        <img height="185" src="../assets/logoblanco.png" alt="Logo de Juicer">
       </div>
     </router-link>
   </div>

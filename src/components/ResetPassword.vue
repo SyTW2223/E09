@@ -3,7 +3,7 @@
     <div id="formContent">
 
       <div class="fadeIn first">
-        <router-link to="/"><img src="../assets/juicer-logo.png" id="icon" alt="User Icon" /></router-link>
+        <router-link to="/"><img src="../assets/logoblanco.png" id="icon" alt="User Icon" /></router-link>
       </div>
   
       <form @submit.prevent="resetPassword()">
