@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx tsc; node dist/index.js;",
+    "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js\"",
     "run": "yarn tsc"
   },
   "keywords": [],
@@ -30,7 +31,6 @@
     "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "chai": "^4.3.7",
-    "env-cmd": "^10.1.0",
     "eslint": "^8.28.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.26.0",
