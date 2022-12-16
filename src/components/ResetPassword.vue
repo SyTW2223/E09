@@ -17,8 +17,11 @@
         </p>
         <div>
           <div class="form-group">
-            <input type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
-            <input type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+            <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+            <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+            <div class="checkboxes">
+              <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+            </div>
           </div>
         </div>
       </div>
@@ -72,6 +75,15 @@
           this.$store.dispatch('resetPassword', this.$route.params.token);
         } else {
           this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
+      },
+      changePasswordVisibility() {
+        if (document.getElementById('password').type === 'password') {
+          document.getElementById('password').type = 'text';
+          document.getElementById('confirm_password').type = 'text';
+        } else {
+          document.getElementById('password').type = 'password';
+          document.getElementById('confirm_password').type = 'password';
         }
       }
     },

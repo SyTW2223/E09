@@ -16,8 +16,11 @@
             <div class="form-group">
               <input type="text" v-model=user.name class="form-control" placeholder="Nombre de usuario" required>
               <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
-              <input type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
-              <input type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+              <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+              <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+              <div class="checkboxes">
+                <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+              </div>
             </div>
           </div>
         </div>
@@ -70,6 +73,15 @@
           this.$store.dispatch('setError', 'Contraseñas distintas');
         }
       },
+      changePasswordVisibility() {
+        if (document.getElementById('password').type === 'password') {
+          document.getElementById('password').type = 'text';
+          document.getElementById('confirm_password').type = 'text';
+        } else {
+          document.getElementById('password').type = 'password';
+          document.getElementById('confirm_password').type = 'password';
+        }
+      }
     },
     computed: {
       ...mapGetters(['error'])

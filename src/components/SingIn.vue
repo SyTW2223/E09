@@ -15,8 +15,11 @@
         <div>
           <div class="form-group">
             <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
-            <input type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
-            <input type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+            <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+            <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+            <div class="checkboxes">
+              <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+            </div>
           </div>
         </div>
       </div>
@@ -44,7 +47,6 @@
 </template>
  
 <script>
-  import 'custom-element-password-toggle'
   import { mapGetters } from 'vuex';
   import ErrorMsg from './ErrorMsg.vue'
   export default {
@@ -72,6 +74,15 @@
         } else {
           this.$store.dispatch('setError', 'Contraseñas distintas');
         }
+      },
+      changePasswordVisibility() {
+        if (document.getElementById('password').type === 'password') {
+          document.getElementById('password').type = 'text';
+          document.getElementById('confirm_password').type = 'text';
+        } else {
+          document.getElementById('password').type = 'password';
+          document.getElementById('confirm_password').type = 'password';
+        }
       }
     },
     computed: {
@@ -81,5 +92,15 @@
 </script>
  
 <style>
-
+.checkboxes label {
+  display: inline-block;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+.checkboxes input {
+  vertical-align: middle;
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
 </style>
