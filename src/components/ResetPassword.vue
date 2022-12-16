@@ -8,7 +8,7 @@
     </router-link>
   </div>
   <div class="body">
-    <form class="form" autocomplete="off" @submit.prevent="sendResetPasswordEmail()">
+    <form class="form" autocomplete="off" @submit.prevent="resetPassword()">
       <div class="body">
         <ErrorMsg v-if="error"/>
         <h3 class="title">Restablecer contraseña</h3>
@@ -17,8 +17,8 @@
         </p>
         <div>
           <div class="form-group">
-            <input type="password" v-model=email class="form-control" placeholder="Contraseña" required>
-            <input type="password" v-model=email class="form-control" placeholder="Confirmar contraseña" required>
+            <input type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+            <input type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
           </div>
         </div>
       </div>
@@ -56,7 +56,10 @@
     },
     data() {
       return {
-        password: ''
+        user: {
+          password: '',
+          confirm_password: ''
+        }
       }
     },
     created() {
@@ -64,12 +67,16 @@
     },
     methods: {
       resetPassword() {
-        this.$store.dispatch('setPassword', this.password);
-        this.$store.dispatch('resetPassword', this.$route.params.token);
+        if (this.user.confirm_password === this.user.password) {
+          this.$store.dispatch('setPassword', this.password);
+          this.$store.dispatch('resetPassword', this.$route.params.token);
+        } else {
+          this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
       }
     },
     computed: {
-      ...mapGetters(['errorMsg'])
+      ...mapGetters(['error'])
     }
   }
 </script>

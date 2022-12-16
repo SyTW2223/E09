@@ -44,6 +44,7 @@
 </template>
  
 <script>
+  import 'custom-element-password-toggle'
   import { mapGetters } from 'vuex';
   import ErrorMsg from './ErrorMsg.vue'
   export default {
@@ -65,12 +66,16 @@
     },
     methods: {
       signIn() {
-        this.$store.dispatch('signIn', this.user);
-        this.$store.dispatch('postSignIn');
+        if (this.user.confirm_password === this.user.password) {
+          this.$store.dispatch('signIn', this.user);
+          this.$store.dispatch('postSignIn');
+        } else {
+          this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
       }
     },
     computed: {
-      ...mapGetters(['errorMsg'])
+      ...mapGetters(['error'])
     }
   }
 </script>

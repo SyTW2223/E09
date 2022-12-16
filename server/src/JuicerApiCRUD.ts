@@ -16,7 +16,7 @@ export class JuicerApiCRUD {
       await element.save();
       return res.status(201).send(element);
     } catch (error) {
-      return res.status(400).send(error);
+      handleErrors(error, res);
     }
   }
  
@@ -27,16 +27,16 @@ export class JuicerApiCRUD {
       if (element) {
         jwt.sign({element}, 'secretkey', {'expiresIn': '300s'}, (err: any, token: any) => {
           if (err) {
-            return res.status(500).send(err);
+            return res.status(500).send({error: err});
           } else {
             return res.status(200).send({user: element, token});
           }
         });
       } else {
-        return res.status(404).send();
+        return res.status(404).send({error:'Correo electrónico o contraseña incorrectos'});
       }
     } catch (error) {
-      return res.status(500).send();
+      return res.status(500).send({error: error});
     }
   }
 
@@ -48,13 +48,13 @@ export class JuicerApiCRUD {
 
       jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
         if (err){
-          return res.status(403).send();
+          return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           return res.send(authData);
         }
       });
-    } else{
-      return res.status(400).send({error: 'A token must be provided'});
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 
@@ -70,12 +70,13 @@ export class JuicerApiCRUD {
             sendEmail(res, req, token);
           }
         });
+      } else {
+        return res.status(404).send({error: 'Correo electrónico no registrado'});
       }
     } catch (error) {
-      return res.status(500).send(error);
+      return res.status(500).send({error: error});
     }
   }
-
 
   public static async get(res: any, filter: any, model: any) {
     try {
@@ -84,9 +85,9 @@ export class JuicerApiCRUD {
       if (elements.length !== 0) {
         return res.send(elements);
       }
-      return res.status(404).send();
+      return res.status(404).send('Elemento no encontrado');
     } catch (error) {
-      return res.status(500).send();
+      return res.status(500).send({error: error});
     }
   }
   /*
@@ -110,26 +111,26 @@ export class JuicerApiCRUD {
 
       jwt.verify(bearerToken, 'secretkey', async (err: any, authData: any) => {
         if (err) {
-          return res.status(403).send();
+          return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            const element = await model.findOneAndUpdate({email: authData.element.email}, req.body, {
+            const element = await model.findOneAndUpdate({name: authData.element.name}, req.body, {
               new: true,
               runValidators: true,
             });
       
             if (!element) {
-              return res.status(404).send();
+              return res.status(404).send({error: 'Elemento no encontrado'});
             }
         
             return res.send(element);
-          } catch (error) {
-            return res.status(500).send(error);
+          } catch (err) {
+            handleErrors(err, res);
           }
         }
       });
     } else {
-      return res.status(400).send({error: 'A token must be provided'});
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
   /*
@@ -147,7 +148,7 @@ export class JuicerApiCRUD {
     } catch (error) {
       return res.status(400).send(error);
     }
-  }
+  }*/
 
   public static async delete(req: any, res: any, model: any) {
     try {
@@ -175,7 +176,7 @@ export class JuicerApiCRUD {
     } catch (error) {
       return res.status(400).send();
     }
-  }*/
+  }
 }
 
 
@@ -197,8 +198,32 @@ async function sendEmail(res: any, req: any, token: string) {
       subject: 'Password reset',
       text: `Click here to reset password: http://10.6.130.29/reset/${token}`,
     });
-    return res.status(200).send("email sent sucessfully");
+    return res.status(200).send("Correo electrónico enviado con éxito");
   } catch (error) {
     return res.status(500).send(error);
   }
+}
+
+async function handleErrors(err: any, res: any) {
+  try {
+    if(err.name === 'ValidationError') {
+      return res.status(400).send({error: "La contraseña debe contener al menos ocho caracteres, un número y una mayúscula", fields: 'password'});
+    }
+    if(err.code && err.code == 11000) return err = handleDuplicateKeyError(err, res);
+  } catch(err) {
+    res.status(500).send({error: 'Error desconocido'});
+  }
+}
+
+function handleDuplicateKeyError(err: any, res: any) {
+  const field = Object.keys(err.keyValue);
+  console.log(field);
+  const code = 409;
+  var campo = field[0];
+  if (campo === 'name') {
+    campo = 'nombre';
+  } else {
+    campo = 'correo electrónico';
+  }
+  res.status(code).send({error: `Ya existe una cuenta con ese ${campo}.`, fields: field});
 }

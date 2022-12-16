@@ -63,8 +63,12 @@
     },
     methods: {
       signUp() {
-        this.$store.dispatch('signUp', this.user);
-        this.$store.dispatch('postSignUp');
+        if (this.user.confirm_password === this.user.password) {
+          this.$store.dispatch('signUp', this.user);
+          this.$store.dispatch('postSignUp');
+        } else {
+          this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
       },
     },
     computed: {

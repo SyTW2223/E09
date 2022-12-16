@@ -11,6 +11,7 @@
     <form class="form" autocomplete="off" @submit.prevent="sendResetPasswordEmail()">
       <div class="body">
         <ErrorMsg v-if="error"/>
+        <SuccessMsg v-if="success"/>
         <h3 class="title">¿Has olvidado tu cuenta?</h3>
         <p>
           Introduce tu correo electr&oacute;nico para cambiar tu contrase&ntilde;a.
@@ -42,11 +43,13 @@
 
 <script>
   import ErrorMsg from './ErrorMsg.vue'
+  import SuccessMsg from './SuccessMsg.vue'
   import { mapGetters } from 'vuex';
   export default {
     name: 'ForgotPassword',
-    compute: {
-      ErrorMsg
+    components: {
+      ErrorMsg,
+      SuccessMsg
     },
     data() {
       return {
@@ -63,7 +66,7 @@
       }
     },
     computed: {
-      ...mapGetters(['error'])
+      ...mapGetters(['error', 'success'])
     }
   }
 </script>
