@@ -1,4 +1,5 @@
 import * as request from 'supertest';
+import   { app } from '../src/app';
 import { User } from '../src/models/user';
 
 /**
@@ -13,7 +14,7 @@ beforeEach(async () => {
  */
 describe('POST USER /api/signup', () => {
   it('Should successfully create a new user', async () => {
-    await request(User).post('/api/signup').send({
+    await request(app).post('/api/signup').send({
       name: "userExample",
       email: "user@example.com",
       password: "passwordExample",
