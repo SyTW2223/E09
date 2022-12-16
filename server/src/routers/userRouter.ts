@@ -63,7 +63,7 @@ userRouter.patch('/api/users/:id', (req, res) => {
   }
   JuicerApiCRUD.idPatch(req, res, User);
 });
-
+*/
 // DELETE
 userRouter.delete('/api/users', (req, res) => {
   if (!req.query.name) {
@@ -77,5 +77,3 @@ userRouter.delete('/api/users', (req, res) => {
 userRouter.delete('/api/users/:id', async (req, res) => {
   JuicerApiCRUD.idDelete(req, res, User);
 });
-
-*/

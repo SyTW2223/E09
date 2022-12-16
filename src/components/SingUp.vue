@@ -3,19 +3,24 @@
     <div class="header">
       <router-link to="/">
         <div>
-          <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
+          <img height="185" src="../assets/logoblanco.png" alt="Logo de Juicer">
         </div>
       </router-link>
     </div>
     <div class="body">
-      <form class="form" autocomplete="off" @submit.prevent="signUp">
+      <form class="form" autocomplete="off" @submit.prevent="signUp" >
         <div class="body">
+          <ErrorMsg v-if="error"/>
           <h3 class="title">¡Bienvenido a Juicer!</h3>
           <div>
             <div class="form-group">
-              <input v-model=user.name type="text" class="form-control" placeholder="Nombre de usuario">
-              <input v-model=user.email type="email" class="form-control" placeholder="Correo electrónico">
-              <input v-model=user.password type="password" class="form-control" placeholder="Contraseña">
+              <input type="text" v-model=user.name class="form-control" placeholder="Nombre de usuario" required>
+              <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
+              <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+              <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+              <div class="checkboxes">
+                <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+              </div>
             </div>
           </div>
         </div>
@@ -39,25 +44,48 @@
    
   
 <script>
+  import { mapGetters } from 'vuex';
+  import ErrorMsg from './ErrorMsg.vue';
   export default {
-      name: 'SingUp',
-      data() {
-        return {
-          user: {
-            name: '',
-            email: '',
-            password: ''
-          }
-        }
-      },
-      methods: {
-        signUp() {
+    name: 'SingUp',
+    components: {
+      ErrorMsg
+    },
+    data() {
+      return {
+        user: {
+          name: '',
+          email: '',
+          password: '',
+          confirm_password: ''
+      }
+      }
+    },
+    created() {
+      this.$store.dispatch('setError', null);
+    },
+    methods: {
+      signUp() {
+        if (this.user.confirm_password === this.user.password) {
           this.$store.dispatch('signUp', this.user);
           this.$store.dispatch('postSignUp');
-        },
+        } else {
+          this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
       },
-      computed: {
-      },
+      changePasswordVisibility() {
+        if (document.getElementById('password').type === 'password') {
+          document.getElementById('password').type = 'text';
+          document.getElementById('confirm_password').type = 'text';
+        } else {
+          document.getElementById('password').type = 'password';
+          document.getElementById('confirm_password').type = 'password';
+        }
+      }
+    },
+    computed: {
+      ...mapGetters(['error'])
+    }
   }
 </script>
 

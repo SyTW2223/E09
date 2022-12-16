@@ -2,22 +2,26 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <router-link class="navbar-brand" to="/">Home</router-link>
+        <div>
+          <router-link class="navbar-brand" to="/">
+            <img height="35" src="../assets/logo.png">
+          </router-link>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul v-if="!user" class="navbar-nav">
             <li class="nav-item active">
-              <router-link class="nav-link" to="/signin">Sign In</router-link>
+              <router-link class="nav-link" to="/signin">Iniciar sesión</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/signup">Sign Up</router-link>
+              <router-link class="nav-link" to="/signup">Registrarse</router-link>
             </li>
           </ul>
           <ul v-if="user" class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#" @click="signOut()">Sign out</a>
+              <a class="nav-link" href="#" @click="signOut()">Cerrar sesión</a>
             </li>
           </ul>
         </div>
