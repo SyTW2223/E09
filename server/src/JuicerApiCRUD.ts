@@ -50,7 +50,7 @@ export class JuicerApiCRUD {
         if (err){
           return res.status(403).send();
         } else {
-          return res.send(authData);
+          return res.status(200).send(authData);
         }
       });
     } else{
@@ -82,7 +82,7 @@ export class JuicerApiCRUD {
       const elements = await model.find(filter);
 
       if (elements.length !== 0) {
-        return res.send(elements);
+        return res.status(200).send(elements);
       }
       return res.status(404).send();
     } catch (error) {
@@ -197,7 +197,7 @@ async function sendEmail(res: any, req: any, token: string) {
       subject: 'Password reset',
       text: `Click here to reset password: http://10.6.130.29/reset/${token}`,
     });
-    return res.status(200).send("email sent sucessfully");
+    return res.status(200).send({mssg:"email sent successfully"});
   } catch (error) {
     return res.status(500).send(error);
   }
