@@ -43,6 +43,21 @@ describe('POST /api/signup', () => {
     expect(response.body.error).to.be.eq('Ya existe una cuenta con ese nombre.');
   });
 
+  it('Should get an error because the password is too short', async () => {
+    const response = await request(app).post('/api/signup').send({
+      name: "user3",
+      email: "user3@example.com",
+      password: "short",
+      description: "description3",
+      folowing: 0,
+      followers: 0,
+      likes: 0,
+      age: 0,
+    }).expect(400);
+    expect(response.body.error).to.be.eq("La contraseña debe contener al menos ocho caracteres, un número y una mayúscula");
+    expect(response.body.fields).to.be.eq("password");
+  });
+
 });
 
 /**
@@ -141,5 +156,11 @@ describe('POST password-reset', () => {
       Authorization:'Bearer ' + tokenGlobal
     }).expect(200);
     expect(response.body.mssg).to.be.eq('email sent successfully');
+  });
+  it('Should get an error because the email does not exist', async () => {
+    const response = await request(app).post('/api/password-reset').send({
+      email: "notExist@email.com",
+    }).expect(404);
+    expect(response.body.error).to.be.eq('Correo electrónico no registrado');
   });
 });
