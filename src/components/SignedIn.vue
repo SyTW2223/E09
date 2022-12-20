@@ -9,6 +9,9 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'SignedIn',
+    created() {
+      this.$store.dispatch('getUser');
+    },
     computed: {
       ...mapGetters(['user'])
     }

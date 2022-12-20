@@ -3,18 +3,23 @@
   <div class="header">
     <router-link to="/">
       <div>
-        <img height="90" src="../assets/juicer_icon.png" alt="Logo de Juicer">
+        <img height="185" src="../assets/logoblanco.png" alt="Logo de Juicer">
       </div>
     </router-link>
   </div>
   <div class="body">
     <form class="form" autocomplete="off" @submit.prevent="signIn">
       <div class="body">
+        <ErrorMsg v-if="error"/>
         <h3 class="title">Iniciar sesi&oacute;n</h3>
         <div>
           <div class="form-group">
-            <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico">
-            <input type="password"  v-model=user.password class="form-control" placeholder="Contraseña">
+            <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
+            <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
+            <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
+            <div class="checkboxes">
+              <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+            </div>
           </div>
         </div>
       </div>
@@ -42,25 +47,60 @@
 </template>
  
 <script>
+  import { mapGetters } from 'vuex';
+  import ErrorMsg from './ErrorMsg.vue'
   export default {
     name: 'SingIn',
+    components: {
+      ErrorMsg
+    },
     data() {
       return {
         user: {
           email: '',
-          password: ''
+          password: '',
+          confirm_password: ''
         }
       }
     },
+    created() {
+      this.$store.dispatch('setError', null);
+    },
     methods: {
       signIn() {
-        this.$store.dispatch('signIn', this.user);
-        this.$store.dispatch('postSignIn');
+        if (this.user.confirm_password === this.user.password) {
+          this.$store.dispatch('signIn', this.user);
+          this.$store.dispatch('postSignIn');
+        } else {
+          this.$store.dispatch('setError', 'Contraseñas distintas');
+        }
+      },
+      changePasswordVisibility() {
+        if (document.getElementById('password').type === 'password') {
+          document.getElementById('password').type = 'text';
+          document.getElementById('confirm_password').type = 'text';
+        } else {
+          document.getElementById('password').type = 'password';
+          document.getElementById('confirm_password').type = 'password';
+        }
       }
+    },
+    computed: {
+      ...mapGetters(['error'])
     }
   }
 </script>
  
 <style>
-
+.checkboxes label {
+  display: inline-block;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+.checkboxes input {
+  vertical-align: middle;
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
 </style>
