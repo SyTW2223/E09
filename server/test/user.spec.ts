@@ -39,8 +39,10 @@ describe('POST /api/signup', () => {
   });
 
   it('Should get an error because the user was already created', async () => {
-    await request(app).post('/api/signup').send(firstUser).expect(400);
+    const response = await request(app).post('/api/signup').send(firstUser).expect(409);
+    expect(response.body.error).to.be.eq('Ya existe una cuenta con ese nombre.');
   });
+
 });
 
 /**
@@ -102,7 +104,7 @@ describe('GET /api/user', () => {
   });
   it('Should get an error because token is not provided', async () => {
     const response = await request(app).get('/api/user').expect(400);
-    expect(response.body.error).to.be.eq('A token must be provided');
+    expect(response.body.error).to.be.eq('Debe proporcionarse un token');
   });
 });
 

@@ -218,7 +218,6 @@ async function handleErrors(err: any, res: any) {
 
 function handleDuplicateKeyError(err: any, res: any) {
   const field = Object.keys(err.keyValue);
-  console.log(field);
   const code = 409;
   var campo = field[0];
   if (campo === 'name') {
