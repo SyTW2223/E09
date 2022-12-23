@@ -29,6 +29,6 @@ jobs:
     - name: Cambiar al directorio server
       working-directory: ./server
       run: |
-          npm i
+        npm i
     # - run: npm run build --if-present
-          npm test
+        npm test
