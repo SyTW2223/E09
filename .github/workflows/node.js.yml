@@ -28,6 +28,7 @@ jobs:
         cache: 'npm'
     - name: Cambiar al directorio server
       working-directory: ./server
-      run: npm i
+      run: |
+          npm i
     # - run: npm run build --if-present
-    - run: npm test
+          npm test
