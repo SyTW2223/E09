@@ -6,7 +6,10 @@
   "scripts": {
     "start": "npx tsc; env-cmd -f ./config/dev.env node dist/index.js;",
     "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js\"",
-    "test": "nyc env-cmd -f ./config/test.env mocha --exit",
+    "test": "env-cmd -f ./config/test.env mocha --exit",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_output",
+    "relcoverage": "nyc npm test",
+    "gencov": "nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_output",
     "run": "yarn tsc"
   },
   "keywords": [],
@@ -32,6 +35,7 @@
     "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "chai": "^4.3.7",
+    "coveralls": "^3.1.1",
     "env-cmd": "^10.1.0",
     "eslint": "^8.28.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
