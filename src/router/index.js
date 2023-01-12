@@ -5,6 +5,7 @@ import SignUpView from '../views/signupView.vue'
 import ForgotView from '../views/forgotView.vue'
 import ResetView from '../views/resetView.vue'
 import ProfilePageView from '../views/profilePageView.vue'
+import JuisView from '../views/juisView.vue'
 
 const mode = 'history';
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/profile',
     name: 'ProfilePage',
     component: ProfilePageView
+  },
+  {
+    path: '/juis',
+    name: 'JuisComponent',
+    component: JuisView
   }
 ]
 const router = createRouter({
