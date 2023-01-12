@@ -5,41 +5,86 @@ import { handleErrors } from './assets/handleErrors';
 
 export class AppCRUD {
 
-  public static async post(res: any, element: UserDocumentInterface|JuiceDocumentInterface) {
-    try {
-      await element.save();
-      return res.status(201).send(element);
-    } catch (error) {
-      handleErrors(error, res);
+  // POST
+  public static async post(req:any, res: any, element: UserDocumentInterface|JuiceDocumentInterface) {
+    const bearerHeader =  req.headers['authorization'];
+
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
+
+      jwt.verify(bearerToken, 'secretkey', async (err: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            await element.save();
+            return res.status(201).send(element);
+          } catch (error) {
+            handleErrors(error, res);
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 
-  public static async get(res: any, filter: any, model: any) {
-    try {
-      const elements = await model.find(filter);
+  // GET
+  public static async get(req:any, res: any, filter: any, model: any) {
+    const bearerHeader =  req.headers['authorization'];
 
-      if (elements.length !== 0) {
-        return res.status(200).send(elements);
-      }
-      return res.status(404).send('Elemento no encontrado');
-    } catch (error) {
-      return res.status(500).send({error: error});
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
+
+      jwt.verify(bearerToken, 'secretkey', async (err: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            const elements = await model.find(filter);
+      
+            if (elements.length !== 0) {
+              return res.status(200).send(elements);
+            }
+            return res.status(404).send('Elemento no encontrado');
+          } catch (error) {
+            return res.status(500).send({error: error});
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
   
   public static async idGet(req: any, res: any, model: any) {
-    try {
-      const element = await model.findById(req.params.id);
+    const bearerHeader =  req.headers['authorization'];
 
-      if (!element) {
-        return res.status(404).send();
-      }
-      return res.status(200).send(element);
-    } catch (error) {
-      return res.status(500).send({error: error});
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
+
+      jwt.verify(bearerToken, 'secretkey', async (err: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            const element = await model.findById(req.params.id);
+      
+            if (!element) {
+              return res.status(404).send();
+            }
+            return res.status(200).send(element);
+          } catch (error) {
+            return res.status(500).send({error: error});
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 
+  // PATCH
   public static async patch(req: any, res: any, filter: any, model: any) {
     const bearerHeader =  req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
@@ -100,31 +145,60 @@ export class AppCRUD {
     }
   }
 
+  // DELETE
   public static async delete(req: any, res: any, model: any) {
-    try {
-      const element = await model.findOneAndDelete({name: req.query.name.toString()});
+    const bearerHeader =  req.headers['authorization'];
 
-      if (!element) {
-        return res.status(404).send();
-      }
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
 
-      return res.send(element);
-    } catch (error) {
-      return res.status(400).send();
+      jwt.verify(bearerToken, 'secretkey', async (err: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            const element = await model.findOneAndDelete({name: req.query.name.toString()});
+      
+            if (!element) {
+              return res.status(404).send();
+            }
+      
+            return res.send(element);
+          } catch (error) {
+            return res.status(400).send();
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 
   public static async idDelete(req: any, res: any, model: any) {
-    try {
-      const element = await model.findByIdAndDelete(req.params.id);
+    const bearerHeader =  req.headers['authorization'];
 
-      if (!element) {
-        return res.status(404).send();
-      }
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
 
-      return res.send(element);
-    } catch (error) {
-      return res.status(400).send();
+      jwt.verify(bearerToken, 'secretkey', async (err: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            const element = await model.findByIdAndDelete(req.params.id);
+      
+            if (!element) {
+              return res.status(404).send();
+            }
+      
+            return res.send(element);
+          } catch (error) {
+            return res.status(400).send();
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 }

@@ -8,7 +8,7 @@ export const userRouter = express.Router();
 // POST
 userRouter.post('/api/signup', (req, res) => {
   const user = new User(req.body);
-  AppCRUD.post(res, user);
+  UserCRUD.postSignUp(res, user);
 });
 
 userRouter.post('/api/signin', (req, res) => {
@@ -26,7 +26,7 @@ userRouter.get('/api/user', (req, res) => {
 
 userRouter.get('/api/users', (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
-  AppCRUD.get(res, filter, User);
+  AppCRUD.get(req, res, filter, User);
 });
 
 userRouter.get('/api/users/:id', (req, res) => {

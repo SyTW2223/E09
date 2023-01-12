@@ -1,8 +1,18 @@
 import * as jwt from 'jsonwebtoken';
+import { UserDocumentInterface } from '../models/user';
 import { handleErrors } from './assets/handleErrors';
 import { sendEmail } from './assets/sendEmail';
 
 export class UserCRUD {
+
+  public static async postSignUp(res: any, element: UserDocumentInterface) {
+    try {
+      await element.save();
+      return res.status(201).send(element);
+    } catch (error) {
+      handleErrors(error, res);
+    }
+  }
  
   public static async postSignIn(res: any, req: any, model: any) {
     try {
