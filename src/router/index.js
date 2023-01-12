@@ -41,7 +41,7 @@ const routes = [
     component: ProfilePageView
   },
   {
-    path: '/juis',
+    path: '/juice',
     name: 'JuisComponent',
     component: JuisView
   }
