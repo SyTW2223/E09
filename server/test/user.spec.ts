@@ -85,10 +85,14 @@ describe('POST /api/signup', () => {
 */
 describe('GET /api/users', () => {
   it('Should successfully get all registered users', async () => {
-    await request(app).get('/api/users').send().expect(200);
+    await request(app).get('/api/users').set({
+      Authorization:'Bearer ' + tokenGlobal
+    }).send().expect(200);
   });
   it('The number of registered users must be 2', async () => {
-    const response = await request(app).get('/api/users').send().expect(200);
+    const response = await request(app).get('/api/users').set({
+      Authorization:'Bearer ' + tokenGlobal
+    }).send().expect(200);
     expect(response.body.length).to.be.eq(2);
   });
 });
