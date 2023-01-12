@@ -3,6 +3,7 @@
     <div class="juice">
       <div class="juice-info">
         <h2>{{ juice.username }}</h2>
+        <p>{{ juice.date }}</p>
         <p>{{ juice.text }}</p>
         <div class="juice-meta">
           <button @click="likeJuice" class="like-button btn btn-outline-primary">
@@ -22,6 +23,7 @@
         juice: {
           username: '@username',
           text: 'This is an example of the text that can be included inside of a Juice. It can be really extensive!!',
+          date: '01/01/2020',
           likes: '7'
         }
       }
