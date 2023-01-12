@@ -7,9 +7,9 @@
     "start": "npx tsc; env-cmd -f ./config/dev.env node dist/index.js;",
     "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js\"",
     "test": "env-cmd -f ./config/test.env mocha --exit",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_output",
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
     "relcoverage": "nyc npm test",
-    "gencov": "nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_output",
+    "gencov": "nyc report --reporter=lcov",
     "run": "yarn tsc"
   },
   "keywords": [],
