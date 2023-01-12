@@ -1,36 +1,36 @@
 import * as express from 'express';
 import {User} from '../models/user';
-import {JuicerApiCRUD} from '../JuicerApiCRUD';
+import {UserApiCRUD} from '../UserApiCRUD';
 
 export const userRouter = express.Router();
 
 // POST
 userRouter.post('/api/signup', (req, res) => {
   const user = new User(req.body);
-  JuicerApiCRUD.postSignUp(res, user);
+  UserApiCRUD.postSignUp(res, user);
 });
 
 userRouter.post('/api/signin', (req, res) => {
-  JuicerApiCRUD.postSignIn(res, req, User);
+  UserApiCRUD.postSignIn(res, req, User);
 });
 
 userRouter.post('/api/password-reset', (req, res) => {
-  JuicerApiCRUD.postPasswordReset(res, req, User);
+  UserApiCRUD.postPasswordReset(res, req, User);
 });
 
 // GET
 userRouter.get('/api/user', (req, res) => {
-  JuicerApiCRUD.getUser(req, res);
+  UserApiCRUD.getUser(req, res);
 });
 
 userRouter.get('/api/users', (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
-  JuicerApiCRUD.get(res, filter, User);
+  UserApiCRUD.get(res, filter, User);
 });
 
 /*
 userRouter.get('/api/users/:id', (req, res) => {
-  JuicerApiCRUD.idGet(req, res, User);
+  UserApiCRUD.idGet(req, res, User);
 });*/
 
 // PATCH
@@ -45,7 +45,7 @@ userRouter.get('/api/users/:id', (req, res) => {
       error: 'Update is not permitted',
     });
   } else {
-    JuicerApiCRUD.patch(req, res, User);
+    UserApiCRUD.patch(req, res, User);
   }
 });
 
@@ -61,7 +61,7 @@ userRouter.patch('/api/users/:id', (req, res) => {
       error: 'Update is not permitted',
     });
   }
-  JuicerApiCRUD.idPatch(req, res, User);
+  UserApiCRUD.idPatch(req, res, User);
 });
 */
 // DELETE
@@ -71,9 +71,9 @@ userRouter.delete('/api/users', (req, res) => {
       error: 'A name must be provided',
     });
   }
-  JuicerApiCRUD.delete(req, res, User);
+  UserApiCRUD.delete(req, res, User);
 });
 
 userRouter.delete('/api/users/:id', async (req, res) => {
-  JuicerApiCRUD.idDelete(req, res, User);
+  UserApiCRUD.idDelete(req, res, User);
 });

@@ -9,7 +9,7 @@ const PASS = 'plsoovkmdwvujbgb'// email password
 const SERVICE = 'Gmail'// email service
 
 
-export class JuicerApiCRUD {
+export class UserApiCRUD {
 
   public static async postSignUp(res: any, element: UserDocumentInterface) {
     try {

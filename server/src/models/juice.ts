@@ -3,23 +3,14 @@ import {Document, Schema, model} from 'mongoose';
 
 export interface JuiceDocumentInterface extends Document {
   id: number,
-  fatherId: number,
   userId: number,
   text: string,
-  image: string,
   date: string,
-  likes: number,
-  squeezes: number,
-  idOfResponses: number[]
+  likes: number
 }
 
 export const JuiceSchema = new Schema<JuiceDocumentInterface>({
   id: {
-    type: Number,
-    unique: true,
-    required: true,
-  },
-  fatherId: {
     type: Number,
     unique: true,
     required: true,
@@ -34,9 +25,6 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
     required: true,
     trim: true,
   },
-  image: {
-    type: String,
-  },
   date: {
     type: String,
     unique: false,
@@ -47,15 +35,7 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
     type: Number,
     default: 0,
     required: false,
-  },
-  squeezes: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  idOfResponses: {
-    type: [Number]
-  },
+  }
 });
 
 export const Juice = model<JuiceDocumentInterface>('Juice', JuiceSchema);
