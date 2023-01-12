@@ -1,14 +1,14 @@
 <template>
     <div>
       <p>
-        Pagina de Juis
+        Pagina de Juice
       </p>
     </div>
   </template>
        
   <script>
     export default {
-      name: 'JuisComponent'
+      name: 'JuiceComponent'
     }
   </script>
        
