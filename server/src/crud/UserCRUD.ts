@@ -34,24 +34,6 @@ export class UserCRUD {
     }
   }
 
-  public static getLoggedUser(req: any, res: any){
-    const bearerHeader =  req.headers['authorization'];
-
-    if (typeof bearerHeader !== 'undefined'){
-      const bearerToken = bearerHeader.split(" ")[1];
-
-      jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
-        if (err){
-          return res.status(403).send({error: 'La sesión ha expirado'});
-        } else {
-          return res.status(200).send(authData);
-        }
-      });
-    } else {
-      return res.status(400).send({error: 'Debe proporcionarse un token'});
-    }
-  }
-
   public static async postPasswordReset(res: any, req: any, model: any) {
     try {
       const element = await model.findOne({email: req.body.email});
@@ -69,6 +51,24 @@ export class UserCRUD {
       }
     } catch (error) {
       return res.status(500).send({error: error});
+    }
+  }
+
+  public static getLoggedUser(req: any, res: any){
+    const bearerHeader =  req.headers['authorization'];
+
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
+
+      jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          return res.status(200).send(authData);
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
     }
   }
 
