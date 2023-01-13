@@ -54,7 +54,7 @@ export class AppCRUD {
           return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            const element = await model.findOneAndUpdate({id: req.query.id.toString()}, req.body, {
+            const element = await model.findByIdAndUpdate(req.query.id, req.body, {
               new: true,
               runValidators: true,
             });
@@ -86,7 +86,7 @@ export class AppCRUD {
           return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            const element = await model.findOneAndDelete({id: req.query.id.toString()});
+            const element = await model.findByIdAndDelete(req.query.id);
       
             if (!element) {
               return res.status(404).send();

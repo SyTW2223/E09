@@ -14,7 +14,8 @@ const firstUser = {
     age: 0,
 }
 
-let tokenGlobal: string = "";
+let token: string = "";
+let id: string = "";
 
 before(async () => {
   await User.deleteMany();
@@ -69,7 +70,8 @@ describe('POST /api/signup', () => {
       email: "user2@example.com",
       password: "Password2",
     }).expect(200);
-    tokenGlobal = response.body.token;
+    token = response.body.token;
+    id = response.body.user._id;
   });
 
   it('Should get an error because the user does not exist', async () => {
@@ -86,12 +88,12 @@ describe('POST /api/signup', () => {
 describe('GET /api/users', () => {
   it('Should successfully get all registered users', async () => {
     await request(app).get('/api/users').set({
-      Authorization:'Bearer ' + tokenGlobal
+      Authorization:'Bearer ' + token
     }).send().expect(200);
   });
   it('The number of registered users must be 2', async () => {
     const response = await request(app).get('/api/users').set({
-      Authorization:'Bearer ' + tokenGlobal
+      Authorization:'Bearer ' + token
     }).send().expect(200);
     expect(response.body.length).to.be.eq(2);
   });
@@ -103,7 +105,7 @@ describe('GET /api/users', () => {
 describe('GET /api/user', () => {
   it('Should successfully get a created user', async () => {
     const response = await request(app).get('/api/user').set({
-      Authorization:'Bearer ' + tokenGlobal
+      Authorization:'Bearer ' + token
     }).expect(200);
     expect(response.body.element).to.include({
       name: "user2",
@@ -133,15 +135,15 @@ describe('GET /api/user', () => {
  */
 describe('PATCH user password', () => {
   it('Should successfully change a user password',async () => {
-    const response = await request(app).patch('/api/users').send({
+    const response = await request(app).patch(`/api/users?id=${id}`).send({
       password: "newPassword2",
     }).set({
-      Authorization:'Bearer ' + tokenGlobal
+      Authorization:'Bearer ' + token
     }).expect(200);
     expect(response.body.password).to.be.eq('newPassword2');
   });
   it('Should get an error because the token does not exist',async () => {
-    await request(app).patch('/api/users').send({
+    await request(app).patch(`/api/users?id=${id}`).send({
       password: "newPassword2",
     }).set({
       Authorization:'Bearer ' + 'undefinedToken'
@@ -157,7 +159,7 @@ describe('POST password-reset', () => {
     const response = await request(app).post('/api/password-reset').send({
       email: "user2@example.com",
     }).set({
-      Authorization:'Bearer ' + tokenGlobal
+      Authorization:'Bearer ' + token
     }).expect(200);
     expect(response.body.mssg).to.be.eq('email sent successfully');
   });

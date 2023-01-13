@@ -82,7 +82,7 @@ export class UserCRUD {
           return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            const element = await model.findOneAndUpdate({id: authData.element.id}, req.body, {
+            const element = await model.findByIdAndUpdate(authData.element.id, req.body, {
               new: true,
               runValidators: true,
             });
