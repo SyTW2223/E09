@@ -29,15 +29,12 @@ export const juiceModel = {
       commit('SET_NEWJUICE', value);
     },
     async postJuice({ getters, dispatch }) {
-      console.log(getters.userId);
-      console.log(getters.text);
-      console.log(getters.date);
       try {
         await axios.post('juice', {
-          userId: getters.id,
+          userId: getters.userId,
           text: getters.text,
           date: getters.date,
-          likes: 0
+          likes: getters.juice_likes
         },
         {
           headers: {

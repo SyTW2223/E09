@@ -11,7 +11,6 @@ export interface JuiceDocumentInterface extends Document {
 export const JuiceSchema = new Schema<JuiceDocumentInterface>({
   userId: {
     type: String,
-    unique: true,
     required: true,
   },
   text: {
@@ -21,7 +20,6 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
   },
   date: {
     type: String,
-    unique: false,
     required: false,
     trim: true,
   },

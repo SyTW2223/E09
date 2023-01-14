@@ -5,11 +5,11 @@
       <div class="juice">
         <div class="juice-info">
           <ErrorMsg v-if="error"/>
-          <h2>@{{ user.element.name }}</h2>
+          <h2>@{{ name }}</h2>
           <p>{{ calculateDate() }}</p>
           <div class="juice-meta form">
             <form class="submit" @submit.prevent="postJuice">
-              <input type="text" style="text-align:left" v-model="juice.text">
+              <input type="text" style="text-align:left" v-model="text">
               <button type="submit" class="like-button btn btn-outline-primary">
                 <span>Publicar</span>
               </button>
@@ -28,10 +28,7 @@
     name: 'NewJuice',
     data() {
       return {
-        juice: {
-          text: '',
-          date: this.calculateDate(),
-        }
+        text: ''
       }
     },
     methods: {
@@ -42,7 +39,13 @@
             `${('0' + fecha.getHours()).slice(-2)}:${('0' + fecha.getMinutes()).slice(-2)}`;
         },
         postJuice() {
-          this.$store.dispatch('storeJuice', this.juice);
+          console.log(this.id);
+          this.$store.dispatch('storeJuice', {
+            userId: this.id,
+            text: this.text,
+            date: this.calculateDate(),
+            likes: 0
+          });
           this.$store.dispatch('postJuice');
         },
         closePage() {
@@ -53,7 +56,7 @@
         ErrorMsg
     },
     computed: {
-      ...mapGetters(['user', 'error'])
+      ...mapGetters(['name', 'error', 'id'])
     }
   }
 </script>

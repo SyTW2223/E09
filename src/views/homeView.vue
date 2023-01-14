@@ -3,7 +3,7 @@
     <div class="page">
       <SignedIn/>
     </div>
-    <NewJuice v-if='newJuice'/>
+    <NewJuice v-if='newJuice && user'/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     NewJuice
   },
   computed: {
-    ...mapGetters(['newJuice'])
+    ...mapGetters(['newJuice', 'user'])
   }
 }
 </script>
