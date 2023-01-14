@@ -51,7 +51,7 @@ export const userModel = {
   actions: {
     async postSignUp({ getters, dispatch }) {
       try {
-        await axios.post('signup', {
+        await axios.post('juice', {
           name: getters.name,
           email: getters.email,
           password: getters.password,

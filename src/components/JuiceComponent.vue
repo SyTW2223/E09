@@ -1,5 +1,5 @@
 <template>
-  <div class="juice-box">
+  <div class="juice-box form-container">
     <div class="juice">
       <div class="juice-info">
         <h2>{{ juice.username }}</h2>

@@ -23,6 +23,9 @@
             <li class="nav-item active">
               <a class="nav-link" href="#" @click="signOut()">Cerrar sesión</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#" @click="newJuice()">+</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -39,6 +42,9 @@
         localStorage.removeItem('token');
         this.$store.dispatch('setUser', null);
         this.$router.push('/');
+      },
+      newJuice() {
+        this.$store.dispatch('setNewJuice', true);
       }
     },
     computed: {
