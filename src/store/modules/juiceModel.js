@@ -4,20 +4,20 @@ import router from "../../router/index"
 export const juiceModel = {
   state: () => ({
     newJuice: false,
-    error: null,
     userId: '',
     text: '',
     date: '',
-    likes: 0,
+    juice_likes: 0,
   }),
   mutations: {
     STORE_JUICE(state, juice) {
       state.userId = juice.userId;
       state.text = juice.text;
       state.date = juice.date;
-      state.likes = juice.likes;
+      state.juice_likes = juice.likes;
     },
     SET_NEWJUICE(state, value) {
+      console.log(value);
       state.newJuice = value;
     },
     async postJuice({ getters, dispatch }) {
@@ -45,10 +45,9 @@ export const juiceModel = {
   },
   getters: {
     newJuice: state => state.newJuice,
-    error: state => state.error,
-    id: state => state.id,
+    userId: state => state.userId,
     text: state => state.text,
     userName: state => state.userName,
-    likes: state => state.likes,
+    juice_likes: state => state.juice_likes,
   }
 }
