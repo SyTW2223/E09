@@ -20,7 +20,7 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
     trim: true,
   },
   date: {
-    type: Date,
+    type: String,
     unique: false,
     required: false,
     trim: true,

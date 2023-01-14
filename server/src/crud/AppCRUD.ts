@@ -1,6 +1,5 @@
 import {UserDocumentInterface} from '../models/user';
 import { JuiceDocumentInterface } from '../models/juice';
-import { handleErrors } from './assets/handleErrors';
 import * as jwt from 'jsonwebtoken';
 
 export class AppCRUD {
@@ -20,7 +19,7 @@ export class AppCRUD {
             await element.save();
             return res.status(201).send(element);
           } catch (error) {
-            handleErrors(error, res);
+            return res.status(400).send({error: error});
           }
         }
       });

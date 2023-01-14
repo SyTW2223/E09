@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" @click="closeForm">
+  <div class="overlay">
     <div class="juice-box form-container">
       <button class="boton-cerrar" @click="closePage">✖</button>
       <div class="juice">
@@ -7,11 +7,13 @@
           <ErrorMsg v-if="error"/>
           <h2>@{{ user.element.name }}</h2>
           <p>{{ calculateDate() }}</p>
-          <input type="text" style="text-align:left" v-model="juice.text">
-          <div class="juice-meta form" @submit.prevent="postJuice">
-            <button type="submit" class="like-button btn btn-outline-primary">
-              <span>Publicar</span>
-            </button>
+          <div class="juice-meta form">
+            <form class="submit" @submit.prevent="postJuice">
+              <input type="text" style="text-align:left" v-model="juice.text">
+              <button type="submit" class="like-button btn btn-outline-primary">
+                <span>Publicar</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -36,7 +38,8 @@
         calculateDate() {
           let ahora = Date.now();
           let fecha = new Date(ahora);
-          return `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()} ${fecha.getHours()}:${fecha.getMinutes()}`;
+          return `${('0' + fecha.getDate()).slice(-2)}/${('0' + (fecha.getMonth() + 1)).slice(-2)}/${fecha.getFullYear()} `+
+            `${('0' + fecha.getHours()).slice(-2)}:${('0' + fecha.getMinutes()).slice(-2)}`;
         },
         postJuice() {
           this.$store.dispatch('storeJuice', this.juice);
@@ -48,9 +51,6 @@
     },
     components: {
         ErrorMsg
-    },
-    created() {
-      this.$store.dispatch('getUser');
     },
     computed: {
       ...mapGetters(['user', 'error'])

@@ -7,6 +7,7 @@ export const juiceModel = {
     userId: '',
     text: '',
     date: '',
+    juice_id: '',
     juice_likes: 0,
   }),
   mutations: {
@@ -17,23 +18,8 @@ export const juiceModel = {
       state.juice_likes = juice.likes;
     },
     SET_NEWJUICE(state, value) {
-      console.log(value);
       state.newJuice = value;
-    },
-    async postJuice({ getters, dispatch }) {
-      try {
-        await axios.post('juice', {
-          userId: getters.user.element.id,
-          text: getters.text,
-          date: getters.date,
-          likes: 0
-        })
-        dispatch('setNewJuice', false);
-        router.push('/');
-      } catch (err) {
-        dispatch('setError', err.response.data.error);
-      }
-    },
+    }
   },
   actions: {
     storeJuice({commit}, juice) {
@@ -41,13 +27,35 @@ export const juiceModel = {
     },
     setNewJuice({commit}, value) {
       commit('SET_NEWJUICE', value);
-    }
+    },
+    async postJuice({ getters, dispatch }) {
+      console.log(getters.userId);
+      console.log(getters.text);
+      console.log(getters.date);
+      try {
+        await axios.post('juice', {
+          userId: getters.id,
+          text: getters.text,
+          date: getters.date,
+          likes: 0
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('setNewJuice', false);
+        router.push('/');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
   },
   getters: {
     newJuice: state => state.newJuice,
     userId: state => state.userId,
     text: state => state.text,
-    userName: state => state.userName,
+    date: state => state.date,
     juice_likes: state => state.juice_likes,
   }
 }

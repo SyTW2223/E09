@@ -44,8 +44,7 @@
       }
     },
     computed: {
-      ...mapGetters(['user']),
-      ...mapGetters(['newJuice']),
+      ...mapGetters(['user', 'newJuice'])
     }
   }
 </script>

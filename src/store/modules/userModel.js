@@ -9,7 +9,7 @@ export const userModel = {
     name: '',
     email: '',
     password: '',
-    id: 0,
+    id: '',
     description: '',
     following: 0,
     followers: 0,
@@ -19,6 +19,15 @@ export const userModel = {
   mutations: {
     SET_USER(state, user) {
       state.user = user;
+      state.name = user.element.name;
+      state.email = user.element.email;
+      state.password = user.element.password;
+      state.id = user.element.id;
+      state.description = user.element.description;
+      state.following = user.element.following;
+      state.followers = user.element.followers;
+      state.likes = user.element.likes;
+      state.age = user.element.age;
     },
     SET_ERROR(state, error) {
       state.error = error;
@@ -96,7 +105,6 @@ export const userModel = {
         const response = await axios.post('password-reset', {
           email: getters.email
         })
-        console.log(response.data);
         dispatch('setError', null);
         dispatch('setSuccess', response.data);
       } catch (err) {
