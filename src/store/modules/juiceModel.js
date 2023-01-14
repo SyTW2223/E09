@@ -1,9 +1,9 @@
-// import axios from "axios"
-// import router from "../../router/index"
+import axios from "axios"
+import router from "../../router/index"
 
-export const JuiceModel = {
+export const juiceModel = {
   state: () => ({
-    newJuice: true,
+    newJuice: false,
     error: null,
     userId: '',
     text: '',
@@ -28,6 +28,7 @@ export const JuiceModel = {
           date: getters.date,
           likes: 0
         })
+        dispatch('setNewJuice', false);
         router.push('/');
       } catch (err) {
         dispatch('setError', err.response.data.error);

@@ -3,7 +3,8 @@
     <div class="juice-box form-container">
     <div class="juice">
       <div class="juice-info">
-        <h2>@{{ user.element.name }}</h2>
+        <ErrorMsg v-if="error"/>
+        <h2>@{{  user.element.name }}</h2>
         <p>{{ calculateDate() }}</p>
         <input type="text" style="text-align:left" v-model="juice.text">
         <div class="juice-meta form" @submit.prevent="postJuice">
@@ -45,7 +46,7 @@
       this.$store.dispatch('getUser');
     },
     computed: {
-      ...mapGetters(['user'])
+      ...mapGetters(['user', 'error'])
     }
   }
 </script>

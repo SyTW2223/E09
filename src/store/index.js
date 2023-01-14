@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
-import { userModel} from './modules/userModel'
+import { userModel } from './modules/userModel'
+import { juiceModel } from './modules/juiceModel'
 
 export default createStore({
   state: {
@@ -12,5 +13,6 @@ export default createStore({
   },
   modules: {
     user: userModel,
+    juice: juiceModel
   }
 })

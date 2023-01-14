@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <h3 v-if="user">Bienvenido {{user.element.name}}!</h3>
-        <h3 v-if="!user">No has iniciado sesión</h3>
+        <h3 v-if="user">Bienvenido {{user.element.name}}!!</h3>
+        <h3 v-if="!user">No has iniciado sesión.</h3>
     </div>
 </template>
 
