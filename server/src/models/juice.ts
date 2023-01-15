@@ -2,16 +2,15 @@ import {Document, Schema, model} from 'mongoose';
 // import validator from 'validator';
 
 export interface JuiceDocumentInterface extends Document {
-  userId: string,
+  userName: string,
   text: string,
   date: string,
   likes: number
 }
 
 export const JuiceSchema = new Schema<JuiceDocumentInterface>({
-  userId: {
+  userName: {
     type: String,
-    unique: true,
     required: true,
   },
   text: {
@@ -20,8 +19,7 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
     trim: true,
   },
   date: {
-    type: Date,
-    unique: false,
+    type: String,
     required: false,
     trim: true,
   },

@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        <h3 v-if="user">Bienvenido {{user.element.name}}!</h3>
-        <h3 v-if="!user">No has iniciado sesión</h3>
+    <div class="container message">
+        <h3 v-if="loggedUser">Bienvenido a Juicer {{ loggedUser.name }}!!</h3>
+        <h3 v-if="!loggedUser">No has iniciado sesión.</h3>
     </div>
 </template>
 
@@ -10,10 +10,16 @@
   export default {
     name: 'SignedIn',
     created() {
-      this.$store.dispatch('getUser');
+      this.$store.dispatch('getLoggedUser');
     },
     computed: {
-      ...mapGetters(['user'])
+      ...mapGetters(['loggedUser'])
     }
   }
 </script>
+
+<style>
+  .message {
+    margin-top: 50px;
+  }
+</style>

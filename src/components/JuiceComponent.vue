@@ -1,8 +1,8 @@
 <template>
-  <div class="juice-box">
+  <div class="juice-box form-container">
     <div class="juice">
       <div class="juice-info">
-        <h2>{{ juice.username }}</h2>
+        <h3>{{ juice.username }}</h3>
         <p>{{ juice.date }}</p>
         <p>{{ juice.text }}</p>
         <div class="juice-meta">
@@ -65,6 +65,7 @@
   }
   .btn-outline-primary:hover {
     background-color: #ff8981ce;
+    border-color: #000000;
   }
   .btn-outline-primary:active {
     background-color: #fc0606ce;

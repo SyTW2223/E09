@@ -16,9 +16,8 @@
           <div class="form-group">
             <input type="email" v-model=user.email class="form-control" placeholder="Correo electrónico" required>
             <input id="password" type="password" v-model=user.password class="form-control" placeholder="Contraseña" required>
-            <input id="confirm_password" type="password" v-model=user.confirm_password class="form-control" placeholder="Confirmar contraseña" required>
             <div class="checkboxes">
-              <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseñas</span></label>        
+              <label><input type="checkbox" @click="changePasswordVisibility()"><span>&nbsp;Mostrar contraseña</span></label>        
             </div>
           </div>
         </div>
@@ -58,8 +57,7 @@
       return {
         user: {
           email: '',
-          password: '',
-          confirm_password: ''
+          password: ''
         }
       }
     },
@@ -68,12 +66,8 @@
     },
     methods: {
       signIn() {
-        if (this.user.confirm_password === this.user.password) {
-          this.$store.dispatch('signIn', this.user);
-          this.$store.dispatch('postSignIn');
-        } else {
-          this.$store.dispatch('setError', 'Contraseñas distintas');
-        }
+        this.$store.dispatch('signIn', this.user);
+        this.$store.dispatch('postSignIn');
       },
       changePasswordVisibility() {
         if (document.getElementById('password').type === 'password') {
