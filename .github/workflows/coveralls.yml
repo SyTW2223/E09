@@ -31,9 +31,9 @@ jobs:
 
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
+      run: npm run coverage
       working-directory: ./server
       uses: coverallsapp/github-action@master
-    - run: npm run coverage
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
