@@ -31,8 +31,8 @@ jobs:
 
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
-      run: npm run coverage
       working-directory: ./server
+      run: npm run coverage
     - name: Evaluates coverage information
       working-directory: ./server
       uses: coverallsapp/github-action@master
