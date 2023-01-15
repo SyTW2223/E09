@@ -30,6 +30,13 @@ jobs:
       run: npm install
     - name: Installing server dependencies
       run: cd server && npm install
+    # Lo mismo que necesita la action de tests
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
