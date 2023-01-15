@@ -28,6 +28,8 @@ jobs:
         node-version: 16.x
     - name: Installing dependencies
       run: npm install
+    - name: Installing server dependencies
+      run: cd server && npm install
 
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
