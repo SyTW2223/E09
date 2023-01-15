@@ -8,7 +8,7 @@
           </router-link>
         </div>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul v-if="!user" class="navbar-nav">
+          <ul v-if="!loggedUser" class="navbar-nav">
             <li class="nav-item active">
               <router-link class="nav-link" to="/signin">Iniciar sesión</router-link>
             </li>
@@ -16,12 +16,12 @@
               <router-link class="nav-link" to="/signup">Registrarse</router-link>
             </li>
           </ul>
-          <ul v-if="user" class="navbar-nav">
+          <ul v-if="loggedUser" class="navbar-nav">
             <li class="nav-item active">
               <a class="nav-link" href="#" @click="signOut()">Cerrar sesión</a>
             </li>
           </ul>
-          <button v-if="user && !newJuice" class="nueva-publicacion" href="#" @click="setNewJuice()">+</button>
+          <button v-if="loggedUser" class="orange-btn" href="#" @click="setNewJuice">+</button>
         </div>
       </div>
     </nav>
@@ -35,22 +35,21 @@
     methods: {
       signOut() {
         localStorage.removeItem('token');
-        this.$store.dispatch('setUser', null);
+        this.$store.dispatch('setLoggedUser', null);
         this.$router.push('/');
       },
       setNewJuice() {
-        this.creating = true;
         this.$store.dispatch('setNewJuice', true);
       }
     },
     computed: {
-      ...mapGetters(['user', 'newJuice'])
+      ...mapGetters(['loggedUser', 'newJuice'])
     }
   }
 </script>
 
 <style>
-  .nueva-publicacion {
+  .orange-btn {
     background-color: #ED701B; /* color de fondo naranja */
     color: white; /* color de letra blanco */
     border-radius: 50%; /* para hacer el botón redondo */
@@ -59,12 +58,12 @@
     padding: 2.5px; /* para centrar el contenido del botón */
     font-size: 30px; /* tamaño de la letra */
     position: fixed; /* para hacer que el botón flote */
-    top: 35px; /* posición en la parte inferior de la pantalla */
-    right: 35px; /* posición a la derecha de la pantalla */
+    top: 12.5%; /* posición en la parte inferior de la pantalla */
+    right: 12.5%; /* posición a la derecha de la pantalla */
     border: none;
-    z-index: 99;
+    z-index: 1;
   }
-  .nueva-publicacion:hover {
+  .orange-btn:hover {
     background-color: #FF8429;
   }
   .navbar-nav {

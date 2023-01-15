@@ -3,7 +3,7 @@ import router from '../../router/index'
 
 export const userModel = {
   state: () => ({
-    user: null,
+    loggedUser: null,
     error: null,
     success: null,
     name: '',
@@ -18,16 +18,18 @@ export const userModel = {
   }),
   mutations: {
     SET_USER(state, user) {
-      state.user = user;
-      state.name = user.element.name;
-      state.email = user.element.email;
-      state.password = user.element.password;
-      state.id = user.element._id;
-      state.description = user.element.description;
-      state.following = user.element.following;
-      state.followers = user.element.followers;
-      state.likes = user.element.likes;
-      state.age = user.element.age;
+      state.name = user.name;
+      state.email = user.email;
+      state.password = user.password;
+      state.id = user._id;
+      state.description = user.description;
+      state.following = user.following;
+      state.followers = user.followers;
+      state.likes = user.likes;
+      state.age = user.age;
+    },
+    SET_LOGGED_USER(state, user) {
+      state.loggedUser = user;
     },
     SET_ERROR(state, error) {
       state.error = error;
@@ -82,19 +84,19 @@ export const userModel = {
           password: getters.password,
         })
         localStorage.setItem('token', response.data.token);
-        dispatch('getUser');
+        dispatch('getLoggedUser');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
     },
-    async getUser({ dispatch }) {
+    async getLoggedUser({ dispatch }) {
       try {
         const response = await axios.get('user', {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('setUser', response.data);
+        dispatch('setLoggedUser', response.data.element);
         router.push('/');
       } catch (err) {
         dispatch('setError', err.response.data.error);
@@ -125,6 +127,14 @@ export const userModel = {
         dispatch('setError', err.response.data.error);
       }
     },
+    async getUser({ dispatch }, id) {
+      try {
+        const response = await axios.get(`users?id=${id}`);
+        dispatch('setUser', response.data[0]);
+      } catch (err) {
+        dispatch('setError', err.message);
+      }
+    },
     signUp({commit}, user) {
       commit('SIGN_UP', user);
     },
@@ -133,6 +143,9 @@ export const userModel = {
     },
     setUser({commit}, user) {
       commit('SET_USER', user);
+    },
+    setLoggedUser({commit}, user) {
+      commit('SET_LOGGED_USER', user);
     },
     setError({commit}, error) {
       commit('SET_ERROR', error);
@@ -154,7 +167,7 @@ export const userModel = {
     },
   },
   getters: {
-    user: state => state.user,
+    loggedUser: state => state.loggedUser,
     error: state => state.error,
     success: state => state.success,
     name: state => state.name,

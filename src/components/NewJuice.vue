@@ -5,14 +5,12 @@
       <div class="juice">
         <div class="juice-info">
           <ErrorMsg v-if="error" class="error"/>
-          <h2>@{{ name }}</h2>
+          <h3>@{{ loggedUser.name }}</h3>
           <p>{{ calculateDate() }}</p>
           <div class="juice-meta form">
-            <form class="submit" @submit.prevent="postJuice">
-              <input type="text" style="text-align:left" v-model="text">
-              <button type="submit" class="like-button btn btn-outline-primary">
-                <span>Publicar</span>
-              </button>
+            <form class="form" @submit.prevent="postJuice">
+              <input type="text" style="text-align:left" v-model="text" required><br/><br/>
+              <input type="submit" class="like-button btn btn-outline-primary">
             </form>
           </div>
         </div>
@@ -39,9 +37,8 @@
             `${('0' + fecha.getHours()).slice(-2)}:${('0' + fecha.getMinutes()).slice(-2)}`;
         },
         postJuice() {
-          console.log(this.id);
-          this.$store.dispatch('storeJuice', {
-            userId: this.id,
+          this.$store.dispatch('setJuice', {
+            userName: this.loggedUser.name,
             text: this.text,
             date: this.calculateDate(),
             likes: 0
@@ -56,7 +53,7 @@
         ErrorMsg
     },
     computed: {
-      ...mapGetters(['name', 'error', 'id'])
+      ...mapGetters(['loggedUser', 'error'])
     }
   }
 </script>
@@ -67,16 +64,16 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-    z-index: 1; /* Poner el overlay encima de la página */
+    z-index: 2; /* Poner el overlay encima de la página */
   }
   .form-container {
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centrar el formulario en la pantalla */
     background-color: white;
     padding: 20px;
-    z-index: 2; /* Poner el formulario encima del overlay */
+    z-index: 3; /* Poner el formulario encima del overlay */
   }
   .boton-cerrar {
     position: absolute; /* para posicionar el botón en relación al contenedor */
