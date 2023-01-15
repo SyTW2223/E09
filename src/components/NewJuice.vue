@@ -4,7 +4,7 @@
       <button class="boton-cerrar" @click="closePage">✖</button>
       <div class="juice">
         <div class="juice-info">
-          <ErrorMsg v-if="error"/>
+          <ErrorMsg v-if="error" class="error"/>
           <h2>@{{ name }}</h2>
           <p>{{ calculateDate() }}</p>
           <div class="juice-meta form">
@@ -84,6 +84,9 @@
     right: 10px; /* posición a la derecha del contenedor */
     border: none;
     background-color: white;
+  }
+  .error {
+    max-width: 535px;
   }
 </style>
   
