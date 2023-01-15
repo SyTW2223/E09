@@ -34,7 +34,6 @@ jobs:
       working-directory: ./server
       run: npm run coverage
     - name: Evaluates coverage information
-      working-directory: ./server
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
