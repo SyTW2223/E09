@@ -127,9 +127,9 @@ export const userModel = {
         dispatch('setError', err.response.data.error);
       }
     },
-    async getUser({ dispatch }, id) {
+    async getUser({ dispatch }, name) {
       try {
-        const response = await axios.get(`users?id=${id}`);
+        const response = await axios.get(`users?name=${name}`);
         dispatch('setUser', response.data[0]);
       } catch (err) {
         dispatch('setError', err.message);

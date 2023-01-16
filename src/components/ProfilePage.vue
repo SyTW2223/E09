@@ -1,18 +1,23 @@
 <template>
+  <div>
+    <h1>
+      Profile Page !!
+    </h1>
+  </div>
   <div class="profile-page">
     <div class="header">
-      <h1>{{ user.name }}</h1>
+      <h1>{{ name }}</h1>
     </div>
     <div class="bio">
-       <p>{{ user.description }}</p>
+       <p>{{ description }}</p>
     </div>
     <div class="stats">
       <div class="stat">
-        <p>{{ user.followers }}</p>
+        <p>{{ followers }}</p>
         <p>Followers</p>
       </div>
       <div class="stat">
-        <p>{{ user.following }}</p>
+        <p>{{ following }}</p>
         <p>Following</p>
       </div>
     </div>
@@ -20,17 +25,16 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     name: 'ProfilePage',
-    data() {
-      return {
-        user: {
-          name: '@username',
-          description: 'Hi, I am new at Juicer!',
-          followers: 0,
-          following: 0,
-        }
-      }
+    methods: {
+    },
+    computed: {
+      ...mapGetters(['name', 'description', 'followers', 'following'])
+    },
+    created() {
+      this.$store.dispatch('getUser', this.$route.params.userName);
     }
   }
 </script>

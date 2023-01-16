@@ -25,7 +25,7 @@ userRouter.get('/api/user', (req, res) => {
 });
 
 userRouter.get('/api/users', (req, res) => {
-  const filter = req.query.id?{_id: req.query.id.toString()}:{};
+  const filter = req.query.name?{name: req.query.name.toString()}:{};
   AppCRUD.get(res, filter, User);
 });
 
