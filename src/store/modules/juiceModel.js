@@ -62,6 +62,14 @@ export const juiceModel = {
         dispatch('setError', err.response.data.error);
       }
     },
+    async getJuicesByUserId({ dispatch }, userId) {
+      try {
+        const response = await axios.get(`juices/${userId}`);
+        dispatch('setJuices', response.data);
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    }
   },
   getters: {
     newJuice: state => state.newJuice,
