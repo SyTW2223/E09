@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar/>
-    <div class="content">
+    <div>
       <router-view/>
     </div>
   </div>
@@ -20,7 +20,4 @@ export default {
 </script>
 
 <style>
-  .content {
-    margin-top: 25px;
-  }
 </style>
