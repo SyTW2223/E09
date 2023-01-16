@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <h1>
-      Profile Page !!
-    </h1>
-  </div>
   <div class="profile-page">
     <div class="header">
-      <h1>{{ name }}</h1>
+      <h1>@{{ name }}</h1>
     </div>
     <div class="bio">
        <p>{{ description }}</p>
@@ -21,29 +16,49 @@
         <p>Following</p>
       </div>
     </div>
+    <div class="juice-bar">
+      <button class="juice-bar-button" @click="showUserJuices">Juices</button>
+      <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
+    </div>
+    <div v-if="likedJuices" class="juices">
+      <h2>Juices</h2>
+      <JuicesList/>
+    </div>
+    <div v-else class="juices">
+      <JuicesList/>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
+  import JuicesList from "../components/JuicesList.vue";
   export default {
     name: 'ProfilePage',
+    components: {
+      JuicesList
+    },
     methods: {
+      showUserJuices() {
+        this.showJuices = true;
+        this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
+      }
     },
     computed: {
-      ...mapGetters(['name', 'description', 'followers', 'following'])
+      ...mapGetters(['name', 'description', 'followers', 'following', 'juices'])
     },
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);
+      this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
     }
   }
 </script>
      
 <style>
   .profile-page {
-      width: 600px;
-      margin: 50px auto;
-      background-color: #fff;
+      width: 50%;
+      margin: 2% auto;
+      background-color: rgb(255, 255, 255);
       box-shadow: 0px 0px 10px #ddd;
       padding: 20px;
       border-radius: 10px;
@@ -61,13 +76,24 @@
     position: relative;
     overflow: hidden;
   }
-  .cover-photo {
-    width: 100%;
-    height: 100px;
+  .juice-bar {
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  text-align: center;
   }
-  .profile-photo {
-    position: relative;
-    width: 50px;
-    height: 50px;
+  .juice-bar-button {
+  padding: 0.5rem 1rem;
+  background-color: #e7910e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  .juice-bar-button:first-child {
+    margin-right: 0.5rem;
+  }
+
+  .juice-bar-button:last-child {
+    margin-left: 0.5rem;
   }
 </style>

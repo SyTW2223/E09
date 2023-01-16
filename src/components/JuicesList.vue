@@ -25,9 +25,6 @@
     computed: {
       ...mapGetters(['juices','loggedUser']),
     },
-    created() {
-      this.$store.dispatch('getJuices');
-    }
   }
 </script>
     

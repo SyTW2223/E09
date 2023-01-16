@@ -35,6 +35,9 @@ export default {
       this.componentKey += 1;
     }
   },
+  created() {
+      this.$store.dispatch('getJuices');
+  }
 }
 </script>
 
