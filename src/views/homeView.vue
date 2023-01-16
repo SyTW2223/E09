@@ -5,14 +5,14 @@
     <JuicesList  :key="componentKey"/>
   </div>
   <NewJuice v-if='newJuice'/>
-  <JuiceComponent v-if='juicePage'/>
+  <OpenJuice v-if='juicePage'/>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import NewJuice from "../components/NewJuice.vue";
 import JuicesList from "../components/JuicesList.vue";
-import JuiceComponent from "../components/JuiceComponent.vue";
+import OpenJuice from "../components/OpenJuice.vue";
 export default {
   name: 'HomeView',
   data() {
@@ -23,7 +23,7 @@ export default {
   components: {
     NewJuice,
     JuicesList,
-    JuiceComponent
+    OpenJuice
   },
   computed: {
     ...mapGetters(['newJuice', 'juicePage'])

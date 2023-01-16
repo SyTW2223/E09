@@ -1,7 +1,4 @@
 <template>
-  <div class="overlay">
-    <div class="juice-box form-container">
-      <button class="boton-cerrar" @click="closePage">✖</button>
       <div class="juice">
         <div class="juice-info">
           <ErrorMsg v-if="error" class="error"/>
@@ -16,8 +13,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -25,11 +20,6 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
-    methods: {
-      closePage() {
-        this.$store.dispatch('setJuicePage', false);
-      }
-    },
     components: {
       ErrorMsg
     },
