@@ -9,15 +9,11 @@
     "mv-server": "mv server ../server && mv ../server server"
   },
   "dependencies": {
-    "@mdi/font": "5.9.55",
     "axios": "^1.0.0",
     "core-js": "^3.8.3",
-    "dotenv": "^16.0.3",
-    "roboto-fontface": "*",
     "vue": "^3.2.13",
-    "vuetify": "^3.0.0-beta.0",
-    "vuex": "^4.0.0",
-    "webfontloader": "^1.0.0"
+    "vue-router": "^4.1.6",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -27,9 +23,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "mongoose": "^6.7.3",
-    "webpack-plugin-vuetify": "^2.0.0-alpha.0"
+    "eslint-plugin-vue": "^8.0.3"
   },
   "eslintConfig": {
     "root": true,
@@ -43,7 +37,9 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "no-mixed-spaces-and-tabs": 0
+    }
   },
   "browserslist": [
     "> 1%",
