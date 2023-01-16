@@ -21,6 +21,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   email: {
     type: String,
+    unique: true,
     required: true,
     trim: true,
     validate: (value: string) => {
@@ -33,11 +34,11 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     required: true,
     trim: true,
-    //validate: (value: string) => {
-      //if (!validator.isStrongPassword(value)) {
-      //  throw new Error('Must be a strong password');
-    //  }
-    //},
+    validate: (value: string) => {
+      if (!validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0})) {
+        throw new Error('Must be a strong password');
+      }
+    },
   },
   description: {
     type: String,

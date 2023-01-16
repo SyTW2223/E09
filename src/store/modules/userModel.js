@@ -1,14 +1,15 @@
 import axios from "axios"
-const proxyIP = '10.6.130.29';
+import router from '../../router/index'
 
 export const userModel = {
   state: () => ({
-    must: {
-      name: '',
-      email: '',
-      password: '',
-    },
-    id: 0,
+    loggedUser: null,
+    error: null,
+    success: null,
+    name: '',
+    email: '',
+    password: '',
+    id: '',
     description: '',
     following: 0,
     followers: 0,
@@ -16,66 +17,162 @@ export const userModel = {
     age: 0
   }),
   mutations: {
-    CH_NAME(state, name) {
-      state.must.name = name
+    SET_USER(state, user) {
+      state.name = user.name;
+      state.email = user.email;
+      state.password = user.password;
+      state.id = user._id;
+      state.description = user.description;
+      state.following = user.following;
+      state.followers = user.followers;
+      state.likes = user.likes;
+      state.age = user.age;
     },
-    CH_EMAIL(state, email) {
-      state.must.email = email
+    SET_LOGGED_USER(state, user) {
+      state.loggedUser = user;
     },
-    CH_PASSWORD(state, password) {
-      state.must.password = password
+    SET_ERROR(state, error) {
+      state.error = error;
     },
-    CH_DESC(state, description) {
-      state.must.description = description
+    SET_SUCCESS(state, success) {
+      state.success = success;
     },
-    SIGN_IN(state, name, password) {
-      state.must.name = name
-      state.must.password = password
+    SET_NAME(state, name) {
+      state.name = name;
     },
-    SIGN_UP(state, must) {
-      state.must = must
+    SET_EMAIL(state, email) {
+      state.email = email;
     },
+    SET_PASSWORD(state, password) {
+      state.password = password;
+    },
+    SET_DESC(state, description) {
+      state.description = description;
+    },
+    SIGN_IN(state, user) {
+      state.email = user.email;
+      state.password = user.password;
+    },
+    SIGN_UP(state, user) {
+      state.name = user.name;
+      state.email = user.email;
+      state.password = user.password;
+    }
   },
   actions: {
-    async postUsers({ getters }) {
+    async postSignUp({ getters, dispatch }) {
       try {
-        await axios.post(`http://${proxyIP}/api/users`, {
-          name: getters.must.name,
-          email: getters.must.email,
-          password: getters.must.password,
+        await axios.post('juice', {
+          name: getters.name,
+          email: getters.email,
+          password: getters.password,
           description: getters.description,
           following: getters.following,
           followers: getters.followers,
           likes: getters.likes,
           age: getters.age,
         })
-      } catch (error) {
-        alert(error);
-        console.log(error);
+        router.push('/signin');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
-      console.log("ENVIE POST");
     },
-    signUp({commit}, must) {
-      commit('SIGN_UP', must)
+    async postSignIn({ getters, dispatch }) {
+      try {
+        const response = await axios.post('signin', {
+          email: getters.email,
+          password: getters.password,
+        })
+        localStorage.setItem('token', response.data.token);
+        dispatch('getLoggedUser');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
     },
-    signIn({commit}, must) {
-      commit('SIGN_IN', must)
+    async getLoggedUser({ dispatch }) {
+      try {
+        const response = await axios.get('user', {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('setLoggedUser', response.data.element);
+        router.push('/');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
     },
-    changeName({commit}, name) {
-      commit('CH_NAME', name)
+    async sendResetPasswordEmail({ getters, dispatch }) {
+      try {
+        const response = await axios.post('password-reset', {
+          email: getters.email
+        })
+        dispatch('setError', null);
+        dispatch('setSuccess', response.data);
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
     },
-    changeEmail({commit}, email) {
-      commit('CH_EMAIL', email)
+    async resetPassword({ getters, dispatch }, token) {
+      try {
+        await axios.patch('users',{
+          password: getters.password
+        }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+        router.push('/signin');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
     },
-    changePassword({commit}, password) {
-      commit('CH_PASSWORD', password)
+    async getUser({ dispatch }, id) {
+      try {
+        const response = await axios.get(`users?id=${id}`);
+        dispatch('setUser', response.data[0]);
+      } catch (err) {
+        dispatch('setError', err.message);
+      }
     },
-    changeDesc({commit}, description) {
-      commit('CH_DESC', description)
+    signUp({commit}, user) {
+      commit('SIGN_UP', user);
+    },
+    signIn({commit}, user) {
+      commit('SIGN_IN', user);
+    },
+    setUser({commit}, user) {
+      commit('SET_USER', user);
+    },
+    setLoggedUser({commit}, user) {
+      commit('SET_LOGGED_USER', user);
+    },
+    setError({commit}, error) {
+      commit('SET_ERROR', error);
+    },
+    setSuccess({commit}, success) {
+      commit('SET_SUCCESS', success);
+    },
+    setName({commit}, name) {
+      commit('SET_NAME', name);
+    },
+    setEmail({commit}, email) {
+      commit('SET_EMAIL', email);
+    },
+    setPassword({commit}, password) {
+      commit('SET_PASSWORD', password);
+    },
+    setDesc({commit}, description) {
+      commit('SET_DESC', description);
     },
   },
   getters: {
-    must: state => state.must,
+    loggedUser: state => state.loggedUser,
+    error: state => state.error,
+    success: state => state.success,
+    name: state => state.name,
+    email: state => state.email,
+    password: state => state.password,
     id: state => state.id,
     description: state => state.description,
     following: state => state.following,
