@@ -1,11 +1,13 @@
 <template>
       <div class="juice">
         <div class="juice-info">
-          <ErrorMsg v-if="error" class="error"/>
           <h3>@{{ userName }}</h3>
           <p>{{ date }}</p>
           <p>{{ text }}</p>
           <div class="juice-meta">
+            <button v-if="loggedUser && loggedUser.name == userName" class="delete-button btn btn-outline-primary" @click="deleteJuice">
+              <span>🗑 Eliminar</span>
+            </button>
             <button v-if="loggedUser" class="like-button btn btn-outline-primary">
               <span>♡ {{ likes }}</span>
             </button>
@@ -16,15 +18,17 @@
 </template>
 
 <script>
-  import ErrorMsg from './ErrorMsg.vue'
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
-    components: {
-      ErrorMsg
-    },
     computed: {
-      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes'])
+      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes', 'juice_id'])
+    },
+    methods: {
+      deleteJuice() {
+        this.$store.dispatch('deleteJuice', this.juice_id);
+        this.$store.dispatch('setJuicePage', false);
+      }
     }
   }
 </script>
@@ -42,12 +46,6 @@
   .juice-info {
     margin-top: 10px;
     text-align: left;
-  }
-  .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
   }
   .btn-outline-primary {
     color: #000000 !important;

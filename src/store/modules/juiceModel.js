@@ -14,6 +14,7 @@ export const juiceModel = {
   }),
   mutations: {
     SET_JUICE(state, juice) {
+      state.juice_id = juice.juice_id;
       state.userName = juice.userName;
       state.text = juice.text;
       state.date = juice.date;
@@ -61,6 +62,18 @@ export const juiceModel = {
         dispatch('setError', err.message);
       }
     },
+    async deleteJuice({ dispatch }, id) {
+      console.log(id);
+      try {
+        await axios.delete(`juices?id=${id}`, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
     async getJuices({ dispatch }) {
       try {
         const response = await axios.get('juices');
@@ -77,6 +90,7 @@ export const juiceModel = {
     userName: state => state.userName,
     text: state => state.text,
     date: state => state.date,
+    juice_id: state => state.juice_id,
     likes: state => state.likes,
   }
 }
