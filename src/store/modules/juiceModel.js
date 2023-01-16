@@ -4,22 +4,26 @@ import router from "../../router/index"
 export const juiceModel = {
   state: () => ({
     newJuice: false,
+    juicePage: false,
     juices: [],
     userName: '',
     text: '',
     date: '',
     juice_id: '',
-    juice_likes: 0,
+    likes: 0,
   }),
   mutations: {
     SET_JUICE(state, juice) {
       state.userName = juice.userName;
       state.text = juice.text;
       state.date = juice.date;
-      state.juice_likes = juice.likes;
+      state.likes = juice.likes;
     },
-    SET_NEWJUICE(state, value) {
+    SET_NEW_JUICE(state, value) {
       state.newJuice = value;
+    },
+    SET_JUICE_PAGE(state, value) {
+      state.juicePage = value;
     },
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
@@ -30,7 +34,10 @@ export const juiceModel = {
       commit('SET_JUICE', juice);
     },
     setNewJuice({commit}, value) {
-      commit('SET_NEWJUICE', value);
+      commit('SET_NEW_JUICE', value);
+    },
+    setJuicePage({commit}, value) {
+      commit('SET_JUICE_PAGE', value);
     },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
@@ -41,7 +48,7 @@ export const juiceModel = {
           userName: getters.userName,
           text: getters.text,
           date: getters.date,
-          likes: getters.juice_likes
+          likes: getters.likes
         },
         {
           headers: {
@@ -65,10 +72,11 @@ export const juiceModel = {
   },
   getters: {
     newJuice: state => state.newJuice,
+    juicePage: state => state.juicePage,
     juices: state => state.juices,
     userName: state => state.userName,
     text: state => state.text,
     date: state => state.date,
-    juice_likes: state => state.juice_likes,
+    likes: state => state.likes,
   }
 }

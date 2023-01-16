@@ -60,25 +60,25 @@
   
 <style> 
   .overlay {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-    z-index: 2; /* Poner el overlay encima de la página */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
   }
   .form-container {
     position: absolute;
     top: 25%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrar el formulario en la pantalla */
+    transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
-    z-index: 3; /* Poner el formulario encima del overlay */
+    z-index: 3;
   }
   .boton-cerrar {
-    position: absolute; /* para posicionar el botón en relación al contenedor */
-    top: 10px; /* posición en la parte superior del contenedor */
-    right: 10px; /* posición a la derecha del contenedor */
+    position: absolute;
+    top: 10px;
+    right: 10px;
     border: none;
     background-color: white;
   }

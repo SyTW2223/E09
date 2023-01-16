@@ -1,40 +1,44 @@
 <template>
-  <div class="juice-box form-container">
-    <div class="juice">
-      <div class="juice-info">
-        <h3>{{ juice.username }}</h3>
-        <p>{{ juice.date }}</p>
-        <p>{{ juice.text }}</p>
-        <div class="juice-meta">
-          <button @click="likeJuice" class="like-button btn btn-outline-primary">
-            <span>♡ {{ juice.likes }}</span>
-          </button>
+  <div class="overlay">
+    <div class="juice-box form-container">
+      <button class="boton-cerrar" @click="closePage">✖</button>
+      <div class="juice">
+        <div class="juice-info">
+          <ErrorMsg v-if="error" class="error"/>
+          <h3>@{{ userName }}</h3>
+          <p>{{ date }}</p>
+          <p>{{ text }}</p>
+          <div class="juice-meta">
+            <button v-if="loggedUser" class="like-button btn btn-outline-primary">
+              <span>♡ {{ likes }}</span>
+            </button>
+            <p v-else>♡ {{ likes }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-       
+
 <script>
+  import ErrorMsg from './ErrorMsg.vue'
+  import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
-    data() {
-      return {
-        juice: {
-          username: '@username',
-          text: 'This is an example of the text that can be included inside of a Juice. It can be really extensive!!',
-          date: '01/01/2020',
-          likes: '7'
-        }
+    methods: {
+      closePage() {
+        this.$store.dispatch('setJuicePage', false);
       }
     },
-    methods: {
-      likeJuice() {
-      // code to handle the like action
-      }
+    components: {
+      ErrorMsg
+    },
+    computed: {
+      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes'])
     }
   }
 </script>
+  
        
 <style>
   .juice-box {

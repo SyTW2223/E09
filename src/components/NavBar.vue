@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar nav-bar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <div>
           <router-link class="navbar-brand" to="/">
@@ -21,10 +21,10 @@
               <a class="nav-link" href="#" @click="signOut()">Cerrar sesión</a>
             </li>
           </ul>
-          <button v-if="loggedUser" class="orange-btn" href="#" @click="setNewJuice">+</button>
         </div>
       </div>
     </nav>
+    <button v-if="loggedUser" class="orange-btn" href="#" @click="setNewJuice">+</button>
   </div>
 </template>
 
@@ -49,17 +49,23 @@
 </script>
 
 <style>
+  .nav-bar {
+    position: fixed;
+    margin-top: -25px;
+    width: 100%;
+    z-index: 3;
+  }
   .orange-btn {
-    background-color: #ED701B; /* color de fondo naranja */
-    color: white; /* color de letra blanco */
-    border-radius: 50%; /* para hacer el botón redondo */
-    width: 50px; /* tamaño del botón */
-    height: 50px; /* tamaño del botón */
-    padding: 2.5px; /* para centrar el contenido del botón */
-    font-size: 30px; /* tamaño de la letra */
-    position: fixed; /* para hacer que el botón flote */
-    top: 12.5%; /* posición en la parte inferior de la pantalla */
-    right: 12.5%; /* posición a la derecha de la pantalla */
+    background-color: #ED701B;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 2.5px;
+    font-size: 30px;
+    position: fixed;
+    top: 12.5%;
+    right: 12.5%;
     border: none;
     z-index: 1;
   }
