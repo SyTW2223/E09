@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="juices-list div-center">
-      <button class="juice-box2 juice-button" v-for="juice in juices" :key="juice._id" @click="openJuicePage({juice_id: juice._id, userName: juice.userName,text: juice.text,date: juice.date,likes: juice.likes})">
+    <div class="juices-list div-center" v-if="juices.length > 0">
+      <button class="juice-box2 juice-button" v-for="juice in juices" :key="juice._id" @click="openJuicePage({juice_id: juice._id, userName: juice.userName,text: juice.text,date: juice.date, likes: juice.likes})">
         <div class="juice">
           <div class="juice-info">
             <h3>@{{ juice.userName }}</h3>
@@ -9,13 +9,16 @@
             <p>{{ juice.text }}</p>
             <div class="juice-meta">
               <button v-if="loggedUser" class="btn btn-outline-primary">
-                <span>♡ {{ juice.likes }}</span>
+                <span>♡ {{ juice.likes.length }}</span>
               </button>
-              <p v-else>♡ {{ juice.likes }}</p>
+              <p v-else>♡ {{ juice.likes.length }}</p>
             </div>
           </div>
         </div>
       </button>
+    </div>
+    <div v-else>
+      <h3>No hay publicaciones en este momento</h3>
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@
     name: 'JuicesList',
     methods: {
       openJuicePage(juice) {
+        console.log(juice);
         this.$store.dispatch('setJuice', juice);
         this.$store.dispatch('setJuicePage', true);
       }

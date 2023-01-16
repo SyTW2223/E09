@@ -8,10 +8,10 @@
             <button v-if="loggedUser && loggedUser.name == userName" class="delete-button btn btn-outline-primary" @click="deleteJuice">
               <span>🗑 Eliminar</span>
             </button>
-            <button v-if="loggedUser" class="like-button btn btn-outline-primary">
-              <span>♡ {{ likes }}</span>
+            <button v-if="loggedUser" class="like-button btn btn-outline-primary" @click="likeJuice">
+              <span>♡ {{ likes.length }}</span>
             </button>
-            <p v-else>♡ {{ likes }}</p>
+            <p v-else>♡ {{ likes.length }}</p>
           </div>
         </div>
       </div>
@@ -26,8 +26,21 @@
     },
     methods: {
       deleteJuice() {
-        this.$store.dispatch('deleteJuice', this.juice_id);
+        this.$store.dispatch('deleteJuice');
         this.$store.dispatch('setJuicePage', false);
+      },
+      likeJuice() {
+        let updated_likes = this.likes;
+        const index = updated_likes.indexOf(this.loggedUser.name);
+        if (index > -1) { 
+          updated_likes.splice(index, 1);
+        } else {
+          updated_likes.push(this.loggedUser.name);
+        }
+        console.log(updated_likes);
+        this.$store.dispatch('setLikes', this.updated_likes);
+        console.log(this.likes);
+        this.$store.dispatch('likeJuice');
       }
     }
   }

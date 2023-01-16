@@ -41,7 +41,7 @@
             userName: this.loggedUser.name,
             text: this.text,
             date: this.calculateDate(),
-            likes: 0
+            likes: []
           });
           this.$store.dispatch('postJuice');
         },

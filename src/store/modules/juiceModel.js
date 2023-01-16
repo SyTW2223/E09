@@ -10,7 +10,7 @@ export const juiceModel = {
     text: '',
     date: '',
     juice_id: '',
-    likes: 0,
+    likes: [],
   }),
   mutations: {
     SET_JUICE(state, juice) {
@@ -28,6 +28,9 @@ export const juiceModel = {
     },
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
+    },
+    SET_LIKES(state, likes) {
+      state.likes = likes;
     }
   },
   actions: {
@@ -42,6 +45,9 @@ export const juiceModel = {
     },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
+    },
+    setLikes({commit}, likes) {
+      commit('SET_LIKES', likes);
     },
     async postJuice({ getters, dispatch }) {
       try {
@@ -62,10 +68,23 @@ export const juiceModel = {
         dispatch('setError', err.message);
       }
     },
-    async deleteJuice({ dispatch }, id) {
-      console.log(id);
+    async deleteJuice({ dispatch, getters}) {
       try {
-        await axios.delete(`juices?id=${id}`, {
+        await axios.delete(`juices?id=${getters.juice_id}`, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
+    async likeJuice({ dispatch, getters }) {
+      try {
+        await axios.patch(`juice/like?id=${getters.juice_id}`, {
+          likes: getters.likes
+        },
+        {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
@@ -79,7 +98,11 @@ export const juiceModel = {
         const response = await axios.get('juices');
         dispatch('setJuices', response.data);
       } catch (err) {
-        dispatch('setError', err.response.data.error);
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
+        }
       }
     },
   },
