@@ -19,7 +19,7 @@ export class UserCRUD {
       const element = await model.findOne({email:req.body.email, password:req.body.password});
 
       if (element) {
-        jwt.sign({element}, 'secretkey', {'expiresIn': '3600s'}, (err: any, token: any) => {
+        jwt.sign({element}, 'secretkey', {'expiresIn': '86400s'}, (err: any, token: any) => {
           if (err) {
             return res.status(500).send({error: err});
           } else {

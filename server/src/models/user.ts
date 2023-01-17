@@ -8,7 +8,6 @@ export interface UserDocumentInterface extends Document {
   description: string,
   following: number,
   followers: number,
-  likes: number,
   age: number,
 }
 
@@ -53,11 +52,6 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     required: true,
   },
   followers: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  likes: {
     type: Number,
     default: 0,
     required: true,
