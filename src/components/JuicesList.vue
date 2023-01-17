@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="juices-list div-center" v-if="juices.length > 0">
-      <button class="juice-box2 juice-button" v-for="juice in juices" :key="juice._id" @click="openJuicePage({juice_id: juice._id, userName: juice.userName,text: juice.text,date: juice.date, likes: juice.likes})">
+      <button class="juice-box2 juice-button" v-for="(juice, index) in juices" :key="index" @click="openJuicePage(juice, index)">
         <div class="juice">
           <div class="juice-info">
             <h3>@{{ juice.userName }}</h3>
@@ -9,10 +9,11 @@
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
               <div class="juice-meta">
-                <button v-if="loggedUser" class="like-btn">
-                  <span>♡ {{ juice.likes.length }}</span>
+                <button v-if="loggedUser" class="like-btn" @click="likeJuice(juice, index)"> {{ calculateLikes(juice.likes) }}
+                  <span v-if="liked[index]" class="like-txt"><span style="color:red">❤</span> {{ likes[index].length }}</span>
+                  <span v-else>♡ {{ likes[index].length }}</span>
                 </button>
-                <p v-else>♡ {{ juice.likes.length }}</p>
+                <p v-else>♡ {{ likes[index].length }}</p>
               </div>
               <div class="juice-settings">
                 <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="deleteJuice">
@@ -31,8 +32,36 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuicesList',
+    data() {
+      return {
+        likes: [],
+        liked: []
+      }
+    },
     methods: {
-      openJuicePage(juice) {
+      calculateLikes(juice_likes) {
+        this.likes.push(juice_likes);
+        if (juice_likes.indexOf(this.loggedUser.name) === -1) {
+          this.liked.push(false);
+        } else {
+          this.liked.push(true);
+        }
+      },
+      likeJuice(juice, index) {
+        const position = this.likes[index].indexOf(this.loggedUser.name);
+        if (position > -1) {
+          this.liked[index] = false;
+          this.likes[index].splice(position, 1);
+        } else {
+          this.liked[index] = true;
+          this.likes[index].push(this.loggedUser.name);
+        }
+        juice.likes = this.likes[index];
+        this.$store.dispatch('setJuice', juice);
+        this.$store.dispatch('likeJuice', this.likes[index]);
+      },
+      openJuicePage(juice, index) {
+        juice.likes = this.likes[index];
         this.$store.dispatch('setJuice', juice);
         this.$store.dispatch('setJuicePage', true);
       }

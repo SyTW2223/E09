@@ -14,7 +14,7 @@ export const juiceModel = {
   }),
   mutations: {
     SET_JUICE(state, juice) {
-      state.juice_id = juice.juice_id;
+      state.juice_id = juice._id;
       state.userName = juice.userName;
       state.text = juice.text;
       state.date = juice.date;
