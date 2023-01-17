@@ -28,9 +28,6 @@ export const juiceModel = {
     },
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
-    },
-    SET_LIKES(state, likes) {
-      state.likes = likes;
     }
   },
   actions: {
@@ -45,9 +42,6 @@ export const juiceModel = {
     },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
-    },
-    setLikes({commit}, likes) {
-      commit('SET_LIKES', likes);
     },
     async postJuice({ getters, dispatch }) {
       try {
@@ -79,10 +73,10 @@ export const juiceModel = {
         dispatch('setError', err.response.data.error);
       }
     },
-    async likeJuice({ dispatch, getters }) {
+    async likeJuice({ dispatch, getters }, updated_likes) {
       try {
         await axios.patch(`juice/like?id=${getters.juice_id}`, {
-          likes: getters.likes
+          likes: updated_likes
         },
         {
           headers: {

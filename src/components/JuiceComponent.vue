@@ -1,28 +1,49 @@
 <template>
-      <div class="juice">
-        <div class="juice-info">
-          <h3>@{{ userName }}</h3>
-          <p>{{ date }}</p>
-          <p>{{ text }}</p>
-          <div class="juice-meta">
-            <button v-if="loggedUser && loggedUser.name == userName" class="delete-button btn btn-outline-primary" @click="deleteJuice">
-              <span>🗑 Eliminar</span>
-            </button>
-            <button v-if="loggedUser" class="like-button btn btn-outline-primary" @click="likeJuice">
-              <span>♡ {{ likes.length }}</span>
-            </button>
-            <p v-else>♡ {{ likes.length }}</p>
-          </div>
+  <div class="juice">
+    <div class="juice-info" >
+      <h3>@{{ userName }}</h3>
+      <p>{{ date }}</p>
+      <p>{{ text }}</p>
+      <div class="juice-buttons">
+        <div class="juice-meta">
+          <button v-if="loggedUser" class="like-btn" @click="likeJuice">
+            <span v-if="liked" class="like-txt"><span style="color:red">❤</span> {{ likes_count }}</span>
+            <span v-else>♡ {{ likes_count }}</span>
+          </button>
+          <p v-else>♡ {{ likes_count }}</p>
+        </div>
+        <div class="juice-settings">
+          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn" @click="deleteJuice">
+            <span>🗑</span>
+          </button>
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
+  import { toRaw } from 'vue';
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
+    data() {
+      return {
+        likes_count: 0,
+        liked: false
+      }
+    },
+    created() {
+      let likes_list = toRaw(this.likes);
+      this.likes_count = likes_list.length;
+      if (likes_list.indexOf(this.loggedUser.name) !== -1) {
+        this.liked = true;
+      } else {
+        this.liked = false;
+      }
+    },
     computed: {
-      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes', 'juice_id'])
+      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes', 'juice_id']),
     },
     methods: {
       deleteJuice() {
@@ -30,17 +51,21 @@
         this.$store.dispatch('setJuicePage', false);
       },
       likeJuice() {
-        let updated_likes = this.likes;
+        let updated_likes = this.proxyToArray(this.likes);
         const index = updated_likes.indexOf(this.loggedUser.name);
         if (index > -1) { 
           updated_likes.splice(index, 1);
+          this.liked = false;
         } else {
           updated_likes.push(this.loggedUser.name);
+          this.liked = true;
         }
-        console.log(updated_likes);
-        this.$store.dispatch('setLikes', this.updated_likes);
-        console.log(this.likes);
-        this.$store.dispatch('likeJuice');
+        this.$store.dispatch('likeJuice', updated_likes);
+        this.$store.dispatch('setLikes', updated_likes);
+        this.likes_count = updated_likes.length;
+      },
+      proxyToArray(proxy) {
+        return toRaw(proxy);
       }
     }
   }
@@ -60,19 +85,30 @@
     margin-top: 10px;
     text-align: left;
   }
-  .btn-outline-primary {
-    color: #000000 !important;
-    outline-color: #000000;
-    border-color: #000000;
-    lighting-color: #f31b0b;
-    background-color: #ff898173;
-
+  .juice-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
-  .btn-outline-primary:hover {
-    background-color: #ff8981ce;
-    border-color: #000000;
+  .juice-settings {
+    text-align: right;
   }
-  .btn-outline-primary:active {
-    background-color: #fc0606ce;
+  .like-btn {
+    border-radius: 15%;
+    border: none;
+    background-color: white;
+  }
+  .like-btn:hover{
+    background-color: lightgray;
+  }
+  .delete-btn {
+    border-radius: 15%;
+    border: none;
+    background-color: white;
+    text-align: right;
+  }
+  .delete-btn:hover{
+    background-color: lightcoral;
+    color: white;
   }
 </style>

@@ -7,18 +7,22 @@
             <h3>@{{ juice.userName }}</h3>
             <p>{{ juice.date }}</p>
             <p>{{ juice.text }}</p>
-            <div class="juice-meta">
-              <button v-if="loggedUser" class="btn btn-outline-primary">
-                <span>♡ {{ juice.likes.length }}</span>
-              </button>
-              <p v-else>♡ {{ juice.likes.length }}</p>
+            <div class="juice-buttons">
+              <div class="juice-meta">
+                <button v-if="loggedUser" class="like-btn">
+                  <span>♡ {{ juice.likes.length }}</span>
+                </button>
+                <p v-else>♡ {{ juice.likes.length }}</p>
+              </div>
+              <div class="juice-settings">
+                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="deleteJuice">
+                  <span>🗑</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </button>
-    </div>
-    <div v-else>
-      <h3>No hay publicaciones en este momento</h3>
     </div>
   </div>
 </template>
@@ -29,7 +33,6 @@
     name: 'JuicesList',
     methods: {
       openJuicePage(juice) {
-        console.log(juice);
         this.$store.dispatch('setJuice', juice);
         this.$store.dispatch('setJuicePage', true);
       }
