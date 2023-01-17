@@ -16,7 +16,7 @@
                 <p v-else>♡ {{ likes[index].length }}</p>
               </div>
               <div class="juice-settings">
-                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="deleteJuice(juice)">
+                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="openDeleteMsg(true, juice)">
                   <span>🗑</span>
                 </button>
               </div>
@@ -25,11 +25,13 @@
         </div>
       </button>
     </div>
+    <DeleteMsg v-if="deleteMsg"/>
   </div>
 </template>
   
 <script>
   import { mapGetters } from 'vuex';
+  import DeleteMsg from './DeleteMsg.vue';
   export default {
     name: 'JuicesList',
     data() {
@@ -37,6 +39,9 @@
         likes: [],
         liked: []
       }
+    },
+    components: {
+      DeleteMsg
     },
     methods: {
       calculateLikes(juice_likes, index) {
@@ -46,10 +51,6 @@
         } else {
           this.liked[index] = true;
         }
-      },
-      deleteJuice(juice) {
-        this.$store.dispatch('setJuice', juice);
-        this.$store.dispatch('deleteJuice');
       },
       likeJuice(juice, index) {
         const position = this.likes[index].indexOf(this.loggedUser.name);
@@ -68,10 +69,14 @@
         juice.likes = this.likes[index];
         this.$store.dispatch('setJuice', juice);
         this.$store.dispatch('setJuicePage', true);
+      },
+      openDeleteMsg(value, juice) {
+        this.$store.dispatch('setJuice', juice);
+        this.$store.dispatch('setDeleteMsg', value);
       }
     },
     computed: {
-      ...mapGetters(['juices','loggedUser']),
+      ...mapGetters(['juices','loggedUser', 'deleteMsg']),
     },
     created() {
       this.liked = new Array(this.$store.getters.juices.length).fill(false);

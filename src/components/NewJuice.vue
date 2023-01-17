@@ -4,7 +4,6 @@
       <button class="boton-cerrar" @click="closePage">✖</button>
       <div class="juice">
         <div class="juice-info">
-          <ErrorMsg v-if="error" class="error"/>
           <h3>@{{ loggedUser.name }}</h3>
           <p>{{ calculateDate() }}</p>
           <div class="juice-meta form">
@@ -20,7 +19,6 @@
 </template>
 
 <script>
-  import ErrorMsg from './ErrorMsg.vue'
   import { mapGetters } from 'vuex';
   export default {
     name: 'NewJuice',
@@ -48,9 +46,6 @@
         closePage() {
           this.$store.dispatch('setNewJuice', false);
         }
-    },
-    components: {
-        ErrorMsg
     },
     computed: {
       ...mapGetters(['loggedUser', 'error'])

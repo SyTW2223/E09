@@ -5,6 +5,7 @@ export const juiceModel = {
   state: () => ({
     newJuice: false,
     juicePage: false,
+    deleteMsg: false,
     juices: [],
     userName: '',
     text: '',
@@ -23,6 +24,9 @@ export const juiceModel = {
     SET_NEW_JUICE(state, value) {
       state.newJuice = value;
     },
+    SET_DELETE_MSG(state, value) {
+      state.deleteMsg = value;
+    },
     SET_JUICE_PAGE(state, value) {
       state.juicePage = value;
     },
@@ -36,6 +40,9 @@ export const juiceModel = {
     },
     setNewJuice({commit}, value) {
       commit('SET_NEW_JUICE', value);
+    },
+    setDeleteMsg({commit}, value) {
+      commit('SET_DELETE_MSG', value);
     },
     setJuicePage({commit}, value) {
       commit('SET_JUICE_PAGE', value);
@@ -106,6 +113,7 @@ export const juiceModel = {
   getters: {
     newJuice: state => state.newJuice,
     juicePage: state => state.juicePage,
+    deleteMsg: state => state.deleteMsg,
     juices: state => state.juices,
     userName: state => state.userName,
     text: state => state.text,
