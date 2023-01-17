@@ -26,13 +26,11 @@
         </div>
       </div>
     </div>
-    <DeleteMsg v-if="deleteMsg"/>
   </div>
 </template>
 
 <script>
   import { toRaw } from 'vue';
-  import DeleteMsg from './DeleteMsg.vue';
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
@@ -41,9 +39,6 @@
         likes_count: 0,
         liked: false
       }
-    },
-    components: {
-      DeleteMsg
     },
     created() {
       let likes_list = toRaw(this.likes);

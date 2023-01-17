@@ -9,14 +9,14 @@
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
               <div class="juice-meta">
-                <button v-if="loggedUser" class="like-btn bttn" @click="likeJuice(juice, index)"> {{ calculateLikes(juice.likes, index) }}
+                <button v-if="loggedUser" class="like-btn bttn" @click.stop="likeJuice(juice, index)"> {{ calculateLikes(juice.likes, index) }}
                   <span v-if="liked[index]" class="like-txt"><span style="color:red">❤</span> {{ likes[index].length }}</span>
                   <span v-else>♡ {{ likes[index].length }}</span>
                 </button>
                 <p v-else>♡ {{ likes[index].length }}</p>
               </div>
               <div class="juice-settings">
-                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn bttn" @click="openDeleteMsg(juice)">
+                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn bttn" @click.stop="openDeleteMsg(juice)">
                   <span>🗑</span>
                 </button>
               </div>
@@ -25,11 +25,13 @@
         </div>
       </button>
     </div>
+    <DeleteMsg v-if="deleteMsg"/>
   </div>
 </template>
   
 <script>
   import { mapGetters } from 'vuex';
+  import DeleteMsg from './DeleteMsg.vue';
   export default {
     name: 'JuicesList',
     data() {
@@ -37,6 +39,9 @@
         likes: [],
         liked: []
       }
+    },
+    components: {
+      DeleteMsg
     },
     methods: {
       calculateLikes(juice_likes, index) {
