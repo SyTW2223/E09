@@ -13,17 +13,19 @@
           <p v-else>♡ {{ likes_count }}</p>
         </div>
         <div class="juice-settings">
-          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn" @click="deleteJuice">
+          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn" @click="openDeleteMsg">
             <span>🗑</span>
           </button>
         </div>
       </div>
     </div>
+    <!--DeleteMsg v-if="deleteMsg"/-->
   </div>
 </template>
 
 <script>
   import { toRaw } from 'vue';
+  //import DeleteMsg from './DeleteMsg.vue';
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
@@ -32,6 +34,9 @@
         likes_count: 0,
         liked: false
       }
+    },
+    components: {
+      //DeleteMsg
     },
     created() {
       let likes_list = toRaw(this.likes);
@@ -43,13 +48,9 @@
       }
     },
     computed: {
-      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes', 'juice_id']),
+      ...mapGetters(['loggedUser', 'error', 'userName', 'date', 'text', 'likes', 'juice_id', 'deleteMsg']),
     },
     methods: {
-      deleteJuice() {
-        this.$store.dispatch('deleteJuice');
-        this.$store.dispatch('setJuicePage', false);
-      },
       likeJuice() {
         let updated_likes = this.proxyToArray(this.likes);
         const index = updated_likes.indexOf(this.loggedUser.name);
@@ -66,6 +67,9 @@
       },
       proxyToArray(proxy) {
         return toRaw(proxy);
+      },
+      openDeleteMsg() {
+        this.$store.dispatch('setDeleteMsg', true);
       }
     }
   }

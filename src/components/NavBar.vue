@@ -53,7 +53,7 @@
     position: fixed;
     margin-top: -25px;
     width: 100%;
-    z-index: 3;
+    z-index: 6;
   }
   .orange-btn {
     background-color: #ED701B;
