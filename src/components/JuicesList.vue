@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="juices-list div-center" v-if="juices.length > 0">
-      <button class="juice-box2 juice-button" v-for="(juice, index) in juices" :key="index" @click="openJuicePage(juice, index)">
+      <button id="juice-btn" class="juice-box2 juice-button" v-for="(juice, index) in juices" :key="index" @click="openJuicePage(juice, index)">
         <div class="juice">
           <div class="juice-info">
             <h3>@{{ juice.userName }}</h3>
@@ -16,7 +16,7 @@
                 <p v-else>♡ {{ likes[index].length }}</p>
               </div>
               <div class="juice-settings">
-                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="deleteJuice">
+                <button v-if="loggedUser && loggedUser.name == juice.userName" class="delete-btn" @click="deleteJuice(juice)">
                   <span>🗑</span>
                 </button>
               </div>
@@ -46,6 +46,10 @@
         } else {
           this.liked[index] = true;
         }
+      },
+      deleteJuice(juice) {
+        this.$store.dispatch('setJuice', juice);
+        this.$store.dispatch('deleteJuice');
       },
       likeJuice(juice, index) {
         const position = this.likes[index].indexOf(this.loggedUser.name);
