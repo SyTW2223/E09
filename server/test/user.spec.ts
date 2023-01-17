@@ -168,3 +168,4 @@ describe('POST password-reset', () => {
     expect(response.body.error).to.be.eq('Correo electrónico no registrado');
   });
 });
+
