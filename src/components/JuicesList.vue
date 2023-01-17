@@ -9,7 +9,7 @@
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
               <div class="juice-meta">
-                <button v-if="loggedUser" class="like-btn" @click="likeJuice(juice, index)"> {{ calculateLikes(juice.likes) }}
+                <button v-if="loggedUser" class="like-btn" @click="likeJuice(juice, index)"> {{ calculateLikes(juice.likes, index) }}
                   <span v-if="liked[index]" class="like-txt"><span style="color:red">❤</span> {{ likes[index].length }}</span>
                   <span v-else>♡ {{ likes[index].length }}</span>
                 </button>
@@ -39,12 +39,12 @@
       }
     },
     methods: {
-      calculateLikes(juice_likes) {
-        this.likes.push(juice_likes);
+      calculateLikes(juice_likes, index) {
+        this.likes[index] = juice_likes;
         if (juice_likes.indexOf(this.loggedUser.name) === -1) {
-          this.liked.push(false);
+          this.liked[index] = false;
         } else {
-          this.liked.push(true);
+          this.liked[index] = true;
         }
       },
       likeJuice(juice, index) {
@@ -70,6 +70,8 @@
       ...mapGetters(['juices','loggedUser']),
     },
     created() {
+      this.liked = new Array(this.$store.getters.juices.length).fill(false);
+      this.likes = new Array(this.$store.getters.juices.length).fill([]);
       this.$store.dispatch('getJuices');
     }
   }
