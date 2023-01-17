@@ -4,14 +4,13 @@ import { User } from '../src/models/user';
 import { expect } from 'chai';
 
 const firstUser = {
-    name: "user1",
-    email: "user1@example.com",
-    password: "Password1",
-    description: "description1",
-    following: 0,
-    followres: 0,
-    likes: 0,
-    age: 0,
+  name: "user1",
+  email: "user1@example.com",
+  password: "Password1",
+  description: "description1",
+  following: 0,
+  followres: 0,
+  age: 0,
 }
 
 let token: string = "";

@@ -1,167 +1,128 @@
 import * as request from 'supertest';
 import   { app } from '../src/app';
 import { Juice } from '../src/models/juice';
-import { expect } from 'chai';
+import { User } from '../src/models/user';
+//import { expect } from 'chai';
 
-const firstJuice = {
-  userName: 'user1',
-  text: 'Mi primer juice',
-  date: '01/01/2023 00:00',
-  likes: ['user1']
+const testUser = {
+  name: "test",
+  email: "test@test.com",
+  password: "Password1",
+  description: "description1",
+  following: 0,
+  followres: 0,
+  age: 0,
 }
 
-let token: string = "";
-let id: string = "";
+let token: string = '';
+let id: string = ';'
 
 before(async () => {
   await Juice.deleteMany();
-  await new Juice(firstJuice).save();
+  await new User(testUser).save();
+  const response = await request(app).post('/api/signin').send({
+    email: "test@test.com",
+    password: "Password1",
+  });
+  token = response.body.token;
 });
 
 /**
- * User SIGN UP
+ * Juice POST
  */
-describe('POST /api/signup', () => {
-  it('Should successfully create a new user', async () => {
-    await request(app).post('/api/signup').send({
-      name: "user2",
-      email: "user2@example.com",
-      password: "Password2",
-      description: "description2",
-      folowing: 0,
-      followers: 0,
-      likes: 0,
-      age: 0,
-    }).expect(201);
-  });
-
-  it('Should get an error because the user was already created', async () => {
-    const response = await request(app).post('/api/signup').send(firstUser).expect(409);
-    expect(response.body.error).to.be.eq('Ya existe una cuenta con ese nombre.');
-  });
-
-  it('Should get an error because the password is too short', async () => {
-    const response = await request(app).post('/api/signup').send({
-      name: "user3",
-      email: "user3@example.com",
-      password: "short",
-      description: "description3",
-      folowing: 0,
-      followers: 0,
-      likes: 0,
-      age: 0,
+describe('POST /api/juice', () => {
+  it('Should get an error for token not provided', async () => {
+    await request(app).post('/api/juice').send({
+      userName: 'user2',
+      text: 'Hola, estoy usando juicer',
+      date: '31/12/2023 12:00',
+      likes: ['user1']
     }).expect(400);
-    expect(response.body.error).to.be.eq("La contraseña debe contener al menos ocho caracteres, un número y una mayúscula");
-    expect(response.body.fields).to.be.eq("password");
   });
-
+  it('Should get an error for expired session', async () => {
+    await request(app).post('/api/juice').set({
+      Authorization:'Bearer ' + '1234'
+    }).send({
+      userName: 'user2',
+      text: 'Hola, estoy usando juicer',
+      date: '31/12/2023 12:00',
+      likes: ['user1']
+    }).expect(403);
+  });  
+  it('Should get an error for bad request', async () => {
+    await request(app).post('/api/juice').set({
+      Authorization:'Bearer ' + token
+    }).send().expect(400);
+  });
+  it('Should successfully create a new juice', async () => {
+    const response = await request(app).post('/api/juice').set({
+      Authorization:'Bearer ' + token
+    }).send({
+        userName: 'user2',
+        text: 'Hola, estoy usando juicer',
+        date: '31/12/2023 12:00',
+        likes: ['user1']
+    }).expect(201);
+    id = response.body._id;
+  });
 });
 
 /**
- * User SIGN IN
- */
- describe('POST /api/signin', () => {
-  it('Should successfully login a new user', async () => {
-    const response = await request(app).post('/api/signin').send({
-      email: "user2@example.com",
-      password: "Password2",
-    }).expect(200);
-    token = response.body.token;
-    id = response.body.user._id;
+* Juice GET
+*/
+describe('GET /api/juices', () => {
+  it('Should get an error for not found', async () => {
+    await request(app).get('/api/juices?id=1234').send().expect(404);
   });
+  it('Should successfully get juices list', async () => {
+    await request(app).get('/api/juices').send().expect(200);
+  });
+});
 
-  it('Should get an error because the user does not exist', async () => {
-    await request(app).post('/api/signin').send({
-      email: "undefined@email.com",
-      password: "UndefinedPwd0",
+/**
+* Juice PATCH
+*/
+describe('PATCH /api/juice/like', () => {
+  it('Should get an error for update not permitted', async () => {
+    await request(app).patch(`/api/juice/like?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).send({
+      userName: 'testing'
+    }).expect(400);
+  });
+  it('Should get an error for id not provided', async () => {
+    await request(app).patch('/api/juice/like').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      likes: ['test']
+    }).expect(400);
+  });
+  it('Should get an error for token not provided', async () => {
+    await request(app).patch(`/api/juice/like?id=${id}`).send({
+      likes: ['test']
+    }).expect(400);
+  });
+  it('Should get an error for not found', async () => {
+    await request(app).patch('/api/juice/like?id=41224d776a326fb40f000001').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      likes: ['test']
     }).expect(404);
   });
-});
-
-/**
- * Users GET
-*/
-describe('GET /api/users', () => {
-  it('Should successfully get all registered users', async () => {
-    await request(app).get('/api/users').set({
+  it('Should get an error for server error', async () => {
+    await request(app).patch('/api/juice/like?id=1234').set({
       Authorization:'Bearer ' + token
-    }).send().expect(200);
+    }).send({
+      likes: ['test']
+    }).expect(500);
   });
-  it('The number of registered users must be 2', async () => {
-    const response = await request(app).get('/api/users').set({
+  it('Should successfully update a juice', async () => {
+    await request(app).patch(`/api/juice/like?id=${id}`).set({
       Authorization:'Bearer ' + token
-    }).send().expect(200);
-    expect(response.body.length).to.be.eq(2);
-  });
-});
-
-/**
- * GET authenticated user
-*/
-describe('GET /api/user', () => {
-  it('Should successfully get a created user', async () => {
-    const response = await request(app).get('/api/user').set({
-      Authorization:'Bearer ' + token
+    }).send({
+      likes: ['test']
     }).expect(200);
-    expect(response.body.element).to.include({
-      name: "user2",
-      email: "user2@example.com",
-      password: "Password2",
-      description: "description2",
-      following: 0,
-      followers: 0,
-      age: 0,
-    });
-  });
-  it('Should get an error because token doesnt exist', async () => {
-    await request(app).get('/api/user').set({
-      Authorization:'Bearer ' + 'wrongTokenDefinition'
-    }).expect(403);
-  });
-  it('Should get an error because token is not provided', async () => {
-    const response = await request(app).get('/api/user').expect(400);
-    expect(response.body.error).to.be.eq('Debe proporcionarse un token');
   });
 });
 
-
-/**
- * PATCH user password
- */
-describe('PATCH user password', () => {
-  it('Should successfully change a user password',async () => {
-    const response = await request(app).patch(`/api/users?id=${id}`).send({
-      password: "newPassword2",
-    }).set({
-      Authorization:'Bearer ' + token
-    }).expect(200);
-    expect(response.body.password).to.be.eq('newPassword2');
-  });
-  it('Should get an error because the token does not exist',async () => {
-    await request(app).patch(`/api/users?id=${id}`).send({
-      password: "newPassword2",
-    }).set({
-      Authorization:'Bearer ' + 'undefinedToken'
-    }).expect(403);
-  });
-});
-
-/**
- * POST password reset
-*/
-describe('POST password-reset', () => {
-  it('Should successfully send an email to the user who is reseting his password', async () => {
-    const response = await request(app).post('/api/password-reset').send({
-      email: "user2@example.com",
-    }).set({
-      Authorization:'Bearer ' + token
-    }).expect(200);
-    expect(response.body.mssg).to.be.eq('email sent successfully');
-  });
-  it('Should get an error because the email does not exist', async () => {
-    const response = await request(app).post('/api/password-reset').send({
-      email: "notExist@email.com",
-    }).expect(404);
-    expect(response.body.error).to.be.eq('Correo electrónico no registrado');
-  });
-});
+  
