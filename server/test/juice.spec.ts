@@ -1,25 +1,21 @@
 import * as request from 'supertest';
 import   { app } from '../src/app';
-import { User } from '../src/models/user';
+import { Juice } from '../src/models/juice';
 import { expect } from 'chai';
 
-const firstUser = {
-    name: "user1",
-    email: "user1@example.com",
-    password: "Password1",
-    description: "description1",
-    following: 0,
-    followres: 0,
-    likes: 0,
-    age: 0,
+const firstJuice = {
+  userName: 'user1',
+  text: 'Mi primer juice',
+  date: '01/01/2023 00:00',
+  likes: ['user1']
 }
 
 let token: string = "";
 let id: string = "";
 
 before(async () => {
-  await User.deleteMany();
-  await new User(firstUser).save();
+  await Juice.deleteMany();
+  await new Juice(firstJuice).save();
 });
 
 /**
