@@ -2,7 +2,6 @@ import * as request from 'supertest';
 import   { app } from '../src/app';
 import { Juice } from '../src/models/juice';
 import { User } from '../src/models/user';
-//import { expect } from 'chai';
 
 const testUser = {
   name: "test",
@@ -109,12 +108,12 @@ describe('PATCH /api/juice/like', () => {
       likes: ['test']
     }).expect(404);
   });
-  it('Should get an error for server error', async () => {
+  it('Should get an error for bad request', async () => {
     await request(app).patch('/api/juice/like?id=1234').set({
       Authorization:'Bearer ' + token
     }).send({
       likes: ['test']
-    }).expect(500);
+    }).expect(400);
   });
   it('Should successfully update a juice', async () => {
     await request(app).patch(`/api/juice/like?id=${id}`).set({
@@ -123,6 +122,35 @@ describe('PATCH /api/juice/like', () => {
       likes: ['test']
     }).expect(200);
   });
+});
+
+/**
+* Juice DELETE
+*/
+describe('DELETE /api/juices', () => {
+  it('Should successfully delete a juice', async () => {
+    await request(app).delete(`/api/juices?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).expect(200);
+  });
+    it('Should get an error for token not provided', async () => {
+      await request(app).delete(`/api/juices?id=${id}`).expect(400);
+    });
+    it('Should get an error for not found', async () => {
+      await request(app).delete('/api/juices?id=41224d776a326fb40f000001').set({
+        Authorization:'Bearer ' + token
+      }).expect(404);
+    });
+    it('Should get an error for bad request', async () => {
+      await request(app).delete('/api/juices?id=1234').set({
+        Authorization:'Bearer ' + token
+      }).expect(400);
+    });
+    it('Should successfully delete a juice', async () => {
+      await request(app).delete(`/api/juices?id=${id}`).set({
+        Authorization:'Bearer ' + token
+      }).expect(200);
+    });
 });
 
   

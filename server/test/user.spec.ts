@@ -33,7 +33,6 @@ describe('POST /api/signup', () => {
       description: "description2",
       folowing: 0,
       followers: 0,
-      likes: 0,
       age: 0,
     }).expect(201);
   });
@@ -51,7 +50,6 @@ describe('POST /api/signup', () => {
       description: "description3",
       folowing: 0,
       followers: 0,
-      likes: 0,
       age: 0,
     }).expect(400);
     expect(response.body.error).to.be.eq("La contraseña debe contener al menos ocho caracteres, un número y una mayúscula");
@@ -127,27 +125,58 @@ describe('GET /api/user', () => {
   });
 });
 
-
 /**
- * PATCH user password
+ * PATCH user
  */
-describe('PATCH user password', () => {
-  it('Should successfully change a user password',async () => {
+describe('PATCH user description', () => {
+  it('Should successfully change a user description',async () => {
     const response = await request(app).patch(`/api/users?id=${id}`).send({
-      password: "newPassword2",
+      description: "description2",
     }).set({
       Authorization:'Bearer ' + token
     }).expect(200);
-    expect(response.body.password).to.be.eq('newPassword2');
+    expect(response.body.description).to.be.eq('description2');
   });
   it('Should get an error because the token does not exist',async () => {
     await request(app).patch(`/api/users?id=${id}`).send({
-      password: "newPassword2",
+      description: "description2",
     }).set({
       Authorization:'Bearer ' + 'undefinedToken'
     }).expect(403);
   });
 });
+
+/**
+ * PATCH password reset
+ */
+describe('PATCH password reset', () => {
+  it('Should get an error for bad request',async () => {
+    await request(app).patch('/api/password-reset').send({
+      description: "description2",
+    }).set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
+  it('Should get an error for token not provided', async () => {
+    await request(app).patch('/api/password-reset').expect(400);
+  });
+  it('Should get an error for not found', async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer 41224d776a326fb40f000001'
+    }).expect(404);
+  });
+  it('Should get an error for bad request', async () => {
+    await request(app).delete('/api/juices?id=1234').set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
+  it('Should successfully delete a juice', async () => {
+    await request(app).delete(`/api/juices?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).expect(200);
+  });
+});
+
 
 /**
  * POST password reset

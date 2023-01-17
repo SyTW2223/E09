@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/22</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.09% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/21</span>
+                <span class='fraction'>21/21</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -113,40 +113,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as express from 'express';
 import { AppCRUD } from '../crud/AppCRUD';
 import { Juice } from '../models/juice';
@@ -154,41 +154,41 @@ import { Juice } from '../models/juice';
 export const juiceRouter = express.Router();
 &nbsp;
 // POST
-juiceRouter.post('/api/juice', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-  const juice = <span class="cstat-no" title="statement not covered" >new Juice(req.body);</span>
-<span class="cstat-no" title="statement not covered" >  AppCRUD.post(req, res, juice);</span>
+juiceRouter.post('/api/juice', (req, res) =&gt; {
+  const juice = new Juice(req.body);
+  AppCRUD.post(req, res, juice);
 });
 &nbsp;
 // GET
-juiceRouter.get('/api/juices', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-  const filter = <span class="cstat-no" title="statement not covered" >req.query.id?{name: req.query.id.toString()}:{};</span>
-<span class="cstat-no" title="statement not covered" >  AppCRUD.get(res, filter, Juice);</span>
+juiceRouter.get('/api/juices', (req, res) =&gt; {
+  const filter = req.query.id?{name: req.query.id.toString()}:{};
+  AppCRUD.get(res, filter, Juice);
 });
 &nbsp;
 // PATCH
-juiceRouter.patch('/api/juice/like', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-  const allowedUpdates = <span class="cstat-no" title="statement not covered" >['likes'];</span>
-  const actualUpdates = <span class="cstat-no" title="statement not covered" >Object.keys(req.body);</span>
+juiceRouter.patch('/api/juice/like', (req, res) =&gt; {
+  const allowedUpdates = ['likes'];
+  const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
-<span class="cstat-no" title="statement not covered" >    actualUpdates.every(<span class="fstat-no" title="function not covered" >(u</span>pdate) =&gt; <span class="cstat-no" title="statement not covered" >allowedUpdates.includes(update))</span>;</span>
+    actualUpdates.every((update) =&gt; allowedUpdates.includes(update));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (!isValidUpdate) {</span>
-<span class="cstat-no" title="statement not covered" >    res.status(400).send({</span>
+  if (!isValidUpdate) {
+    res.status(400).send({
       error: 'Update is not permitted',
     });
   } else {
-<span class="cstat-no" title="statement not covered" >    if (!req.query.id) {</span>
-<span class="cstat-no" title="statement not covered" >      res.status(400).send({</span>
+    if (!req.query.id) {
+      res.status(400).send({
         error: 'An id must be provided',
       });
     }
-<span class="cstat-no" title="statement not covered" >    AppCRUD.patch(req, res, Juice);</span>
+    AppCRUD.patch(req, res, Juice);
   }
 });
 &nbsp;
 // DELETE
-juiceRouter.delete('/api/juices', <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  AppCRUD.delete(req, res, Juice);</span>
+juiceRouter.delete('/api/juices', (req, res) =&gt; {
+  AppCRUD.delete(req, res, Juice);
 });</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -196,7 +196,7 @@ juiceRouter.delete('/api/juices', <span class="fstat-no" title="function not cov
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-17T18:32:58.737Z
+                at 2023-01-17T19:58:56.862Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

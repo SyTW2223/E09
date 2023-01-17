@@ -64,7 +64,7 @@ export class AppCRUD {
         
             return res.status(200).send(element);
           } catch (err) {
-            return res.status(500).send({error: err});
+            return res.status(400).send({error: err});
           }
         }
       });
@@ -91,7 +91,7 @@ export class AppCRUD {
               return res.status(404).send();
             }
       
-            return res.send(element);
+            return res.status(200).send(element);
           } catch (error) {
             return res.status(400).send();
           }
