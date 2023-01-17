@@ -4,14 +4,13 @@ import { User } from '../src/models/user';
 import { expect } from 'chai';
 
 const firstUser = {
-    name: "user1",
-    email: "user1@example.com",
-    password: "Password1",
-    description: "description1",
-    following: 0,
-    followres: 0,
-    likes: 0,
-    age: 0,
+  name: "user1",
+  email: "user1@example.com",
+  password: "Password1",
+  description: "description1",
+  following: 0,
+  followres: 0,
+  age: 0,
 }
 
 let token: string = "";
@@ -114,7 +113,6 @@ describe('GET /api/user', () => {
       description: "description2",
       following: 0,
       followers: 0,
-      likes: 0,
       age: 0,
     });
   });
@@ -170,3 +168,4 @@ describe('POST password-reset', () => {
     expect(response.body.error).to.be.eq('Correo electrónico no registrado');
   });
 });
+

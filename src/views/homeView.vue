@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <div class="page">
-      <!--SignedIn/-->
-      <h2 class="message"><b>Inicio</b></h2>
-      <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
-      <JuicesList  :key="componentKey"/>
-    </div>
-    <NewJuice v-if='newJuice'/>
+  <div class="page">
+    <h2 class="message"><b>Inicio</b></h2>
+    <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
+    <JuicesList  :key="componentKey"/>
   </div>
+  <NewJuice v-if='newJuice'/>
+  <JuiceComponent v-if='juicePage'/>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import NewJuice from "../components/NewJuice.vue";
 import JuicesList from "../components/JuicesList.vue";
-//import SignedIn from "../components/SignedIn.vue";
+import JuiceComponent from "../components/JuiceComponent.vue";
 export default {
   name: 'HomeView',
   data() {
@@ -23,18 +21,21 @@ export default {
     };
   },
   components: {
-    //SignedIn,
     NewJuice,
-    JuicesList
+    JuicesList,
+    JuiceComponent
   },
   computed: {
-    ...mapGetters(['newJuice'])
+    ...mapGetters(['newJuice', 'juicePage'])
   },
   methods: {
     forceRerender() {
       this.componentKey += 1;
     }
   },
+  created() {
+    this.$store.dispatch('getLoggedUser');
+  }
 }
 </script>
 
@@ -45,7 +46,7 @@ export default {
     height: 100%;
   }
   .refresh-btn {
-    right: 7.5%; /* posición a la derecha de la pantalla */
+    right: 7.5%;
   }
   .message {
     margin-top: 50px;

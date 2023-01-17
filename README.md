@@ -1,4 +1,4 @@
-# Juicer
+# juicer Alvaro
 
 ## Project setup
 ```
