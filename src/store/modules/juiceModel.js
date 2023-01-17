@@ -56,6 +56,7 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
+        dispatch('getJuices');
         dispatch('setNewJuice', false);
         router.push('/');
       } catch (err) {
@@ -69,6 +70,7 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
+        dispatch('getJuices');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -83,6 +85,7 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
+        dispatch('getJuices');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }

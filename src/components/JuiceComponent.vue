@@ -63,7 +63,6 @@
         this.$store.dispatch('likeJuice', updated_likes);
         this.$store.dispatch('setLikes', updated_likes);
         this.likes_count = updated_likes.length;
-        this.$store.dispatch('getJuices');
       },
       proxyToArray(proxy) {
         return toRaw(proxy);
