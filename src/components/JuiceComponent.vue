@@ -1,29 +1,38 @@
 <template>
-  <div class="juice">
-    <div class="juice-info" >
-      <h3>@{{ userName }}</h3>
-      <p>{{ date }}</p>
-      <p>{{ text }}</p>
-      <div class="juice-buttons">
-        <div class="juice-meta">
-          <button v-if="loggedUser" class="like-btn bttn" @click="likeJuice">
-            <span v-if="liked" class="like-txt"><span style="color:red">❤</span> {{ likes_count }}</span>
-            <span v-else>♡ {{ likes_count }}</span>
-          </button>
-          <p v-else>♡ {{ likes_count }}</p>
-        </div>
-        <div class="juice-settings">
-          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn bttn" @click="openDeleteMsg">
-            <span>🗑</span>
-          </button>
+  <div>
+    <div class="overlay">
+      <div class="juice-box form-container">
+        <button class="boton-cerrar" @click="closePage">✖</button>
+        <div class="juice">
+          <div class="juice-info" >
+            <h3>@{{ userName }}</h3>
+            <p>{{ date }}</p>
+            <p>{{ text }}</p>
+            <div class="juice-buttons">
+              <div class="juice-meta">
+                <button v-if="loggedUser" class="like-btn bttn" @click="likeJuice">
+                  <span v-if="liked" class="like-txt"><span style="color:red">❤</span> {{ likes_count }}</span>
+                  <span v-else>♡ {{ likes_count }}</span>
+                </button>
+                <p v-else>♡ {{ likes_count }}</p>
+              </div>
+              <div class="juice-settings">
+                <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn bttn" @click="openDeleteMsg">
+                  <span>🗑</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <DeleteMsg v-if="deleteMsg"/>
   </div>
 </template>
 
 <script>
   import { toRaw } from 'vue';
+  import DeleteMsg from './DeleteMsg.vue';
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
@@ -32,6 +41,9 @@
         likes_count: 0,
         liked: false
       }
+    },
+    components: {
+      DeleteMsg
     },
     created() {
       let likes_list = toRaw(this.likes);
@@ -65,6 +77,9 @@
       },
       openDeleteMsg() {
         this.$store.dispatch('setDeleteMsg', true);
+      },
+      closePage() {
+        this.$store.dispatch('setJuicePage', false);
       }
     }
   }
