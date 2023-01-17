@@ -6,10 +6,10 @@
         <div class="juice-info">
           <p>¿Está seguro de que quiere eliminar este juice?</p>
           <div class="juice-meta">
-            <button class="btn btn-outline-primary" @click="deleteJuice">
+            <button class="bttn" @click="deleteJuice">
               <span>Si</span>
             </button>
-            <button class="btn btn-outline-primary" @click="deleteMsg(false)">
+            <button class="bttn" @click="deleteMsg(false)">
               <span>No</span>
             </button>
           </div>

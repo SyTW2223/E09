@@ -9,7 +9,7 @@
           <div class="juice-meta form">
             <form class="form" @submit.prevent="postJuice">
               <input type="text" style="text-align:left" v-model="text" required><br/><br/>
-              <input type="submit" class="like-button btn btn-outline-primary">
+              <input type="submit" class="bttn">
             </form>
           </div>
         </div>

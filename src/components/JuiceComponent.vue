@@ -6,26 +6,24 @@
       <p>{{ text }}</p>
       <div class="juice-buttons">
         <div class="juice-meta">
-          <button v-if="loggedUser" class="like-btn" @click="likeJuice">
+          <button v-if="loggedUser" class="like-btn bttn" @click="likeJuice">
             <span v-if="liked" class="like-txt"><span style="color:red">❤</span> {{ likes_count }}</span>
             <span v-else>♡ {{ likes_count }}</span>
           </button>
           <p v-else>♡ {{ likes_count }}</p>
         </div>
         <div class="juice-settings">
-          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn" @click="openDeleteMsg">
+          <button v-if="loggedUser && loggedUser.name == userName" class="delete-btn bttn" @click="openDeleteMsg">
             <span>🗑</span>
           </button>
         </div>
       </div>
     </div>
-    <!--DeleteMsg v-if="deleteMsg"/-->
   </div>
 </template>
 
 <script>
   import { toRaw } from 'vue';
-  //import DeleteMsg from './DeleteMsg.vue';
   import { mapGetters } from 'vuex';
   export default {
     name: 'JuiceComponent',
@@ -34,9 +32,6 @@
         likes_count: 0,
         liked: false
       }
-    },
-    components: {
-      //DeleteMsg
     },
     created() {
       let likes_list = toRaw(this.likes);
@@ -97,18 +92,18 @@
   .juice-settings {
     text-align: right;
   }
-  .like-btn {
+  .bttn {
     border-radius: 15%;
     border: none;
     background-color: white;
   }
-  .like-btn:hover{
+  .bttn:hover{
     background-color: lightgray;
   }
+  .like-btn {
+    text-align: left;
+  }
   .delete-btn {
-    border-radius: 15%;
-    border: none;
-    background-color: white;
     text-align: right;
   }
   .delete-btn:hover{
