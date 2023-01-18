@@ -18,6 +18,7 @@ let id: string = ';'
 
 before(async () => {
   await Juice.deleteMany();
+  await User.deleteMany();
   await new User(testUser).save();
   const response = await request(app).post('/api/signin').send({
     email: "test@test.com",
