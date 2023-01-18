@@ -26,7 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Cambiar al directorio server
+    - name: Ejecutar tests backend
       working-directory: ./server
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
