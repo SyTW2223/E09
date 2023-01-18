@@ -8,8 +8,8 @@
             <p>{{ juice.date }}</p>
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
-              <div class="juice-meta">
-                <button v-if="loggedUser" class="like-btn bttn" @click.stop="likeJuice(juice, index)"> {{ calculateLikes(juice.likes, index) }}
+              <div class="juice-meta"> {{ calculateLikes(juice.likes, index) }}
+                <button v-if="loggedUser" class="like-btn bttn" @click.stop="likeJuice(juice, index)">
                   <span v-if="liked[index]" class="like-txt"><span style="color:red">❤</span> {{ likes[index].length }}</span>
                   <span v-else>♡ {{ likes[index].length }}</span>
                 </button>
@@ -46,7 +46,7 @@
     methods: {
       calculateLikes(juice_likes, index) {
         this.likes[index] = juice_likes;
-        if (juice_likes.indexOf(this.loggedUser.name) === -1) {
+        if (this.loggedUser && (juice_likes.indexOf(this.loggedUser.name) === -1)) {
           this.liked[index] = false;
         } else {
           this.liked[index] = true;
