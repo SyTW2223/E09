@@ -28,7 +28,10 @@ jobs:
         node-version: 19.x
     - name: Installing dependencies
       run: npm install
+    - name: Installing server dependencies
+      run: cd server && npm install
     - name: Generating coverage information
+      working-directory: ./server
       run: npm run coverage
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@master
