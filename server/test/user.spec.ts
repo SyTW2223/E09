@@ -13,7 +13,18 @@ const firstUser = {
   age: 0,
 }
 
+const testUser = {
+  name: "user3",
+  email: "user1@example.com",
+  password: "Password3",
+  description: "description3",
+  following: 0,
+  followres: 0,
+  age: 0,
+}
+
 let token: string = "";
+let token2: string = "";
 let id: string = "";
 
 before(async () => {
@@ -36,10 +47,22 @@ describe('POST /api/signup', () => {
       age: 0,
     }).expect(201);
   });
-
+  it('Should get an error for validation error', async () => {
+    await request(app).post('/api/signup').send({
+      name: "user3",
+      email: "email",
+      password: "Password3",
+      description: "description3",
+      folowing: 0,
+      followers: 0,
+      age: 0,
+    }).expect(400);
+  });
   it('Should get an error because the user was already created', async () => {
     const response = await request(app).post('/api/signup').send(firstUser).expect(409);
     expect(response.body.error).to.be.eq('Ya existe una cuenta con ese nombre.');
+    const response2 = await request(app).post('/api/signup').send(testUser).expect(409);
+    expect(response2.body.error).to.be.eq('Ya existe una cuenta con ese correo electrónico.');
   });
 
   it('Should get an error because the password is too short', async () => {
@@ -70,6 +93,13 @@ describe('POST /api/signup', () => {
     token = response.body.token;
     id = response.body.user._id;
   });
+  it('Should successfully login a new user', async () => {
+    const response = await request(app).post('/api/signin').send({
+      email: "user1@example.com",
+      password: "Password1",
+    }).expect(200);
+    token2 = response.body.token;
+  });
 
   it('Should get an error because the user does not exist', async () => {
     await request(app).post('/api/signin').send({
@@ -93,6 +123,11 @@ describe('GET /api/users', () => {
       Authorization:'Bearer ' + token
     }).send().expect(200);
     expect(response.body.length).to.be.eq(2);
+  });
+  it('Should successfully get a user by id', async () => {
+    await request(app).get(`/api/users?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).send().expect(200);
   });
 });
 
@@ -137,43 +172,26 @@ describe('PATCH user description', () => {
     }).expect(200);
     expect(response.body.description).to.be.eq('description2');
   });
+  it('Should get an error for id not provided',async () => {
+    await request(app).patch('/api/users').send({
+      description: "description2",
+    }).set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
+  it('Should get an error for update not permitted',async () => {
+    await request(app).patch(`/api/users?id=${id}`).send({
+      followers: 1,
+    }).set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
   it('Should get an error because the token does not exist',async () => {
     await request(app).patch(`/api/users?id=${id}`).send({
       description: "description2",
     }).set({
       Authorization:'Bearer ' + 'undefinedToken'
     }).expect(403);
-  });
-});
-
-/**
- * PATCH password reset
- */
-describe('PATCH password reset', () => {
-  it('Should get an error for bad request',async () => {
-    await request(app).patch('/api/password-reset').send({
-      description: "description2",
-    }).set({
-      Authorization:'Bearer ' + token
-    }).expect(400);
-  });
-  it('Should get an error for token not provided', async () => {
-    await request(app).patch('/api/password-reset').expect(400);
-  });
-  it('Should get an error for not found', async () => {
-    await request(app).patch('/api/password-reset').set({
-      Authorization:'Bearer 41224d776a326fb40f000001'
-    }).expect(404);
-  });
-  it('Should get an error for bad request', async () => {
-    await request(app).delete('/api/juices?id=1234').set({
-      Authorization:'Bearer ' + token
-    }).expect(400);
-  });
-  it('Should successfully delete a juice', async () => {
-    await request(app).delete(`/api/juices?id=${id}`).set({
-      Authorization:'Bearer ' + token
-    }).expect(200);
   });
 });
 
@@ -198,3 +216,86 @@ describe('POST password-reset', () => {
   });
 });
 
+/**
+ * PATCH password reset
+ */
+describe('PATCH password reset', () => {
+  it('Should get an error for bad request',async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      description: "description2",
+    }).expect(400);
+  });
+  it('Should get an error for token not provided', async () => {
+    await request(app).patch('/api/password-reset').expect(400);
+  });
+  it('Should get an error for expired session', async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer 1234'
+    }).send({
+      password: "Password1",
+    }).expect(403);
+  });
+  it('Should get an error for validation error', async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      password: "password",
+    }).expect(400);
+  });
+  it('Should successfully reset a user password', async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      password: "Password1",
+    }).expect(200);
+  });
+});
+
+/**
+ * DELETE user
+*/
+describe('DELETE user', () => {
+  it('Should get an error for id not provided',async () => {
+    await request(app).delete('/api/users').set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
+  it('Should get an error for token not provided',async () => {
+    await request(app).delete(`/api/users?id=${id}`).expect(400);
+  });
+  it('Should get an error for expired session', async () => {
+    await request(app).delete(`/api/users?id=${id}`).set({
+      Authorization:'Bearer 1234'
+    }).expect(403);
+  });
+  it('Should get an error for elimination not permitted',async () => {
+    await request(app).delete(`/api/users?id=${id}`).set({
+      Authorization:'Bearer ' + token2
+    }).expect(403);
+  });
+  it('Should succesfully delete an user',async () => {
+    await request(app).delete(`/api/users?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).expect(200);
+  });
+  it('Should get an error for not found',async () => {
+    await request(app).delete(`/api/users?id=${id}`).set({
+      Authorization:'Bearer ' + token
+    }).expect(404);
+  });
+});
+
+/**
+ * PATCH password reset part 2
+ */
+describe('PATCH password reset', () => {
+  it('Should get an error for not found', async () => {
+    await request(app).patch('/api/password-reset').set({
+      Authorization:'Bearer ' + token
+    }).send({
+      password: "Password1",
+    }).expect(404);
+  });
+});

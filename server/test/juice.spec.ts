@@ -51,7 +51,7 @@ describe('POST /api/juice', () => {
   it('Should get an error for bad request', async () => {
     await request(app).post('/api/juice').set({
       Authorization:'Bearer ' + token
-    }).send().expect(400);
+    }).expect(400);
   });
   it('Should successfully create a new juice', async () => {
     const response = await request(app).post('/api/juice').set({
@@ -71,10 +71,10 @@ describe('POST /api/juice', () => {
 */
 describe('GET /api/juices', () => {
   it('Should get an error for not found', async () => {
-    await request(app).get('/api/juices?id=1234').send().expect(404);
+    await request(app).get('/api/juices?id=1234').expect(404);
   });
   it('Should successfully get juices list', async () => {
-    await request(app).get('/api/juices').send().expect(200);
+    await request(app).get('/api/juices').expect(200);
   });
 });
 
@@ -128,29 +128,29 @@ describe('PATCH /api/juice/like', () => {
 * Juice DELETE
 */
 describe('DELETE /api/juices', () => {
+  it('Should get an error for expired session', async () => {
+    await request(app).delete(`/api/juices?id=${id}`).set({
+      Authorization:'Bearer 1234'
+    }).expect(403);
+  });
+  it('Should get an error for token not provided', async () => {
+    await request(app).delete(`/api/juices?id=${id}`).expect(400);
+  });
+  it('Should get an error for not found', async () => {
+    await request(app).delete('/api/juices?id=41224d776a326fb40f000001').set({
+      Authorization:'Bearer ' + token
+    }).expect(404);
+  });
+  it('Should get an error for bad request', async () => {
+    await request(app).delete('/api/juices?id=1234').set({
+      Authorization:'Bearer ' + token
+    }).expect(400);
+  });
   it('Should successfully delete a juice', async () => {
     await request(app).delete(`/api/juices?id=${id}`).set({
       Authorization:'Bearer ' + token
     }).expect(200);
   });
-    it('Should get an error for token not provided', async () => {
-      await request(app).delete(`/api/juices?id=${id}`).expect(400);
-    });
-    it('Should get an error for not found', async () => {
-      await request(app).delete('/api/juices?id=41224d776a326fb40f000001').set({
-        Authorization:'Bearer ' + token
-      }).expect(404);
-    });
-    it('Should get an error for bad request', async () => {
-      await request(app).delete('/api/juices?id=1234').set({
-        Authorization:'Bearer ' + token
-      }).expect(400);
-    });
-    it('Should successfully delete a juice', async () => {
-      await request(app).delete(`/api/juices?id=${id}`).set({
-        Authorization:'Bearer ' + token
-      }).expect(200);
-    });
 });
 
   
