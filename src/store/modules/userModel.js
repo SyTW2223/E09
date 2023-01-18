@@ -11,9 +11,7 @@ export const userModel = {
     password: '',
     id: '',
     description: '',
-    following: 0,
-    followers: 0,
-    age: 0
+    following: [],
   }),
   mutations: {
     SET_USER(state, user) {
@@ -23,8 +21,6 @@ export const userModel = {
       state.id = user._id;
       state.description = user.description;
       state.following = user.following;
-      state.followers = user.followers;
-      state.age = user.age;
     },
     SET_LOGGED_USER(state, user) {
       state.loggedUser = user;
@@ -66,8 +62,6 @@ export const userModel = {
           password: getters.password,
           description: getters.description,
           following: getters.following,
-          followers: getters.followers,
-          age: getters.age,
         })
         router.push('/signin');
       } catch (err) {
@@ -132,6 +126,20 @@ export const userModel = {
         dispatch('setError', err.message);
       }
     },
+    async followUser({ dispatch, getters }, updated_following) {
+      try {
+        await axios.patch(`users?id=${getters.loggedUser._id}`, {
+          following: updated_following
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
     signUp({commit}, user) {
       commit('SIGN_UP', user);
     },
@@ -173,7 +181,5 @@ export const userModel = {
     id: state => state.id,
     description: state => state.description,
     following: state => state.following,
-    followers: state => state.followers,
-    age: state => state.age,
   }
 }

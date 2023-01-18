@@ -8,16 +8,21 @@
     </div>
     <div class="stats">
       <div class="stat">
-        <p>{{ followers }}</p>
+        <p>0</p>
         <p>Followers</p>
       </div>
       <div class="stat">
-        <p>{{ following }}</p>
+        <p>{{ following.length }}</p>
         <p>Following</p>
       </div>
+      <div class="stat">
+        <p>{{ juices.length }}</p>
+        <p>Juices</p>
+      </div>
     </div>
-    <div>
-    </div>
+    <!-- <div class="follow-btn" v-if="loggedUser.name != name">
+      <button class="bttn" @click="followUser">Follow</button>
+    </div> -->
     <div class="juice-bar">
       <button class="juice-bar-button" @click="showUserJuices">Juices</button>
       <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
@@ -42,10 +47,19 @@
       showLikedJuices() {
         this.$store.dispatch('setLikedPage', true);
         this.$store.dispatch('getJuicesLikedByUserName', this.$route.params.userName);
+      },
+      followUser() {
+        let updatedFollowing = this.loggedUser.following;
+        updatedFollowing.push(this.$route.params.userName);
+        if (this.loggedUser) {
+          this.$store.dispatch('followUser', updatedFollowing);
+        } else {
+          this.$router.push('/signin');
+        }
       }
     },
     computed: {
-      ...mapGetters(['name', 'description', 'followers', 'following', 'juices', 'likedPage'])
+      ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser'])
     },
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);

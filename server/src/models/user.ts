@@ -6,9 +6,7 @@ export interface UserDocumentInterface extends Document {
   email: string,
   password: string,
   description: string,
-  following: number,
-  followers: number,
-  age: number,
+  following: [string],
 }
 
 export const UserSchema = new Schema<UserDocumentInterface>({
@@ -47,17 +45,8 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     trim: true,
   },
   following: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  followers: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  age: {
-    type: Number,
+    type: [String],
+    default: [],
     required: false,
   },
 });

@@ -46,7 +46,7 @@ userRouter.patch('/api/password-reset', (req, res) => {
 });
 
  userRouter.patch('/api/users', (req, res) => {
-  const allowedUpdates = ['name', 'email', 'password', 'description', 'age'];
+  const allowedUpdates = ['name', 'email', 'password', 'description', 'following'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
     actualUpdates.every((update) => allowedUpdates.includes(update));
@@ -64,6 +64,8 @@ userRouter.patch('/api/password-reset', (req, res) => {
     AppCRUD.patch(req, res, User);
   }
 });
+
+
 
 // DELETE
 userRouter.delete('/api/users', (req, res) => {
