@@ -16,7 +16,10 @@
         <p>Following</p>
       </div>
     </div>
-    <div class="juice-bar">
+    <div>
+      <JuicesList/>
+    </div>
+    <!-- <div class="juice-bar">
       <button class="juice-bar-button" @click="showUserJuices">Juices</button>
       <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
     </div>
@@ -26,7 +29,7 @@
     </div>
     <div v-else class="juices">
       <JuicesList/>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -50,6 +53,7 @@
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);
       this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
+      this.$store.dispatch('getLoggedUser');
     }
   }
 </script>

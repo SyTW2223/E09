@@ -81,7 +81,7 @@
     created() {
       this.liked = new Array(this.$store.getters.juices.length).fill(false);
       this.likes = new Array(this.$store.getters.juices.length).fill([]);
-      this.$store.dispatch('getJuices');
+      //this.$store.dispatch('getJuices');
     }
   }
 </script>

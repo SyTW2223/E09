@@ -77,7 +77,11 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('getJuices');
+        if(router.currentRoute.value.path === '/') {
+          dispatch('getJuices');
+        } else {
+          dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
+        }
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -92,7 +96,11 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('getJuices');
+        if(router.currentRoute.value.path === '/') {
+          dispatch('getJuices');
+        } else {
+          dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
+        }
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }

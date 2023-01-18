@@ -82,6 +82,7 @@ export const userModel = {
         })
         localStorage.setItem('token', response.data.token);
         dispatch('getLoggedUser');
+        router.push('/');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -94,7 +95,6 @@ export const userModel = {
           }
         });
         dispatch('setLoggedUser', response.data.element);
-        router.push('/');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }

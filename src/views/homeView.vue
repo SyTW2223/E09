@@ -35,6 +35,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getLoggedUser');
+    this.$store.dispatch('getJuices');
   }
 }
 </script>
