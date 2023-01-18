@@ -19,7 +19,7 @@ jobs:
         node-version: [19.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-     steps:
+    steps:
     - name: Cloning repo
       uses: actions/checkout@v2
     - name: Use Node.js 19.x
@@ -29,7 +29,8 @@ jobs:
     - name: Installing dependencies
       run: npm install
     - name: Installing server dependencies
-      run: cd server && npm install
+      working-directory: ./server
+      run: npm install
     - name: Generating coverage information
       working-directory: ./server
       run: npm run coverage
