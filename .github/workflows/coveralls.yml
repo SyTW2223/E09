@@ -19,41 +19,18 @@ jobs:
         node-version: [19.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
+     steps:
     - name: Cloning repo
       uses: actions/checkout@v2
     - name: Use Node.js 19.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 19.x
-
-    - name: Installing dependencies
-      run: npm install
-    - name: Installing server dependencies
-      run: cd server && npm install
-    # Lo mismo que necesita la action de tests
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-
-      # Ver como ejecutar varios comandos en un mismo working-directory
+        node-version: 19.x
+    - name: Installing dependencies
+      run: npm install
     - name: Generating coverage information
-      working-directory: ./server
-      run: npm run relcoverage
-    - name: Generating coverage report
-      working-directory: ./server
-      run: npm run gencov
-    - name: Evaluates coverage information
+      run: npm run coverage
+    - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: Generating coverage information
-    #   run: npm run coverage
-    # - name: Coveralls GitHub Action
-    #   uses: coverallsapp/github-action@master
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
