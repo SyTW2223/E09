@@ -29,6 +29,13 @@ jobs:
     - name: Installing dependencies
       working-directory: ./server
       run: npm install
+      # Lo mismo que necesita la action de tests
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        
     - name: Generating coverage information
       working-directory: ./server
       run: npm run coverage
