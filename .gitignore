@@ -5,6 +5,8 @@ node_modules
 /server/node_modules
 /server/dist
 /server/.vscode
+/server/.nyc_output
+/server/coverage
 
 
 # local env files
