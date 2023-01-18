@@ -1,7 +1,7 @@
 import {connect} from 'mongoose';
-//import {remoteUrl} from './dbconfig';
+import {remoteUrl} from './dbconfig';
 
-console.log(process.env.DATABASE_URL as string);
+console.log(remoteUrl);
 connect(process.env.DATABASE_URL as string, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
