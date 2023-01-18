@@ -43,7 +43,7 @@
     created() {
       let likes_list = toRaw(this.likes);
       this.likes_count = likes_list.length;
-      if (likes_list.indexOf(this.loggedUser.name) !== -1) {
+      if (this.loggedUser && (likes_list.indexOf(this.loggedUser.name) !== -1)) {
         this.liked = true;
       } else {
         this.liked = false;
