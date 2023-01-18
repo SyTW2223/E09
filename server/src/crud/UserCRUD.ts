@@ -82,7 +82,7 @@ export class UserCRUD {
           return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            const element = await model.findByIdAndUpdate(authData.element.id, req.body, {
+            const element = await model.findByIdAndUpdate(authData.element._id, req.body, {
               new: true,
               runValidators: true,
             });
@@ -91,9 +91,41 @@ export class UserCRUD {
               return res.status(404).send({error: 'Elemento no encontrado'});
             }
         
-            return res.send(element);
+            return res.status(200).send(element);
           } catch (err) {
             handleErrors(err, res);
+          }
+        }
+      });
+    } else {
+      return res.status(400).send({error: 'Debe proporcionarse un token'});
+    }
+  }
+
+  // DELETE
+  public static async delete(req: any, res: any, model: any) {
+    const bearerHeader =  req.headers['authorization'];
+
+    if (typeof bearerHeader !== 'undefined'){
+      const bearerToken = bearerHeader.split(" ")[1];
+
+      jwt.verify(bearerToken, 'secretkey', async (err: any, authData: any) => {
+        if (err){
+          return res.status(403).send({error: 'La sesión ha expirado'});
+        } else {
+          try {
+            if(authData.element._id !== req.query.id) {
+              return res.status(403).send('Eliminación no permitida');
+            }
+            const element = await model.findByIdAndDelete(authData.element._id);
+      
+            if (!element) {
+              return res.status(404).send();
+            }
+      
+            return res.status(200).send(element);
+          } catch (error) {
+            return res.status(400).send();
           }
         }
       });

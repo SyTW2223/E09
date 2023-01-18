@@ -72,5 +72,5 @@ userRouter.delete('/api/users', (req, res) => {
       error: 'An id must be provided',
     });
   }
-  AppCRUD.delete(req, res, User);
+  UserCRUD.delete(req, res, User);
 });
