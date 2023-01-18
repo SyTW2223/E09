@@ -22,6 +22,12 @@ juiceRouter.get('/api/juices/user', (req, res) => {
   AppCRUD.get(res, filter, Juice);
 });
 
+// Get Juices liked by User
+juiceRouter.get('/api/juices/user/liked', (req, res) => {
+  const filter = req.query.userName?{likes: req.query.userName.toString()}:{};
+  AppCRUD.get(res, filter, Juice);
+});
+
 // PATCH
 juiceRouter.patch('/api/juice/like', (req, res) => {
   const allowedUpdates = ['likes'];

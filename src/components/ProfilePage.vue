@@ -17,19 +17,12 @@
       </div>
     </div>
     <div>
-      <JuicesList/>
     </div>
-    <!-- <div class="juice-bar">
+    <div class="juice-bar">
       <button class="juice-bar-button" @click="showUserJuices">Juices</button>
       <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
     </div>
-    <div v-if="likedJuices" class="juices">
-      <h2>Juices</h2>
-      <JuicesList/>
-    </div>
-    <div v-else class="juices">
-      <JuicesList/>
-    </div> -->
+    <JuicesList/>
   </div>
 </template>
 
@@ -43,12 +36,16 @@
     },
     methods: {
       showUserJuices() {
-        this.showJuices = true;
+        this.$store.dispatch('setLikedPage', false);
         this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
+      },
+      showLikedJuices() {
+        this.$store.dispatch('setLikedPage', true);
+        this.$store.dispatch('getJuicesLikedByUserName', this.$route.params.userName);
       }
     },
     computed: {
-      ...mapGetters(['name', 'description', 'followers', 'following', 'juices'])
+      ...mapGetters(['name', 'description', 'followers', 'following', 'juices', 'likedPage'])
     },
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);
