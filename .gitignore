@@ -27,4 +27,4 @@ pnpm-debug.log*
 *.sw?
 
 # package-lock.json
-package-lock.json
+# package-lock.json
