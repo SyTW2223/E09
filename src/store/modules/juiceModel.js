@@ -4,22 +4,31 @@ import router from "../../router/index"
 export const juiceModel = {
   state: () => ({
     newJuice: false,
+    juicePage: false,
+    deleteMsg: false,
     juices: [],
     userName: '',
     text: '',
     date: '',
     juice_id: '',
-    juice_likes: 0,
+    likes: [],
   }),
   mutations: {
     SET_JUICE(state, juice) {
+      state.juice_id = juice._id;
       state.userName = juice.userName;
       state.text = juice.text;
       state.date = juice.date;
-      state.juice_likes = juice.likes;
+      state.likes = juice.likes;
     },
-    SET_NEWJUICE(state, value) {
+    SET_NEW_JUICE(state, value) {
       state.newJuice = value;
+    },
+    SET_DELETE_MSG(state, value) {
+      state.deleteMsg = value;
+    },
+    SET_JUICE_PAGE(state, value) {
+      state.juicePage = value;
     },
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
@@ -30,7 +39,13 @@ export const juiceModel = {
       commit('SET_JUICE', juice);
     },
     setNewJuice({commit}, value) {
-      commit('SET_NEWJUICE', value);
+      commit('SET_NEW_JUICE', value);
+    },
+    setDeleteMsg({commit}, value) {
+      commit('SET_DELETE_MSG', value);
+    },
+    setJuicePage({commit}, value) {
+      commit('SET_JUICE_PAGE', value);
     },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
@@ -41,17 +56,45 @@ export const juiceModel = {
           userName: getters.userName,
           text: getters.text,
           date: getters.date,
-          likes: getters.juice_likes
+          likes: getters.likes
         },
         {
           headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
+        dispatch('getJuices');
         dispatch('setNewJuice', false);
         router.push('/');
       } catch (err) {
         dispatch('setError', err.message);
+      }
+    },
+    async deleteJuice({ dispatch, getters}) {
+      try {
+        await axios.delete(`juices?id=${getters.juice_id}`, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('getJuices');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
+    async likeJuice({ dispatch, getters }, updated_likes) {
+      try {
+        await axios.patch(`juice/like?id=${getters.juice_id}`, {
+          likes: updated_likes
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+        dispatch('getJuices');
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
     },
     async getJuices({ dispatch }) {
@@ -59,7 +102,11 @@ export const juiceModel = {
         const response = await axios.get('juices');
         dispatch('setJuices', response.data);
       } catch (err) {
-        dispatch('setError', err.response.data.error);
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
+        }
       }
     },
     async getJuicesByUserName({ dispatch }, userName) {
@@ -73,10 +120,13 @@ export const juiceModel = {
   },
   getters: {
     newJuice: state => state.newJuice,
+    juicePage: state => state.juicePage,
+    deleteMsg: state => state.deleteMsg,
     juices: state => state.juices,
     userName: state => state.userName,
     text: state => state.text,
     date: state => state.date,
-    juice_likes: state => state.juice_likes,
+    juice_id: state => state.juice_id,
+    likes: state => state.likes,
   }
 }

@@ -2,7 +2,7 @@ import {connect} from 'mongoose';
 import {remoteUrl} from './dbconfig';
 
 console.log(remoteUrl);
-connect(remoteUrl as string, {
+connect(remoteUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

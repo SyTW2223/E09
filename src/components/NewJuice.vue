@@ -4,13 +4,12 @@
       <button class="boton-cerrar" @click="closePage">✖</button>
       <div class="juice">
         <div class="juice-info">
-          <ErrorMsg v-if="error" class="error"/>
           <h3>@{{ loggedUser.name }}</h3>
           <p>{{ calculateDate() }}</p>
           <div class="juice-meta form">
             <form class="form" @submit.prevent="postJuice">
               <input type="text" style="text-align:left" v-model="text" required><br/><br/>
-              <input type="submit" class="like-button btn btn-outline-primary">
+              <input type="submit" class="bttn">
             </form>
           </div>
         </div>
@@ -20,7 +19,6 @@
 </template>
 
 <script>
-  import ErrorMsg from './ErrorMsg.vue'
   import { mapGetters } from 'vuex';
   export default {
     name: 'NewJuice',
@@ -41,16 +39,13 @@
             userName: this.loggedUser.name,
             text: this.text,
             date: this.calculateDate(),
-            likes: 0
+            likes: []
           });
           this.$store.dispatch('postJuice');
         },
         closePage() {
           this.$store.dispatch('setNewJuice', false);
         }
-    },
-    components: {
-        ErrorMsg
     },
     computed: {
       ...mapGetters(['loggedUser', 'error'])
@@ -60,25 +55,25 @@
   
 <style> 
   .overlay {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
-    z-index: 2; /* Poner el overlay encima de la página */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
   }
   .form-container {
     position: absolute;
     top: 25%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrar el formulario en la pantalla */
+    transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
-    z-index: 3; /* Poner el formulario encima del overlay */
+    z-index: 3;
   }
   .boton-cerrar {
-    position: absolute; /* para posicionar el botón en relación al contenedor */
-    top: 10px; /* posición en la parte superior del contenedor */
-    right: 10px; /* posición a la derecha del contenedor */
+    position: absolute;
+    top: 10px;
+    right: 10px;
     border: none;
     background-color: white;
   }

@@ -13,7 +13,6 @@ export const userModel = {
     description: '',
     following: 0,
     followers: 0,
-    likes: 0,
     age: 0
   }),
   mutations: {
@@ -25,7 +24,6 @@ export const userModel = {
       state.description = user.description;
       state.following = user.following;
       state.followers = user.followers;
-      state.likes = user.likes;
       state.age = user.age;
     },
     SET_LOGGED_USER(state, user) {
@@ -62,14 +60,13 @@ export const userModel = {
   actions: {
     async postSignUp({ getters, dispatch }) {
       try {
-        await axios.post('juice', {
+        await axios.post('signup', {
           name: getters.name,
           email: getters.email,
           password: getters.password,
           description: getters.description,
           following: getters.following,
           followers: getters.followers,
-          likes: getters.likes,
           age: getters.age,
         })
         router.push('/signin');
@@ -177,7 +174,6 @@ export const userModel = {
     description: state => state.description,
     following: state => state.following,
     followers: state => state.followers,
-    likes: state => state.likes,
     age: state => state.age,
   }
 }

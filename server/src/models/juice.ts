@@ -5,7 +5,7 @@ export interface JuiceDocumentInterface extends Document {
   userName: string,
   text: string,
   date: string,
-  likes: number
+  likes: [string]
 }
 
 export const JuiceSchema = new Schema<JuiceDocumentInterface>({
@@ -24,8 +24,8 @@ export const JuiceSchema = new Schema<JuiceDocumentInterface>({
     trim: true,
   },
   likes: {
-    type: Number,
-    default: 0,
+    type: [String],
+    default: [],
     required: false,
   }
 });
