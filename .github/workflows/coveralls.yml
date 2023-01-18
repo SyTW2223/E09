@@ -40,6 +40,9 @@ jobs:
         cache: 'npm'
 
       # Ver como ejecutar varios comandos en un mismo working-directory
+    - name: Generating /dist
+      working-directory: ./server
+      run: npx tsc
     - name: Generating coverage information
       working-directory: ./server
       run: npm run relcoverage
