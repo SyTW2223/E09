@@ -114,8 +114,6 @@ export class UserCRUD {
           return res.status(403).send({error: 'La sesión ha expirado'});
         } else {
           try {
-            console.log(authData.element._id);
-            console.log(req.query.id);
             if(authData.element._id !== req.query.id) {
               return res.status(403).send('Eliminación no permitida');
             }
