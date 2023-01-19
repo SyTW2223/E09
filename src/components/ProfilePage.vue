@@ -146,21 +146,27 @@
   .disabled-tab-btn:hover h4 {
     font-weight: bold;
   }
-  .follow-btn {
+  .unfollow-btn {
     padding: 0.5rem 1rem;
     background-color: #ED701B;
     color: white;
     border: none;
-    border-radius: 15%;
+    border-radius: 40%;
     cursor: pointer;
   }
-  .unfollow-btn {
+  .unfollow-btn:hover {
+    background-color: lightsalmon;
+  }
+  .follow-btn {
     padding: 0.5rem 1rem;
     background-color: white;
     color: #ED701B;
     border-width: 1px solid;
     border-color: #ED701B;
-    border-radius: 15%;
+    border-radius: 40%;
     cursor: pointer;
+  }
+  .follow-btn:hover {
+    background-color: lightgray;
   }
 </style>
