@@ -42,10 +42,10 @@ jobs:
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
       working-directory: ./server
-      run: npm run relcoverage
+      run: cd server && npm run relcoverage
     - name: Generating coverage report
       working-directory: ./server
-      run: npm run gencov
+      run: cd server &&  npm run gencov
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
