@@ -221,7 +221,7 @@ describe('PATCH password reset', () => {
     await request(app).patch('/api/password-reset').set({
       Authorization:'Bearer ' + token
     }).send({
-      password: "Password1",
+      name: "name",
     }).expect(400);
   });
   it('Should get an error for token not provided', async () => {
