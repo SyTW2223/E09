@@ -62,7 +62,7 @@ export class UserCRUD {
 
       jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
         if (err){
-          return res.status(403).send({error: 'La sesión ha expirado'});
+          return res.status(200).send([]);
         } else {
           return res.status(200).send(authData);
         }

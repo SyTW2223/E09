@@ -4,7 +4,7 @@
       <button id="juice-btn" class="juice-box2 juice-button" v-for="(juice, index) in juices" :key="index" @click="openJuicePage(juice, index)">
         <div class="juice">
           <div class="juice-info">
-            <router-link class="nav-link" :to="'/profile/' + juice.userName"  ><h3 @click.stop>@{{ juice.userName }}</h3></router-link>
+            <router-link class="nav-link" :to="'/profile/' + juice.userName"><h3 class="user-name" @click.stop>@{{ juice.userName }}</h3></router-link>
             <p>{{ juice.date }}</p>
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
@@ -111,6 +111,12 @@
     border-bottom: 1px solid lightgray !important;
     padding: 20px;
     padding-top: 10px;
+  }
+  .nav-link {
+    width: fit-content;
+  }
+  .user-name:hover {
+    font-weight: bold;
   }
 </style>
 
