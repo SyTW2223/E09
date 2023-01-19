@@ -11,9 +11,8 @@ export const userModel = {
     password: '',
     id: '',
     description: '',
-    following: 0,
-    followers: 0,
-    age: 0
+    following: [],
+    followers: 0
   }),
   mutations: {
     SET_USER(state, user) {
@@ -23,8 +22,6 @@ export const userModel = {
       state.id = user._id;
       state.description = user.description;
       state.following = user.following;
-      state.followers = user.followers;
-      state.age = user.age;
     },
     SET_LOGGED_USER(state, user) {
       state.loggedUser = user;
@@ -47,6 +44,9 @@ export const userModel = {
     SET_DESC(state, description) {
       state.description = description;
     },
+    SET_FOLLOWERS(state, followers) {
+      state.followers = followers;
+    },
     SIGN_IN(state, user) {
       state.email = user.email;
       state.password = user.password;
@@ -66,8 +66,6 @@ export const userModel = {
           password: getters.password,
           description: getters.description,
           following: getters.following,
-          followers: getters.followers,
-          age: getters.age,
         })
         router.push('/signin');
       } catch (err) {
@@ -82,6 +80,7 @@ export const userModel = {
         })
         localStorage.setItem('token', response.data.token);
         dispatch('getLoggedUser');
+        router.push('/');
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -93,8 +92,9 @@ export const userModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('setLoggedUser', response.data.element);
-        router.push('/');
+        if(response.data.length !== 0) {
+          dispatch('setLoggedUser', response.data);
+        }
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -103,7 +103,7 @@ export const userModel = {
       try {
         const response = await axios.post('password-reset', {
           email: getters.email
-        })
+        });
         dispatch('setError', null);
         dispatch('setSuccess', response.data);
       } catch (err) {
@@ -124,12 +124,34 @@ export const userModel = {
         dispatch('setError', err.response.data.error);
       }
     },
-    async getUser({ dispatch }, id) {
+    async getUser({ dispatch }, name) {
       try {
-        const response = await axios.get(`users?id=${id}`);
+        const response = await axios.get(`users?name=${name}`);
         dispatch('setUser', response.data[0]);
       } catch (err) {
         dispatch('setError', err.message);
+      }
+    },
+    async followUser({ dispatch, getters }, updated_following) {
+      try {
+        await axios.patch(`users?id=${getters.loggedUser._id}`, {
+          following: updated_following
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
+    async getFollowers({ dispatch }, userName) {
+      try {
+        const response = await axios.get(`followers?userName=${userName}`);
+        dispatch('setFollowers', response.data.followers);
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
     },
     signUp({commit}, user) {
@@ -162,6 +184,9 @@ export const userModel = {
     setDesc({commit}, description) {
       commit('SET_DESC', description);
     },
+    setFollowers({commit}, followers) {
+      commit('SET_FOLLOWERS', followers);
+    },
   },
   getters: {
     loggedUser: state => state.loggedUser,
@@ -174,6 +199,5 @@ export const userModel = {
     description: state => state.description,
     following: state => state.following,
     followers: state => state.followers,
-    age: state => state.age,
   }
 }

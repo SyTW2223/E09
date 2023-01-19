@@ -3,15 +3,17 @@ import router from "../../router/index"
 
 export const juiceModel = {
   state: () => ({
-    newJuice: false,
-    juicePage: false,
-    deleteMsg: false,
-    juices: [],
     userName: '',
     text: '',
     date: '',
     juice_id: '',
     likes: [],
+    juices: [],
+    newJuice: false,
+    juicePage: false,
+    deleteMsg: false,
+    likedPage: false,
+    number_of_juices: 0,
   }),
   mutations: {
     SET_JUICE(state, juice) {
@@ -32,6 +34,12 @@ export const juiceModel = {
     },
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
+    },
+    SET_LIKED_PAGE(state, value) {
+      state.likedPage = value;
+    },
+    SET_NUMBER_OF_JUICES(state, value) {
+      state.number_of_juices = value;
     }
   },
   actions: {
@@ -50,6 +58,12 @@ export const juiceModel = {
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
     },
+    setLikedPage({commit}, value) {
+      commit('SET_LIKED_PAGE', value);
+    },
+    setNumberOfJuices({commit}, value) {
+      commit('SET_NUMBER_OF_JUICES', value);
+    },
     async postJuice({ getters, dispatch }) {
       try {
         await axios.post('juice', {
@@ -65,7 +79,6 @@ export const juiceModel = {
         });
         dispatch('getJuices');
         dispatch('setNewJuice', false);
-        router.push('/');
       } catch (err) {
         dispatch('setError', err.message);
       }
@@ -77,7 +90,15 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('getJuices');
+        if(router.currentRoute.value.path === '/') {
+          dispatch('getJuices');
+        } else {
+          if(getters.likedPage) {
+            dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
+          } else {
+            dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
+          }
+        }
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -92,7 +113,15 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('getJuices');
+        if(router.currentRoute.value.path === '/') {
+          dispatch('getJuices');
+        } else {
+          if(getters.likedPage) {
+            dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
+          } else {
+            dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
+          }
+        }
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
@@ -109,6 +138,43 @@ export const juiceModel = {
         }
       }
     },
+    async getFollowingJuices({ dispatch, getters }) {
+      try {
+        const response = await axios.get(`juices/following?names=*${getters.loggedUser.following.join('*')}`);
+        dispatch('setJuices', response.data);
+      } catch (err) {
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
+        }
+      }
+    },
+    async getJuicesByUserName({ dispatch }, userName) {
+      try {
+        const response = await axios.get(`juices/user?userName=${userName}`);
+        dispatch('setJuices', response.data);
+        dispatch('setNumberOfJuices', response.data.length);
+      } catch (err) {
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
+        }
+      }
+    },
+    async getJuicesLikedByUserName({ dispatch }, userName) {
+      try {
+        const response = await axios.get(`juices/user/liked?userName=${userName}`);
+        dispatch('setJuices', response.data);
+      } catch (err) {
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
+        }
+      }
+    }
   },
   getters: {
     newJuice: state => state.newJuice,
@@ -120,5 +186,7 @@ export const juiceModel = {
     date: state => state.date,
     juice_id: state => state.juice_id,
     likes: state => state.likes,
+    likedPage: state => state.likedPage,
+    number_of_juices: state => state.number_of_juices,
   }
 }

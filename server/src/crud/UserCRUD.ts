@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { UserDocumentInterface } from '../models/user';
+import { User, UserDocumentInterface } from '../models/user';
 import { handleErrors } from './assets/handleErrors';
 import { sendEmail } from './assets/sendEmail';
 
@@ -60,15 +60,29 @@ export class UserCRUD {
     if (typeof bearerHeader !== 'undefined'){
       const bearerToken = bearerHeader.split(" ")[1];
 
-      jwt.verify(bearerToken, 'secretkey', (err: any, authData: any) => {
+      jwt.verify(bearerToken, 'secretkey', async  (err: any, authData: any) => {
         if (err){
-          return res.status(403).send({error: 'La sesión ha expirado'});
+          return res.status(200).send([]);
         } else {
-          return res.status(200).send(authData);
+          try {
+          const element = await User.findById(authData.element._id);
+          return res.status(200).send(element);
+          } catch(err) {
+            return res.status(404).send('Usuario no encontrado');
+          }
         }
       });
     } else {
       return res.status(400).send({error: 'Debe proporcionarse un token'});
+    }
+  }
+
+  public static async getFollowers(req: any, res: any, model: any) {
+    try {
+      const elements = await model.find({following: req.query.userName.toString()});
+      return res.status(200).send({followers: elements.length});
+    } catch (error) {
+      return res.status(500).send({error: error});
     }
   }
 

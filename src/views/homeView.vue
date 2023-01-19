@@ -1,11 +1,12 @@
 <template>
   <div class="page">
-    <h2 class="message"><b>Inicio</b></h2>
     <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
-    <JuicesList  :key="componentKey"/>
+    <HomeTabs/>
+    <JuicesList :key="componentKey"/>
   </div>
-  <NewJuice v-if='newJuice'/>
-  <JuiceComponent v-if='juicePage'/>
+  <NewJuice v-if="newJuice"/>
+  <JuiceComponent v-if="juicePage"/>
+  <DeleteMsg v-if="deleteMsg"/>
 </template>
 
 <script>
@@ -13,20 +14,25 @@ import { mapGetters } from 'vuex';
 import NewJuice from "../components/NewJuice.vue";
 import JuicesList from "../components/JuicesList.vue";
 import JuiceComponent from "../components/JuiceComponent.vue";
+import DeleteMsg from '@/components/DeleteMsg.vue';
+import HomeTabs from '@/components/HomeTabs.vue';
 export default {
   name: 'HomeView',
   data() {
     return {
       componentKey: 0,
+      homeTab: true
     };
   },
   components: {
+    HomeTabs,
     NewJuice,
     JuicesList,
-    JuiceComponent
+    JuiceComponent,
+    DeleteMsg
   },
   computed: {
-    ...mapGetters(['newJuice', 'juicePage'])
+    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg'])
   },
   methods: {
     forceRerender() {
@@ -35,6 +41,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getLoggedUser');
+    this.$store.dispatch('getJuices');
   }
 }
 </script>
@@ -47,8 +54,5 @@ export default {
   }
   .refresh-btn {
     right: 7.5%;
-  }
-  .message {
-    margin-top: 50px;
   }
 </style>

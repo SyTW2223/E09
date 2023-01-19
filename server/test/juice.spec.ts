@@ -72,7 +72,10 @@ describe('POST /api/juice', () => {
 */
 describe('GET /api/juices', () => {
   it('Should get an error for not found', async () => {
-    await request(app).get('/api/juices?id=1234').expect(404);
+    await request(app).get('/api/juices?id=41224d776a326fb40f000001').expect(404);
+  });
+  it('Should get an error for server error', async () => {
+    await request(app).get('/api/juices?id=1234').expect(500);
   });
   it('Should successfully get juices list', async () => {
     await request(app).get('/api/juices').expect(200);

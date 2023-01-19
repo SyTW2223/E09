@@ -12,7 +12,25 @@ juiceRouter.post('/api/juice', (req, res) => {
 
 // GET
 juiceRouter.get('/api/juices', (req, res) => {
-  const filter = req.query.id?{name: req.query.id.toString()}:{};
+  const filter = req.query.id?{_id: req.query.id.toString()}:{};
+  AppCRUD.get(res, filter, Juice);
+});
+
+// GET Juices by User
+juiceRouter.get('/api/juices/user', (req, res) => {
+  const filter = req.query.userName?{userName: req.query.userName.toString()}:{};
+  AppCRUD.get(res, filter, Juice);
+});
+
+// GET Juices by following
+juiceRouter.get('/api/juices/following', (req, res) => {
+  const filter = req.query.names?{userName: req.query.names.toString().split('*')}:{};
+  AppCRUD.get(res, filter, Juice);
+});
+
+// Get Juices liked by User
+juiceRouter.get('/api/juices/user/liked', (req, res) => {
+  const filter = req.query.userName?{likes: req.query.userName.toString()}:{};
   AppCRUD.get(res, filter, Juice);
 });
 

@@ -25,8 +25,12 @@ userRouter.get('/api/user', (req, res) => {
 });
 
 userRouter.get('/api/users', (req, res) => {
-  const filter = req.query.id?{_id: req.query.id.toString()}:{};
+  const filter = req.query.name?{name: req.query.name.toString()}:{};
   AppCRUD.get(res, filter, User);
+});
+
+userRouter.get('/api/followers', (req, res) => {
+  UserCRUD.getFollowers(req, res, User);
 });
 
 // PATCH
@@ -46,7 +50,7 @@ userRouter.patch('/api/password-reset', (req, res) => {
 });
 
  userRouter.patch('/api/users', (req, res) => {
-  const allowedUpdates = ['name', 'email', 'password', 'description', 'age'];
+  const allowedUpdates = ['name', 'email', 'password', 'description', 'following'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
     actualUpdates.every((update) => allowedUpdates.includes(update));
@@ -64,6 +68,8 @@ userRouter.patch('/api/password-reset', (req, res) => {
     AppCRUD.patch(req, res, User);
   }
 });
+
+
 
 // DELETE
 userRouter.delete('/api/users', (req, res) => {
