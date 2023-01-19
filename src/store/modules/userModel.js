@@ -12,6 +12,7 @@ export const userModel = {
     id: '',
     description: '',
     following: [],
+    followers: 0
   }),
   mutations: {
     SET_USER(state, user) {
@@ -42,6 +43,9 @@ export const userModel = {
     },
     SET_DESC(state, description) {
       state.description = description;
+    },
+    SET_FOLLOWERS(state, followers) {
+      state.followers = followers;
     },
     SIGN_IN(state, user) {
       state.email = user.email;
@@ -97,7 +101,7 @@ export const userModel = {
       try {
         const response = await axios.post('password-reset', {
           email: getters.email
-        })
+        });
         dispatch('setError', null);
         dispatch('setSuccess', response.data);
       } catch (err) {
@@ -140,6 +144,15 @@ export const userModel = {
         dispatch('setError', err.response.data.error);
       }
     },
+    async getFollowers({ dispatch }, userName) {
+      try {
+        console.log(userName);
+        const response = await axios.get(`followers?userName=${userName}`);
+        dispatch('setFollowers', response.data.followers);
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
+      }
+    },
     signUp({commit}, user) {
       commit('SIGN_UP', user);
     },
@@ -170,6 +183,9 @@ export const userModel = {
     setDesc({commit}, description) {
       commit('SET_DESC', description);
     },
+    setFollowers({commit}, followers) {
+      commit('SET_FOLLOWERS', followers);
+    },
   },
   getters: {
     loggedUser: state => state.loggedUser,
@@ -181,5 +197,6 @@ export const userModel = {
     id: state => state.id,
     description: state => state.description,
     following: state => state.following,
+    followers: state => state.followers,
   }
 }

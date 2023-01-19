@@ -29,6 +29,10 @@ userRouter.get('/api/users', (req, res) => {
   AppCRUD.get(res, filter, User);
 });
 
+userRouter.get('/api/followers', (req, res) => {
+  UserCRUD.getFollowers(req, res, User);
+});
+
 // PATCH
 userRouter.patch('/api/password-reset', (req, res) => {
   const allowedUpdates = ['password'];

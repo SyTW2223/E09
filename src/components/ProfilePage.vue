@@ -8,7 +8,7 @@
     </div>
     <div class="stats">
       <div class="stat">
-        <p>0</p>
+        <p>{{ followers }}</p>
         <p>Followers</p>
       </div>
       <div class="stat">
@@ -51,16 +51,18 @@
         updatedFollowing.push(this.$route.params.userName);
         if (this.loggedUser) {
           this.$store.dispatch('followUser', updatedFollowing);
+          this.$store.dispatch('getFollowers', this.$route.params.userName);
         } else {
           this.$router.push('/signin');
         }
       }
     },
     computed: {
-      ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser', 'number_of_juices'])
+      ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser', 'number_of_juices', 'followers'])
     },
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);
+      this.$store.dispatch('getFollowers', this.$route.params.userName);
       this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
       this.$store.dispatch('getLoggedUser');
     }

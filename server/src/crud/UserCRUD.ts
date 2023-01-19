@@ -72,6 +72,15 @@ export class UserCRUD {
     }
   }
 
+  public static async getFollowers(req: any, res: any, model: any) {
+    try {
+      const elements = await model.find({following: req.query.userName.toString()});
+      return res.status(200).send({followers: elements.length});
+    } catch (error) {
+      return res.status(500).send({error: error});
+    }
+  }
+
   public static async patchPassword(req: any, res: any, model: any) {
     const bearerHeader =  req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
