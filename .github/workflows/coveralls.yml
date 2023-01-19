@@ -5,13 +5,13 @@ name: Coveralls
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "github_actions_config" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "develop", "github_actions_config" ]
 
 jobs:
   build:
-
+    timeout-minutes: 4
     runs-on: ubuntu-latest
 
     strategy:
@@ -21,36 +21,37 @@ jobs:
 
     steps:
     - name: Cloning repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js 19.x
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: 19.x
+        cache: 'npm'
+        cache-dependency-path: 'server/package.json' 
+        #cache-dependency-path: 'package.json' 
 
     - name: Installing dependencies
       run: npm install
     - name: Installing server dependencies
       run: cd server && npm install
-    # Lo mismo que necesita la action de tests
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
 
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
       working-directory: ./server
       run: pwd && npm run relcoverage
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Generating coverage report
       working-directory: ./server
       run: pwd && npm run gencov
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
+        # ruta a lcov
+        path-to-lcov: ./server/coverage/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}
-
     # - name: Generating coverage information
     #   run: npm run coverage
     # - name: Coveralls GitHub Action
