@@ -20,7 +20,7 @@
         <p>Juices</p>
       </div>
     </div>
-    <div class="follow-btn" v-if="loggedUser">
+    <div class="follow-btn" v-if="loggedUser"> {{ chekIfFollowed() }}
       <button class="bttn" v-if="loggedUser.name != name && !followed" @click="followUser">Follow</button>
       <button class="bttn" v-if="loggedUser.name != name && followed" @click="followUser">Followed</button>
     </div>
@@ -40,7 +40,7 @@
     name: 'ProfilePage',
     data() {
       return {
-        followed: false
+        followed: null
       }
     },
     methods: {
@@ -69,18 +69,18 @@
           this.$router.push('/signin');
         }
       },
-      checkIfFollowed() {
-        const position = this.$store.getters.loggedUser.following.indexOf(this.$route.params.userName);
-        if (position > -1) {
-          this.followed = true;
-        } else {
-          this.followed = false;
-        }
+      chekIfFollowed() {
+      const position = this.$store.getters.loggedUser.following.indexOf(this.$route.params.userName);
+      if (position > -1) {
+        this.followed = true;
+      } else {
+        this.followed = false;
+      }
     }
     },
     computed: {
       ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser', 'number_of_juices', 'followers'])
-    }
+    },
   }
 </script>
      

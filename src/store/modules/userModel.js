@@ -92,7 +92,7 @@ export const userModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('setLoggedUser', response.data.element);
+        dispatch('setLoggedUser', response.data);
       } catch (err) {
         dispatch('setError', err.response.data.error);
       }
