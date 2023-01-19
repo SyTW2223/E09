@@ -25,13 +25,11 @@
         </div>
       </button>
     </div>
-    <DeleteMsg v-if="deleteMsg"/>
   </div>
 </template>
   
 <script>
   import { mapGetters } from 'vuex';
-  import DeleteMsg from './DeleteMsg.vue';
   export default {
     name: 'JuicesList',
     data() {
@@ -39,9 +37,6 @@
         likes: [],
         liked: []
       }
-    },
-    components: {
-      DeleteMsg
     },
     methods: {
       calculateLikes(juice_likes, index) {
@@ -76,7 +71,7 @@
       }
     },
     computed: {
-      ...mapGetters(['juices','loggedUser', 'deleteMsg']),
+      ...mapGetters(['juices','loggedUser']),
     },
     created() {
       this.liked = new Array(this.$store.getters.juices.length).fill(false);

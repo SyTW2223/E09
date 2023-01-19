@@ -20,9 +20,12 @@
         <p>Juices</p>
       </div>
     </div>
-    <!-- <div class="follow-btn" v-if="loggedUser.name != name">
+    <div class="follow-btn" v-if="loggedUser">
+      <button class="bttn" v-if="loggedUser.name != name" @click="followUser">Follow</button>
+    </div>
+    <div class="follow-btn" v-else>
       <button class="bttn" @click="followUser">Follow</button>
-    </div> -->
+    </div>
     <div class="juice-bar">
       <button class="juice-bar-button" @click="showUserJuices">Juices</button>
       <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>

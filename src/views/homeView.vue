@@ -6,6 +6,7 @@
   </div>
   <NewJuice v-if='newJuice'/>
   <JuiceComponent v-if='juicePage'/>
+  <DeleteMsg v-if="deleteMsg"/>
 </template>
 
 <script>
@@ -13,6 +14,7 @@ import { mapGetters } from 'vuex';
 import NewJuice from "../components/NewJuice.vue";
 import JuicesList from "../components/JuicesList.vue";
 import JuiceComponent from "../components/JuiceComponent.vue";
+import DeleteMsg from '@/components/DeleteMsg.vue';
 export default {
   name: 'HomeView',
   data() {
@@ -23,10 +25,11 @@ export default {
   components: {
     NewJuice,
     JuicesList,
-    JuiceComponent
+    JuiceComponent,
+    DeleteMsg
   },
   computed: {
-    ...mapGetters(['newJuice', 'juicePage'])
+    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg'])
   },
   methods: {
     forceRerender() {
