@@ -22,6 +22,12 @@ juiceRouter.get('/api/juices/user', (req, res) => {
   AppCRUD.get(res, filter, Juice);
 });
 
+// GET Juices by following
+juiceRouter.get('/api/juices/following', (req, res) => {
+  const filter = req.query.names?{userName: req.query.names.toString().split('*')}:{};
+  AppCRUD.get(res, filter, Juice);
+});
+
 // Get Juices liked by User
 juiceRouter.get('/api/juices/user/liked', (req, res) => {
   const filter = req.query.userName?{likes: req.query.userName.toString()}:{};

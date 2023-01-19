@@ -9,11 +9,11 @@
     <div class="stats">
       <div class="stat">
         <p>{{ followers }}</p>
-        <p>Followers</p>
+        <p>Seguidores</p>
       </div>
       <div class="stat">
         <p>{{ following.length }}</p>
-        <p>Following</p>
+        <p>Siguiendo</p>
       </div>
       <div class="stat">
         <p>{{ number_of_juices }}</p>
@@ -29,11 +29,11 @@
     </div>
     <div class="tab" v-if="profileTab">
       <button class="tab-btn" @click="showUserJuices">Juices</button>
-      <button class="disabled-tab-btn" @click="showLikedJuices">Liked Juices</button>
+      <button class="disabled-tab-btn" @click="showLikedJuices">Me gusta</button>
     </div>
     <div class="tab" v-else>
       <button class="disabled-tab-btn" @click="showUserJuices">Juices</button>
-      <button class="tab-btn" @click="showLikedJuices">Liked Juices</button>
+      <button class="tab-btn" @click="showLikedJuices">Me gusta</button>
     </div>
   </div>
 </template>

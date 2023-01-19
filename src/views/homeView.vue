@@ -1,7 +1,19 @@
 <template>
   <div class="page">
-    <h2 class="message"><b>Inicio</b></h2>
     <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
+    <div class="home-tab">
+      <div class="tab" v-if="homeTab && loggedUser">
+        <button class="tab-btn" @click="showAllJuices">Inicio</button>
+        <button class="disabled-tab-btn" @click="showFollowingJuices">Siguiendo</button>
+      </div>
+      <div class="tab" v-if="!homeTab && loggedUser">
+        <button class="disabled-tab-btn" @click="showAllJuices">Inicio</button>
+        <button class="tab-btn" @click="showFollowingJuices">Siguiendo</button>
+      </div>
+      <div v-if="!loggedUser">
+        <button class="tab-btn" disabled>Inicio</button>
+      </div>
+    </div>
     <JuicesList  :key="componentKey"/>
   </div>
   <NewJuice v-if="newJuice"/>
@@ -20,6 +32,7 @@ export default {
   data() {
     return {
       componentKey: 0,
+      homeTab: true
     };
   },
   components: {
@@ -29,12 +42,20 @@ export default {
     DeleteMsg
   },
   computed: {
-    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg'])
+    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg', 'loggedUser'])
   },
   methods: {
     forceRerender() {
       this.componentKey += 1;
-    }
+    },
+    showAllJuices() {
+      this.homeTab = true;
+      this.$store.dispatch('getJuices');
+    },
+    showFollowingJuices() {
+      this.homeTab = false;
+      this.$store.dispatch('getFollowingJuices');
+    },
   },
   created() {
     this.$store.dispatch('getLoggedUser');
@@ -52,7 +73,8 @@ export default {
   .refresh-btn {
     right: 7.5%;
   }
-  .message {
+  .home-tab {
     margin-top: 50px;
+    margin-bottom: 20px;
   }
 </style>

@@ -134,11 +134,19 @@ export const juiceModel = {
         if(err.response.status === 404) {
           dispatch('setJuices', []);
         } else {
-          if(err.response.status === 404) {
-            dispatch('setJuices', []);
-          } else {
-            dispatch('setError', err.response.data.error);
-          }
+          dispatch('setError', err.response.data.error);
+        }
+      }
+    },
+    async getFollowingJuices({ dispatch, getters }) {
+      try {
+        const response = await axios.get(`juices/following?names=*${getters.loggedUser.following.join('*')}`);
+        dispatch('setJuices', response.data);
+      } catch (err) {
+        if(err.response.status === 404) {
+          dispatch('setJuices', []);
+        } else {
+          dispatch('setError', err.response.data.error);
         }
       }
     },
