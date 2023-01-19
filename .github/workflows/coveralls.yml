@@ -38,12 +38,7 @@ jobs:
       # Ver como ejecutar varios comandos en un mismo working-directory
     - name: Generating coverage information
       working-directory: ./server
-      run: pwd && npm run relcoverage
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Generating coverage report
-      working-directory: ./server
-      run: pwd && npm run gencov
+      run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Evaluates coverage information
@@ -52,9 +47,3 @@ jobs:
         # ruta a lcov
         path-to-lcov: ./server/coverage/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    # - name: Generating coverage information
-    #   run: npm run coverage
-    # - name: Coveralls GitHub Action
-    #   uses: coverallsapp/github-action@master
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
