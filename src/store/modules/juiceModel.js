@@ -3,16 +3,17 @@ import router from "../../router/index"
 
 export const juiceModel = {
   state: () => ({
-    newJuice: false,
-    juicePage: false,
-    deleteMsg: false,
-    likedPage: false,
-    juices: [],
     userName: '',
     text: '',
     date: '',
     juice_id: '',
     likes: [],
+    juices: [],
+    newJuice: false,
+    juicePage: false,
+    deleteMsg: false,
+    likedPage: false,
+    number_of_juices: 0,
   }),
   mutations: {
     SET_JUICE(state, juice) {
@@ -36,6 +37,9 @@ export const juiceModel = {
     },
     SET_LIKED_PAGE(state, value) {
       state.likedPage = value;
+    },
+    SET_NUMBER_OF_JUICES(state, value) {
+      state.number_of_juices = value;
     }
   },
   actions: {
@@ -56,6 +60,9 @@ export const juiceModel = {
     },
     setLikedPage({commit}, value) {
       commit('SET_LIKED_PAGE', value);
+    },
+    setNumberOfJuices({commit}, value) {
+      commit('SET_NUMBER_OF_JUICES', value);
     },
     async postJuice({ getters, dispatch }) {
       try {
@@ -140,6 +147,7 @@ export const juiceModel = {
       try {
         const response = await axios.get(`juices/user?userName=${userName}`);
         dispatch('setJuices', response.data);
+        dispatch('setNumberOfJuices', response.data.length);
       } catch (err) {
         if(err.response.status === 404) {
           dispatch('setJuices', []);
@@ -172,5 +180,6 @@ export const juiceModel = {
     juice_id: state => state.juice_id,
     likes: state => state.likes,
     likedPage: state => state.likedPage,
+    number_of_juices: state => state.number_of_juices,
   }
 }

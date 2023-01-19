@@ -16,7 +16,7 @@
         <p>Following</p>
       </div>
       <div class="stat">
-        <p>{{ juices.length }}</p>
+        <p>{{ number_of_juices }}</p>
         <p>Juices</p>
       </div>
     </div>
@@ -62,7 +62,7 @@
       }
     },
     computed: {
-      ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser'])
+      ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser', 'number_of_juices'])
     },
     created() {
       this.$store.dispatch('getUser', this.$route.params.userName);
