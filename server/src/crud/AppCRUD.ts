@@ -32,7 +32,6 @@ export class AppCRUD {
   public static async get(res: any, filter: any, model: any) {
     try {
       const elements = await model.find(filter);
-
       if (elements.length !== 0) {
         return res.status(200).send(elements);
       }
