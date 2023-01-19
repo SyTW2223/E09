@@ -1,0 +1,60 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Coveralls
+
+on:
+  push:
+    branches: [ "develop", "github_actions_config", "main" ]
+  pull_request:
+    branches: [ "develop", "github_actions_config", "main" ]
+
+jobs:
+  build:
+    timeout-minutes: 4
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [19.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Cloning repo
+      uses: actions/checkout@v3
+    - name: Use Node.js 19.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x
+        cache: 'npm'
+        cache-dependency-path: 'server/package.json' 
+        #cache-dependency-path: 'package.json' 
+
+    - name: Installing dependencies
+      run: npm install
+    - name: Installing server dependencies
+      run: cd server && npm install
+
+      # Ver como ejecutar varios comandos en un mismo working-directory
+    - name: Generating coverage information
+      working-directory: ./server
+      run: pwd && npm run relcoverage
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Generating coverage report
+      working-directory: ./server
+      run: pwd && npm run gencov
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Evaluates coverage information
+      uses: coverallsapp/github-action@1.1.3
+      with:
+        # ruta a lcov
+        path-to-lcov: ./server/coverage/lcov.info
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Generating coverage information
+    #   run: npm run coverage
+    # - name: Coveralls GitHub Action
+    #   uses: coverallsapp/github-action@master
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}

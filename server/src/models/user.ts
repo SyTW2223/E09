@@ -5,11 +5,7 @@ export interface UserDocumentInterface extends Document {
   name: string,
   email: string,
   password: string,
-  description: string,
-  following: number,
-  followers: number,
-  likes: number,
-  age: number,
+  following: [string],
 }
 
 export const UserSchema = new Schema<UserDocumentInterface>({
@@ -21,6 +17,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   email: {
     type: String,
+    unique: true,
     required: true,
     trim: true,
     validate: (value: string) => {
@@ -33,36 +30,15 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     required: true,
     trim: true,
-    //validate: (value: string) => {
-      //if (!validator.isStrongPassword(value)) {
-      //  throw new Error('Must be a strong password');
-    //  }
-    //},
-  },
-  description: {
-    type: String,
-    default: "",
-    unique: false,
-    required: false,
-    trim: true,
+    validate: (value: string) => {
+      if (!validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0})) {
+        throw new Error('Must be a strong password');
+      }
+    },
   },
   following: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  followers: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
-  age: {
-    type: Number,
+    type: [String],
+    default: [],
     required: false,
   },
 });

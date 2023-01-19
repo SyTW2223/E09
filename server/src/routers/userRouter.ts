@@ -1,33 +1,41 @@
 import * as express from 'express';
 import {User} from '../models/user';
-import {JuicerApiCRUD} from '../JuicerApiCRUD';
+import {UserCRUD} from '../crud/UserCRUD';
+import { AppCRUD } from '../crud/AppCRUD';
 
 export const userRouter = express.Router();
 
 // POST
-userRouter.post('/api/users', (req, res) => {
+userRouter.post('/api/signup', (req, res) => {
   const user = new User(req.body);
-  JuicerApiCRUD.post(res, user);
+  UserCRUD.postSignUp(res, user);
+});
+
+userRouter.post('/api/signin', (req, res) => {
+  UserCRUD.postSignIn(res, req, User);
+});
+
+userRouter.post('/api/password-reset', (req, res) => {
+  UserCRUD.postPasswordReset(res, req, User);
 });
 
 // GET
-userRouter.get('/api/users', (req, res) => {
-  const filter = req.query.name?{name: req.query.name.toString()}:{};
-  JuicerApiCRUD.get(res, filter, User);
+userRouter.get('/api/user', (req, res) => {
+  UserCRUD.getLoggedUser(req, res);
 });
 
-userRouter.get('/api/users/:id', (req, res) => {
-  JuicerApiCRUD.idGet(req, res, User);
+userRouter.get('/api/users', (req, res) => {
+  const filter = req.query.name?{name: req.query.name.toString()}:{};
+  AppCRUD.get(res, filter, User);
+});
+
+userRouter.get('/api/followers', (req, res) => {
+  UserCRUD.getFollowers(req, res, User);
 });
 
 // PATCH
- userRouter.patch('/api/users', (req, res) => {
-  if (!req.query.name) {
-    res.status(400).send({
-      error: 'A name must be provided',
-    });
-  }
-  const allowedUpdates = ['name', 'email', 'password', 'description', 'following', 'followers', 'likes', 'age'];
+userRouter.patch('/api/password-reset', (req, res) => {
+  const allowedUpdates = ['password'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
     actualUpdates.every((update) => allowedUpdates.includes(update));
@@ -36,37 +44,39 @@ userRouter.get('/api/users/:id', (req, res) => {
     res.status(400).send({
       error: 'Update is not permitted',
     });
+  } else {
+    UserCRUD.patchPassword(req, res, User);
   }
-  JuicerApiCRUD.patch(req, res, User);
 });
 
-/**
- * Actualiza la canción por id
- */
-userRouter.patch('/api/users/:id', (req, res) => {
-  const allowedUpdates = ['name', 'email', 'password', 'description', 'following', 'followers', 'likes', 'age'];
+ userRouter.patch('/api/users', (req, res) => {
+  const allowedUpdates = ['name', 'email', 'password', 'following'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate =
-      actualUpdates.every((update) => allowedUpdates.includes(update));
+    actualUpdates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidUpdate) {
     res.status(400).send({
       error: 'Update is not permitted',
     });
+  } else {
+    if (!req.query.id) {
+      res.status(400).send({
+        error: 'An id must be provided',
+      });
+    }
+    AppCRUD.patch(req, res, User);
   }
-  JuicerApiCRUD.idPatch(req, res, User);
 });
+
+
 
 // DELETE
 userRouter.delete('/api/users', (req, res) => {
-  if (!req.query.name) {
+  if (!req.query.id) {
     res.status(400).send({
-      error: 'A name must be provided',
+      error: 'An id must be provided',
     });
   }
-  JuicerApiCRUD.delete(req, res, User);
-});
-
-userRouter.delete('/api/users/:id', async (req, res) => {
-  JuicerApiCRUD.idDelete(req, res, User);
+  UserCRUD.delete(req, res, User);
 });
