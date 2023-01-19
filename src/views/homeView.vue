@@ -4,8 +4,8 @@
     <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
     <JuicesList  :key="componentKey"/>
   </div>
-  <NewJuice v-if='newJuice'/>
-  <JuiceComponent v-if='juicePage'/>
+  <NewJuice v-if="newJuice"/>
+  <JuiceComponent v-if="juicePage"/>
   <DeleteMsg v-if="deleteMsg"/>
 </template>
 

@@ -79,7 +79,6 @@ export const juiceModel = {
         });
         dispatch('getJuices');
         dispatch('setNewJuice', false);
-        router.push('/');
       } catch (err) {
         dispatch('setError', err.message);
       }

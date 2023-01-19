@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-page">
+  <div>
     <div class="header">
       <h1>@{{ name }}</h1>
     </div>
@@ -30,18 +30,13 @@
       <button class="juice-bar-button" @click="showUserJuices">Juices</button>
       <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
     </div>
-    <JuicesList/>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
-  import JuicesList from "../components/JuicesList.vue";
   export default {
     name: 'ProfilePage',
-    components: {
-      JuicesList
-    },
     methods: {
       showUserJuices() {
         this.$store.dispatch('setLikedPage', false);
