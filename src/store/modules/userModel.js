@@ -146,7 +146,6 @@ export const userModel = {
     },
     async getFollowers({ dispatch }, userName) {
       try {
-        console.log(userName);
         const response = await axios.get(`followers?userName=${userName}`);
         dispatch('setFollowers', response.data.followers);
       } catch (err) {

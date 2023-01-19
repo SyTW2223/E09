@@ -21,7 +21,8 @@
       </div>
     </div>
     <div class="follow-btn" v-if="loggedUser">
-      <button class="bttn" v-if="loggedUser.name != name" @click="followUser">Follow</button>
+      <button class="bttn" v-if="loggedUser.name != name && !followed" @click="followUser">Follow</button>
+      <button class="bttn" v-if="loggedUser.name != name && followed" @click="followUser">Followed</button>
     </div>
     <div class="follow-btn" v-else>
       <button class="bttn" @click="followUser">Follow</button>
@@ -37,6 +38,11 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'ProfilePage',
+    data() {
+      return {
+        followed: false
+      }
+    },
     methods: {
       showUserJuices() {
         this.$store.dispatch('setLikedPage', false);
@@ -46,25 +52,34 @@
         this.$store.dispatch('setLikedPage', true);
         this.$store.dispatch('getJuicesLikedByUserName', this.$route.params.userName);
       },
-      followUser() {
-        let updatedFollowing = this.loggedUser.following;
-        updatedFollowing.push(this.$route.params.userName);
+      async followUser() {
         if (this.loggedUser) {
-          this.$store.dispatch('followUser', updatedFollowing);
+          let updatedFollowing = this.loggedUser.following;
+          const position = updatedFollowing.indexOf(this.$route.params.userName);
+          if (position > -1) {
+            updatedFollowing.splice(position, 1);
+            this.followed = false;
+          } else {
+            updatedFollowing.push(this.$route.params.userName);
+            this.followed = true;
+          }
+          await this.$store.dispatch('followUser', updatedFollowing);
           this.$store.dispatch('getFollowers', this.$route.params.userName);
         } else {
           this.$router.push('/signin');
         }
-      }
+      },
+      checkIfFollowed() {
+        const position = this.$store.getters.loggedUser.following.indexOf(this.$route.params.userName);
+        if (position > -1) {
+          this.followed = true;
+        } else {
+          this.followed = false;
+        }
+    }
     },
     computed: {
       ...mapGetters(['name', 'description', 'following', 'juices', 'likedPage', 'loggedUser', 'number_of_juices', 'followers'])
-    },
-    created() {
-      this.$store.dispatch('getUser', this.$route.params.userName);
-      this.$store.dispatch('getFollowers', this.$route.params.userName);
-      this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
-      this.$store.dispatch('getLoggedUser');
     }
   }
 </script>

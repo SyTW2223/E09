@@ -39,6 +39,12 @@
     },
     computed: {
       ...mapGetters(['newJuice', 'juicePage', 'deleteMsg'])
+    },
+    created() {
+      this.$store.dispatch('getUser', this.$route.params.userName);
+      this.$store.dispatch('getFollowers', this.$route.params.userName);
+      this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
+      this.$store.dispatch('getLoggedUser');
     }
   }
 </script>
