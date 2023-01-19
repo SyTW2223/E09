@@ -7,7 +7,6 @@ const testUser = {
   name: "test",
   email: "test@test.com",
   password: "Password1",
-  description: "description1",
   following: 0,
   followres: 0,
   age: 0,

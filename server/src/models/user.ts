@@ -5,7 +5,6 @@ export interface UserDocumentInterface extends Document {
   name: string,
   email: string,
   password: string,
-  description: string,
   following: [string],
 }
 
@@ -36,13 +35,6 @@ export const UserSchema = new Schema<UserDocumentInterface>({
         throw new Error('Must be a strong password');
       }
     },
-  },
-  description: {
-    type: String,
-    default: "",
-    unique: false,
-    required: false,
-    trim: true,
   },
   following: {
     type: [String],

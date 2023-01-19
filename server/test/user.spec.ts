@@ -7,7 +7,6 @@ const firstUser = {
   name: "user1",
   email: "user1@example.com",
   password: "Password1",
-  description: "description1",
   following: 0,
   followres: 0,
   age: 0,
@@ -17,7 +16,6 @@ const testUser = {
   name: "user3",
   email: "user1@example.com",
   password: "Password3",
-  description: "description3",
   following: 0,
   followres: 0,
   age: 0,
@@ -41,7 +39,6 @@ describe('POST /api/signup', () => {
       name: "user2",
       email: "user2@example.com",
       password: "Password2",
-      description: "description2",
       folowing: 0,
       followers: 0,
       age: 0,
@@ -52,7 +49,6 @@ describe('POST /api/signup', () => {
       name: "user3",
       email: "email",
       password: "Password3",
-      description: "description3",
       folowing: 0,
       followers: 0,
       age: 0,
@@ -70,7 +66,6 @@ describe('POST /api/signup', () => {
       name: "user3",
       email: "user3@example.com",
       password: "short",
-      description: "description3",
       folowing: 0,
       followers: 0,
       age: 0,
@@ -144,7 +139,6 @@ describe('GET /api/user', () => {
         name: "user2",
         email: "user2@example.com",
         password: "Password2",
-        description: "description2",
         following: 0,
         followers: 0,
         age: 0,
@@ -166,18 +160,18 @@ describe('GET /api/user', () => {
 /**
  * PATCH user
  */
-describe('PATCH user description', () => {
-  it('Should successfully change a user description',async () => {
+describe('PATCH user password', () => {
+  it('Should successfully change a user password',async () => {
     const response = await request(app).patch(`/api/users?id=${id}`).send({
-      description: "description2",
+      password: "Password2",
     }).set({
       Authorization:'Bearer ' + token
     }).expect(200);
-    expect(response.body.description).to.be.eq('description2');
+    expect(response.body.password).to.be.eq('Password2');
   });
   it('Should get an error for id not provided',async () => {
     await request(app).patch('/api/users').send({
-      description: "description2",
+      password: "Password2",
     }).set({
       Authorization:'Bearer ' + token
     }).expect(400);
@@ -191,7 +185,7 @@ describe('PATCH user description', () => {
   });
   it('Should get an error because the token does not exist',async () => {
     await request(app).patch(`/api/users?id=${id}`).send({
-      description: "description2",
+      password: "Password2",
     }).set({
       Authorization:'Bearer ' + 'undefinedToken'
     }).expect(403);
@@ -227,7 +221,7 @@ describe('PATCH password reset', () => {
     await request(app).patch('/api/password-reset').set({
       Authorization:'Bearer ' + token
     }).send({
-      description: "description2",
+      password: "Password1",
     }).expect(400);
   });
   it('Should get an error for token not provided', async () => {
