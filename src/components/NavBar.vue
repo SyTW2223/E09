@@ -18,7 +18,7 @@
           </ul>
           <ul v-if="loggedUser" class="navbar-nav">
             <li class="nav-item active">
-              <router-link class="nav-link" @click="signOut(); closePages()" to="/" >Cerrar sesión</router-link>
+              <a class="nav-link" href="#" @click="signOut(); closePages()" >Cerrar sesión</a>
             </li>
             <li class="nav-item active">
               <router-link class="nav-link" @click="closePages(); loadProfileData()" :to="'/profile/' + loggedUser.name">Mi perfil</router-link>

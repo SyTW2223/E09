@@ -1,7 +1,14 @@
 <template>
-  <div>
+  <div @load="chekIfFollowed">
     <div class="header">
       <h1>@{{ name }}</h1>
+      <div v-if="loggedUser">
+        <button class="follow-btn" v-if="loggedUser.name != name && !followed" @click="followUser">Seguir</button>
+        <button class="unfollow-btn" v-if="loggedUser.name != name && followed" @click="followUser">Siguiendo</button>
+      </div>
+      <div v-else>
+        <router-link class="follow-btn" to="/signin">Seguir</router-link>
+      </div>
     </div>
     <div class="bio">
        <p>{{ description }}</p>
@@ -19,13 +26,6 @@
         <p>{{ number_of_juices }}</p>
         <p>Juices</p>
       </div>
-    </div>
-    <div class="follow-btn" v-if="loggedUser"> {{ chekIfFollowed() }}
-      <button class="bttn" v-if="loggedUser.name != name && !followed" @click="followUser">Follow</button>
-      <button class="bttn" v-if="loggedUser.name != name && followed" @click="followUser">Followed</button>
-    </div>
-    <div class="follow-btn" v-else>
-      <button class="bttn" @click="followUser">Follow</button>
     </div>
     <div class="tab" v-if="profileTab">
       <button class="tab-btn" @click="showUserJuices">Juices</button>
@@ -60,28 +60,26 @@
         this.$store.dispatch('getJuicesLikedByUserName', this.$route.params.userName);
       },
       async followUser() {
-        if (this.loggedUser) {
-          let updatedFollowing = this.loggedUser.following;
-          const position = updatedFollowing.indexOf(this.$route.params.userName);
-          if (position > -1) {
-            updatedFollowing.splice(position, 1);
-            this.followed = false;
-          } else {
-            updatedFollowing.push(this.$route.params.userName);
-            this.followed = true;
-          }
-          await this.$store.dispatch('followUser', updatedFollowing);
-          this.$store.dispatch('getFollowers', this.$route.params.userName);
+        let updatedFollowing = this.loggedUser.following;
+        const position = updatedFollowing.indexOf(this.$route.params.userName);
+        if (position > -1) {
+          updatedFollowing.splice(position, 1);
+          this.followed = false;
         } else {
-          this.$router.push('/signin');
+          updatedFollowing.push(this.$route.params.userName);
+          this.followed = true;
         }
+        await this.$store.dispatch('followUser', updatedFollowing);
+        this.$store.dispatch('getFollowers', this.$route.params.userName);
       },
       chekIfFollowed() {
-      const position = this.$store.getters.loggedUser.following.indexOf(this.$route.params.userName);
-      if (position > -1) {
-        this.followed = true;
-      } else {
-        this.followed = false;
+        if(this.loggedUser) {
+        const position = this.loggedUser.following.indexOf(this.$route.params.userName);
+        if (position > -1) {
+          this.followed = true;
+        } else {
+          this.followed = false;
+        }
       }
     }
     },
@@ -126,18 +124,43 @@
   }
   .tab-btn {
     padding: 0.5rem 1rem;
-    background-color: #ED701B;
-    color: white;
+    background-color: white;
+    color: black;
+    border-bottom: 5px solid #ED701B !important;
     border: none;
-    border-radius: 4px;
+    font-weight: bold;
     cursor: pointer;
+  }
+  .tab-btn h4{
+    font-weight: bold;
   }
   .disabled-tab-btn {
     padding: 0.5rem 1rem;
     background-color: white;
-    color: #ED701B;
     border: none;
-    border-radius: 4px;
+    cursor: pointer;
+  }
+  .disabled-tab-btn:hover {
+    font-weight: bold;
+  }
+  .disabled-tab-btn:hover h4 {
+    font-weight: bold;
+  }
+  .follow-btn {
+    padding: 0.5rem 1rem;
+    background-color: #ED701B;
+    color: white;
+    border: none;
+    border-radius: 15%;
+    cursor: pointer;
+  }
+  .unfollow-btn {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: #ED701B;
+    border-width: 1px solid;
+    border-color: #ED701B;
+    border-radius: 15%;
     cursor: pointer;
   }
 </style>
