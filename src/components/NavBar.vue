@@ -21,7 +21,7 @@
               <router-link class="nav-link" @click="signOut(); closePages()" to="/" >Cerrar sesión</router-link>
             </li>
             <li class="nav-item active">
-              <router-link class="nav-link" @click="closePages()" :to="'/profile/' + loggedUser.name">Mi perfil</router-link>
+              <router-link class="nav-link" @click="closePages(); loadProfileData()" :to="'/profile/' + loggedUser.name">Mi perfil</router-link>
             </li>
           </ul>
         </div>
@@ -47,6 +47,12 @@
         this.$store.dispatch('setNewJuice', false);
         this.$store.dispatch('setJuicePage', false);
         this.$store.dispatch('setDeleteMsg', false);
+      },
+      loadProfileData() {
+        this.$store.dispatch('getUser', this.loggedUser.name);
+        this.$store.dispatch('getFollowers', this.loggedUser.name);
+        this.$store.dispatch('getJuicesByUserName', this.loggedUser.name);
+        this.$store.dispatch('getLoggedUser');
       }
     },
     computed: {
