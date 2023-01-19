@@ -70,7 +70,7 @@
 <style>
   .profile-page {
       width: 50%;
-      margin: 2% auto;
+      margin: 5% auto;
       background-color: rgb(255, 255, 255);
       box-shadow: 0px 0px 10px #ddd;
       padding: 20px;
