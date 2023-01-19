@@ -1,20 +1,8 @@
 <template>
   <div class="page">
     <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
-    <div class="home-tab">
-      <div class="tab" v-if="homeTab && loggedUser">
-        <button class="tab-btn" @click="showAllJuices">Inicio</button>
-        <button class="disabled-tab-btn" @click="showFollowingJuices">Siguiendo</button>
-      </div>
-      <div class="tab" v-if="!homeTab && loggedUser">
-        <button class="disabled-tab-btn" @click="showAllJuices">Inicio</button>
-        <button class="tab-btn" @click="showFollowingJuices">Siguiendo</button>
-      </div>
-      <div v-if="!loggedUser">
-        <button class="tab-btn" disabled>Inicio</button>
-      </div>
-    </div>
-    <JuicesList  :key="componentKey"/>
+    <HomeTabs/>
+    <JuicesList :key="componentKey"/>
   </div>
   <NewJuice v-if="newJuice"/>
   <JuiceComponent v-if="juicePage"/>
@@ -27,6 +15,7 @@ import NewJuice from "../components/NewJuice.vue";
 import JuicesList from "../components/JuicesList.vue";
 import JuiceComponent from "../components/JuiceComponent.vue";
 import DeleteMsg from '@/components/DeleteMsg.vue';
+import HomeTabs from '@/components/HomeTabs.vue';
 export default {
   name: 'HomeView',
   data() {
@@ -36,26 +25,19 @@ export default {
     };
   },
   components: {
+    HomeTabs,
     NewJuice,
     JuicesList,
     JuiceComponent,
     DeleteMsg
   },
   computed: {
-    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg', 'loggedUser'])
+    ...mapGetters(['newJuice', 'juicePage', 'deleteMsg'])
   },
   methods: {
     forceRerender() {
       this.componentKey += 1;
-    },
-    showAllJuices() {
-      this.homeTab = true;
-      this.$store.dispatch('getJuices');
-    },
-    showFollowingJuices() {
-      this.homeTab = false;
-      this.$store.dispatch('getFollowingJuices');
-    },
+    }
   },
   created() {
     this.$store.dispatch('getLoggedUser');
@@ -72,9 +54,5 @@ export default {
   }
   .refresh-btn {
     right: 7.5%;
-  }
-  .home-tab {
-    margin-top: 50px;
-    margin-bottom: 20px;
   }
 </style>

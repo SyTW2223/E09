@@ -4,7 +4,7 @@ import SignInView from '../views/signinView.vue'
 import SignUpView from '../views/signupView.vue'
 import ForgotView from '../views/forgotView.vue'
 import ResetView from '../views/resetView.vue'
-import ProfilePageView from '../views/profilePageView.vue'
+import ProfileView from '../views/profileView.vue'
 
 const mode = 'history';
 
@@ -36,8 +36,8 @@ const routes = [
   },
   {
     path: '/profile/:userName',
-    name: 'ProfilePage',
-    component: ProfilePageView
+    name: 'Profile',
+    component: ProfileView
   }
 ]
 const router = createRouter({

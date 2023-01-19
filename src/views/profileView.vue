@@ -19,7 +19,7 @@
   import JuiceComponent from "../components/JuiceComponent.vue";
   import DeleteMsg from "../components/DeleteMsg.vue";
   export default {
-    name: 'ProfilePageView',
+    name: 'ProfileView',
     data() {
       return {
         componentKey: 0,
