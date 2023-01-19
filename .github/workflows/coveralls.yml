@@ -27,8 +27,8 @@ jobs:
       with:
         node-version: 19.x
 
-    - name: Installing dependencies
-      run: npm install
+    #- name: Installing dependencies
+    #  run: npm install
     - name: Installing server dependencies
       run: cd server && npm install
     # Lo mismo que necesita la action de tests
