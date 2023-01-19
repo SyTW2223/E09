@@ -27,9 +27,13 @@
     <div class="follow-btn" v-else>
       <button class="bttn" @click="followUser">Follow</button>
     </div>
-    <div class="juice-bar">
-      <button class="juice-bar-button" @click="showUserJuices">Juices</button>
-      <button class="juice-bar-button" @click="showLikedJuices">Liked Juices</button>
+    <div class="tab" v-if="profileTab">
+      <button class="tab-btn" @click="showUserJuices">Juices</button>
+      <button class="disabled-tab-btn" @click="showLikedJuices">Liked Juices</button>
+    </div>
+    <div class="tab" v-else>
+      <button class="disabled-tab-btn" @click="showUserJuices">Juices</button>
+      <button class="tab-btn" @click="showLikedJuices">Liked Juices</button>
     </div>
   </div>
 </template>
@@ -40,15 +44,18 @@
     name: 'ProfilePage',
     data() {
       return {
-        followed: null
+        followed: null,
+        profileTab: true
       }
     },
     methods: {
       showUserJuices() {
+        this.profileTab = true;
         this.$store.dispatch('setLikedPage', false);
         this.$store.dispatch('getJuicesByUserName', this.$route.params.userName);
       },
       showLikedJuices() {
+        this.profileTab = false;
         this.$store.dispatch('setLikedPage', true);
         this.$store.dispatch('getJuicesLikedByUserName', this.$route.params.userName);
       },
@@ -106,24 +113,31 @@
     position: relative;
     overflow: hidden;
   }
-  .juice-bar {
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  text-align: center;
+  .tab {
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    text-align: center;
   }
-  .juice-bar-button {
-  padding: 0.5rem 1rem;
-  background-color: #e7910e;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  }
-  .juice-bar-button:first-child {
+  .tab:first-child {
     margin-right: 0.5rem;
   }
-
-  .juice-bar-button:last-child {
+  .tab:last-child {
     margin-left: 0.5rem;
+  }
+  .tab-btn {
+    padding: 0.5rem 1rem;
+    background-color: #ED701B;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .disabled-tab-btn {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: #ED701B;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
 </style>
