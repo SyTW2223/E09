@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc; env-cmd -f ./config/dev.env node dist/index.js;",
     "dev": "tsc-watch --onSuccess \"env-cmd -f ./config/dev.env node dist/index.js\"",
-    "test": "mocha --exit",
+    "test": "npx mocha --exit",
     "localtests": "env-cmd -f ./config/test.env mocha --exit",
     "coverage": "nyc npm test && nyc report --reporter=lcov",
     "relcoverage": "npx nyc npm test",
