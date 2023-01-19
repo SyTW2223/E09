@@ -10,7 +10,6 @@ export const userModel = {
     email: '',
     password: '',
     id: '',
-    description: '',
     following: [],
     followers: 0
   }),
@@ -20,7 +19,6 @@ export const userModel = {
       state.email = user.email;
       state.password = user.password;
       state.id = user._id;
-      state.description = user.description;
       state.following = user.following;
     },
     SET_LOGGED_USER(state, user) {
@@ -40,9 +38,6 @@ export const userModel = {
     },
     SET_PASSWORD(state, password) {
       state.password = password;
-    },
-    SET_DESC(state, description) {
-      state.description = description;
     },
     SET_FOLLOWERS(state, followers) {
       state.followers = followers;
@@ -64,7 +59,6 @@ export const userModel = {
           name: getters.name,
           email: getters.email,
           password: getters.password,
-          description: getters.description,
           following: getters.following,
         })
         router.push('/signin');
@@ -181,9 +175,6 @@ export const userModel = {
     setPassword({commit}, password) {
       commit('SET_PASSWORD', password);
     },
-    setDesc({commit}, description) {
-      commit('SET_DESC', description);
-    },
     setFollowers({commit}, followers) {
       commit('SET_FOLLOWERS', followers);
     },
@@ -196,7 +187,6 @@ export const userModel = {
     email: state => state.email,
     password: state => state.password,
     id: state => state.id,
-    description: state => state.description,
     following: state => state.following,
     followers: state => state.followers,
   }

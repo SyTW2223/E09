@@ -1,17 +1,14 @@
 <template>
-  <div @load="chekIfFollowed">
+  <div>
     <div class="header">
       <h1>@{{ name }}</h1>
-      <div v-if="loggedUser">
+      <div v-if="loggedUser"> {{ chekIfFollowed() }}
         <button class="follow-btn" v-if="loggedUser.name != name && !followed" @click="followUser">Seguir</button>
         <button class="unfollow-btn" v-if="loggedUser.name != name && followed" @click="followUser">Siguiendo</button>
       </div>
       <div v-else>
         <router-link class="follow-btn" to="/signin">Seguir</router-link>
       </div>
-    </div>
-    <div class="bio">
-       <p>{{ description }}</p>
     </div>
     <div class="stats">
       <div class="stat">
