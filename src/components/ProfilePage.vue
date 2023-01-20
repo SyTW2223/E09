@@ -25,12 +25,12 @@
       </div>
     </div>
     <div class="tab" v-if="profileTab">
-      <button class="tab-btn" @click="showUserJuices">Juices</button>
-      <button class="disabled-tab-btn" @click="showLikedJuices">Me gusta</button>
+      <button class="tab-btn" @click="showUserJuices"><h5 class="tab-name">Juices</h5></button>
+      <button class="disabled-tab-btn" @click="showLikedJuices"><h5 class="tab-name">Me gusta</h5></button>
     </div>
     <div class="tab" v-else>
-      <button class="disabled-tab-btn" @click="showUserJuices">Juices</button>
-      <button class="tab-btn" @click="showLikedJuices">Me gusta</button>
+      <button class="disabled-tab-btn" @click="showUserJuices"><h5 class="tab-name">Juices</h5></button>
+      <button class="tab-btn" @click="showLikedJuices"><h5 class="tab-name">Me gusta</h5></button>
     </div>
   </div>
 </template>
@@ -95,10 +95,15 @@
       padding: 20px;
       border-radius: 10px;
   }
+  @media screen and (max-width: 1000px) {
+    .profile-page {
+      width: 100%;
+    }
+  }
   .stats {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
   }
   .stat {
       text-align: center;
@@ -130,6 +135,7 @@
   }
   .tab-btn h4{
     font-weight: bold;
+    color: black;
   }
   .disabled-tab-btn {
     padding: 0.5rem 1rem;

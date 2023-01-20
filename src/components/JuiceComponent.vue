@@ -83,7 +83,7 @@
        
 <style>
   .juice-box {
-    width: 600px;
+    width: 66%;
     margin: 50px auto;
     box-shadow: 0px 0px 5px;
     padding: 20px;

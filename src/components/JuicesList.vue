@@ -90,11 +90,19 @@
     width: 66%;
     margin: 0 auto;
   }
+  @media screen and (max-width: 767px) {
+    .div-center {
+      width: 100%;
+    }
+  }
+  .juice-info p {
+    color: black;
+  }
+  .juice-meta p {
+    color: black;
+  }
   .juice-button {
     background-color: white;
-    border: none;
-  }
-  .juice-button:active {
     border: none;
   }
   .juice-button:hover {

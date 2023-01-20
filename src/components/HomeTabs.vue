@@ -1,15 +1,15 @@
 <template>
   <div class="home-tab">
     <div class="tab" v-if="homeTab && loggedUser">
-      <button class="tab-btn" @click="showAllJuices"><h4>Inicio</h4></button>
-      <button class="disabled-tab-btn" @click="showFollowingJuices"><h4>Siguiendo</h4></button>
+      <button class="tab-btn" @click="showAllJuices"><h4 class="tab-name">Inicio</h4></button>
+      <button class="disabled-tab-btn" @click="showFollowingJuices"><h4 class="tab-name">Siguiendo</h4></button>
     </div>
     <div class="tab" v-if="!homeTab && loggedUser">
-      <button class="disabled-tab-btn" @click="showAllJuices"><h4>Inicio</h4></button>
-      <button class="tab-btn" @click="showFollowingJuices"><h4>Siguiendo</h4></button>
+      <button class="disabled-tab-btn" @click="showAllJuices"><h4 class="tab-name">Inicio</h4></button>
+      <button class="tab-btn" @click="showFollowingJuices"><h4 class="tab-name">Siguiendo</h4></button>
     </div>
       <div v-if="!loggedUser">
-      <button class="tab-btn" disabled><h4 style="font-weight: bold">Inicio</h4></button>
+      <button class="tab-btn" disabled><h4 class="disabled-tab-name">Inicio</h4></button>
     </div>
   </div>
 </template>
@@ -42,5 +42,12 @@ export default {
   .home-tab {
     margin-top: 50px;
     margin-bottom: 20px;
+  }
+  .tab-name {
+    color: black;
+  }
+  .disabled-tab-name {
+    color: black;
+    font-weight: bold;
   }
 </style>

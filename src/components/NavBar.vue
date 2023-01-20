@@ -78,12 +78,18 @@
     width: 50px;
     height: 50px;
     padding: 2.5px;
-    font-size: 30px;
+    font-size: x-large;
     position: fixed;
-    top: 12.5%;
-    right: 12.5%;
+    top: 130px;
+    right: 7.5%;
     border: none;
     z-index: 1;
+  }
+  @media screen and (max-width: 600px) {
+    .orange-btn {
+      width: 40px;
+      height: 40px;
+    }
   }
   .orange-btn:hover {
     background-color: #FF8429;
