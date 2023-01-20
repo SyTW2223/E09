@@ -28,7 +28,7 @@ jobs:
         node-version: 19.x
         cache: 'npm'
         cache-dependency-path: 'server/package.json' 
-        #cache-dependency-path: 'package.json' 
+        cache-dependency-path: 'package.json' 
 
     - name: Installing dependencies
       run: npm install
