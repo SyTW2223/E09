@@ -22,5 +22,11 @@ export default {
 <style>
   .page-content {
     margin-top: 25px;
+    color:black;
+  }
+  @media (max-width: 767px) {
+    .page-content {
+      color: black;
+    }
   }
 </style>

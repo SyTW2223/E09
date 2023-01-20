@@ -2,8 +2,8 @@
   <div class="page">
     <button class="refresh-btn orange-btn" href="#" @click="forceRerender">↺</button>
     <div class="profile-page">
-    <ProfilePage/>
-    <JuicesList :key="componentKey"/>
+      <ProfilePage/>
+      <JuicesList :key="componentKey"/>
     </div>
   </div>
   <NewJuice v-if="newJuice"/>

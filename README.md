@@ -1,5 +1,5 @@
 
-# juicer
+# juicer [![Coverage Status](https://coveralls.io/repos/github/SyTW2223/E09/badge.svg)](https://coveralls.io/github/SyTW2223/E09)
 
 
 ## Project setup
