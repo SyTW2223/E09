@@ -34,9 +34,9 @@ jobs:
       run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Mover /coverage a driectorio raiz
+    - name: Changes lcov path
       working-directory: ./server
-      run: mv coverage ..
+      run: sed -i 's,SF: ,SF: server/,' coverage/lcov.info
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
