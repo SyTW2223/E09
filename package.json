@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "mv-server": "mv server ../server && mv ../server server"
+    "mv-server": "mv server ../server && mv ../server server",
+    "test": "vue-cli-service test::unit"
   },
   "dependencies": {
     "axios": "^1.0.0",
