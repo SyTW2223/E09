@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node version: 19.x
+          cache: 'npm'
+          cache-dependency-path: 'server/package.json' 
       - name: Installing dependencies
         run: npm install
       - name: Installing server dependencies
