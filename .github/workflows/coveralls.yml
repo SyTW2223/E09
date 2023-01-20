@@ -34,10 +34,12 @@ jobs:
       run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Mover /coverage a driectorio raiz
+      working-directory: ./server
+      run: mv coverage ..
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
         # ruta a lcov
-        path-to-lcov: ./coverage/lcov.info
-        base-path: ./server/
+        #path-to-lcov: ./server/coverage/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}
