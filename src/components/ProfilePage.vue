@@ -7,7 +7,7 @@
         <button class="unfollow-btn" v-if="loggedUser.name != name && followed" @click="followUser">Siguiendo</button>
       </div>
       <div v-else>
-        <router-link class="follow-btn" to="/signin">Seguir</router-link>
+        <router-link to="/signin"><button class="follow-btn">Seguir</button></router-link>
       </div>
     </div>
     <div class="stats">
@@ -25,12 +25,12 @@
       </div>
     </div>
     <div class="tab" v-if="profileTab">
-      <button class="tab-btn" @click="showUserJuices">Juices</button>
-      <button class="disabled-tab-btn" @click="showLikedJuices">Me gusta</button>
+      <button class="tab-btn" @click="showUserJuices"><h5 >Juices</h5></button>
+      <button class="disabled-tab-btn" @click="showLikedJuices"><h5 >Me gusta</h5></button>
     </div>
     <div class="tab" v-else>
-      <button class="disabled-tab-btn" @click="showUserJuices">Juices</button>
-      <button class="tab-btn" @click="showLikedJuices">Me gusta</button>
+      <button class="disabled-tab-btn" @click="showUserJuices"><h5 >Juices</h5></button>
+      <button class="tab-btn" @click="showLikedJuices"><h5 >Me gusta</h5></button>
     </div>
   </div>
 </template>
@@ -95,10 +95,15 @@
       padding: 20px;
       border-radius: 10px;
   }
+  @media screen and (max-width: 1000px) {
+    .profile-page {
+      width: 100%;
+    }
+  }
   .stats {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
   }
   .stat {
       text-align: center;
@@ -128,8 +133,13 @@
     font-weight: bold;
     cursor: pointer;
   }
-  .tab-btn h4{
+  .tab-btn h4 {
+    color: black;
     font-weight: bold;
+  }
+  .tab-btn h5{
+    font-weight: bold;
+    color: black;
   }
   .disabled-tab-btn {
     padding: 0.5rem 1rem;
@@ -137,10 +147,16 @@
     border: none;
     cursor: pointer;
   }
-  .disabled-tab-btn:hover {
+  .disabled-tab-btn h4{
+    color: black;
+  }
+  .disabled-tab-btn h5{
+    color: black;
+  }
+  .disabled-tab-btn:hover h4{
     font-weight: bold;
   }
-  .disabled-tab-btn:hover h4 {
+  .disabled-tab-btn:hover h5{
     font-weight: bold;
   }
   .unfollow-btn {
@@ -165,5 +181,8 @@
   }
   .follow-btn:hover {
     background-color: lightgray;
+  }
+  button:focus {
+    outline: none;
   }
 </style>

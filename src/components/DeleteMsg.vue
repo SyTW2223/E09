@@ -52,4 +52,7 @@ export default {
     padding: 20px;
     z-index: 5;
   }
+  .bttn span {
+    color: black;
+  }
 </style>

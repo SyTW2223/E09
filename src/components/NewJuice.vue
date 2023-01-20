@@ -80,6 +80,9 @@
   .error {
     max-width: 535px;
   }
+  .bttn {
+    color: black;
+  }
 </style>
   
   
