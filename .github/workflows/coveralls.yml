@@ -5,19 +5,13 @@ name: Coveralls
 
 on:
   push:
-    branches: [ "develop", "github_actions_config", "main" ]
+    branches: [ "develop", "main" ]
   pull_request:
-    branches: [ "develop", "github_actions_config", "main" ]
+    branches: [ "develop", "main" ]
 
 jobs:
-  build:
-    timeout-minutes: 4
+  coveralls:
     runs-on: ubuntu-latest
-
-    #strategy:
-    #  matrix:
-    #    node-version: [19.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: Cloning repo
@@ -27,8 +21,8 @@ jobs:
       with:
         node-version: 19.x
         cache: 'npm'
-        cache-dependency-path: 'server/package.json'
-
+        cache-dependency-path: 'server/package.json' 
+        #cache-dependency-path: 'package.json' 
     - name: Installing dependencies
       run: npm install
     - name: Installing server dependencies
@@ -40,6 +34,8 @@ jobs:
       run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Changes lcov path
+      run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
