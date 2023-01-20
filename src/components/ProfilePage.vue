@@ -7,7 +7,7 @@
         <button class="unfollow-btn" v-if="loggedUser.name != name && followed" @click="followUser">Siguiendo</button>
       </div>
       <div v-else>
-        <router-link class="follow-btn" to="/signin">Seguir</router-link>
+        <router-link to="/signin"><button class="follow-btn">Seguir</button></router-link>
       </div>
     </div>
     <div class="stats">

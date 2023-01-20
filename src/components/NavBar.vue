@@ -7,7 +7,10 @@
             <img height="35" src="../assets/logo.png">
           </router-link>
         </div>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul v-if="!loggedUser" class="navbar-nav">
             <li class="nav-item active">
               <router-link class="nav-link"  @click="closePages" to="/signin">Iniciar sesión</router-link>
@@ -87,5 +90,8 @@
   }
   .navbar-nav {
     margin-left: auto;
+  }
+  .nav-link:hover {
+    font-weight: bold;
   }
 </style>
