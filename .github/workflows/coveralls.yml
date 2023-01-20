@@ -38,5 +38,6 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         # ruta a lcov
-        path-to-lcov: ./server/coverage/lcov.info
+        path-to-lcov: ./coverage/lcov.info
+        base-path: ./server/
         github-token: ${{ secrets.GITHUB_TOKEN }}
