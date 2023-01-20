@@ -35,9 +35,7 @@ jobs:
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: Changes lcov path
-      run: "$(sed -i 's,SF: ,SF: server/,' ./server/coverage/lcov.info)"
-    -name: Check lcov
-      run: cat ./server/coverage/lcov.info
+      run: echo "$(sed -i 's,SF:src/app.ts,SF:server/src/app.ts,' ./server/coverage/lcov.info)"
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
