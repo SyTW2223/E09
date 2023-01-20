@@ -25,12 +25,12 @@
       </div>
     </div>
     <div class="tab" v-if="profileTab">
-      <button class="tab-btn" @click="showUserJuices"><h5 class="tab-name">Juices</h5></button>
-      <button class="disabled-tab-btn" @click="showLikedJuices"><h5 class="tab-name">Me gusta</h5></button>
+      <button class="tab-btn" @click="showUserJuices"><h5 >Juices</h5></button>
+      <button class="disabled-tab-btn" @click="showLikedJuices"><h5 >Me gusta</h5></button>
     </div>
     <div class="tab" v-else>
-      <button class="disabled-tab-btn" @click="showUserJuices"><h5 class="tab-name">Juices</h5></button>
-      <button class="tab-btn" @click="showLikedJuices"><h5 class="tab-name">Me gusta</h5></button>
+      <button class="disabled-tab-btn" @click="showUserJuices"><h5 >Juices</h5></button>
+      <button class="tab-btn" @click="showLikedJuices"><h5 >Me gusta</h5></button>
     </div>
   </div>
 </template>
@@ -133,7 +133,11 @@
     font-weight: bold;
     cursor: pointer;
   }
-  .tab-btn h4{
+  .tab-btn h4 {
+    color: black;
+    font-weight: bold;
+  }
+  .tab-btn h5{
     font-weight: bold;
     color: black;
   }
@@ -143,10 +147,16 @@
     border: none;
     cursor: pointer;
   }
-  .disabled-tab-btn:hover {
+  .disabled-tab-btn h4{
+    color: black;
+  }
+  .disabled-tab-btn h5{
+    color: black;
+  }
+  .disabled-tab-btn:hover h4{
     font-weight: bold;
   }
-  .disabled-tab-btn:hover h4 {
+  .disabled-tab-btn:hover h5{
     font-weight: bold;
   }
   .unfollow-btn {
@@ -171,5 +181,8 @@
   }
   .follow-btn:hover {
     background-color: lightgray;
+  }
+  button:focus {
+    outline: none;
   }
 </style>
