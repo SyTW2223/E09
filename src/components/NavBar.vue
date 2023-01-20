@@ -7,7 +7,10 @@
             <img height="35" src="../assets/logo.png">
           </router-link>
         </div>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul v-if="!loggedUser" class="navbar-nav">
             <li class="nav-item active">
               <router-link class="nav-link"  @click="closePages" to="/signin">Iniciar sesión</router-link>
@@ -75,17 +78,26 @@
     width: 50px;
     height: 50px;
     padding: 2.5px;
-    font-size: 30px;
+    font-size: x-large;
     position: fixed;
-    top: 12.5%;
-    right: 12.5%;
+    top: 130px;
+    right: 7.5%;
     border: none;
     z-index: 1;
+  }
+  @media screen and (max-width: 600px) {
+    .orange-btn {
+      width: 40px;
+      height: 40px;
+    }
   }
   .orange-btn:hover {
     background-color: #FF8429;
   }
   .navbar-nav {
     margin-left: auto;
+  }
+  .nav-link:hover {
+    font-weight: bold;
   }
 </style>

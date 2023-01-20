@@ -5,7 +5,7 @@
         <button class="boton-cerrar" @click="closePage">✖</button>
         <div class="juice">
           <div class="juice-info" >
-            <router-link class="nav-link" :to="'/profile/' + userName"><h3>@{{ userName }}</h3></router-link>
+            <router-link class="navigation-link" :to="'/profile/' + userName"><h3 class="user-name">@{{ userName }}</h3></router-link>
             <p>{{ date }}</p>
             <p>{{ text }}</p>
             <div class="juice-buttons">
@@ -83,7 +83,7 @@
        
 <style>
   .juice-box {
-    width: 600px;
+    width: 66%;
     margin: 50px auto;
     box-shadow: 0px 0px 5px;
     padding: 20px;

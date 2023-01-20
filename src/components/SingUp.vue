@@ -106,6 +106,7 @@ body {
   background-position: center center;
   position: relative;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  margin-bottom: auto;
 }
 
 .auth .logo {
@@ -119,6 +120,11 @@ body {
 }
 .auth .body {
   padding-bottom: 2rem;
+}
+@media screen and (max-height: 500px) {
+  .auth .body {
+    margin-top: 25px;
+  }
 }
 .auth .form {
   min-width: 280px;

@@ -54,5 +54,6 @@ export default {
   }
   .refresh-btn {
     right: 7.5%;
+    top: 75px;
   }
 </style>

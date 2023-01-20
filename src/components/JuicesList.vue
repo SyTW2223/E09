@@ -4,7 +4,7 @@
       <button id="juice-btn" class="juice-box2 juice-button" v-for="(juice, index) in juices" :key="index" @click="openJuicePage(juice, index)">
         <div class="juice">
           <div class="juice-info">
-            <router-link class="nav-link" :to="'/profile/' + juice.userName"><h3 class="user-name" @click.stop>@{{ juice.userName }}</h3></router-link>
+            <router-link class="navigation-link" :to="'/profile/' + juice.userName"><h3 class="user-name" @click.stop>@{{ juice.userName }}</h3></router-link>
             <p>{{ juice.date }}</p>
             <p>{{ juice.text }}</p>
             <div class="juice-buttons">
@@ -76,7 +76,6 @@
     created() {
       this.liked = new Array(this.$store.getters.juices.length).fill(false);
       this.likes = new Array(this.$store.getters.juices.length).fill([]);
-      //this.$store.dispatch('getJuices');
     }
   }
 </script>
@@ -90,6 +89,17 @@
   .div-center {
     width: 66%;
     margin: 0 auto;
+  }
+  @media screen and (max-width: 767px) {
+    .div-center {
+      width: 100%;
+    }
+  }
+  .juice-info p {
+    color: black;
+  }
+  .juice-meta p {
+    color: black;
   }
   .juice-button {
     background-color: white;
@@ -107,11 +117,17 @@
     padding: 20px;
     padding-top: 10px;
   }
-  .nav-link {
+  .navigation-link {
     width: fit-content;
+  }
+  .user-name {
+    color: black;
   }
   .user-name:hover {
     font-weight: bold;
+  }
+  a:hover {
+    text-decoration: none !important;
   }
 </style>
 
