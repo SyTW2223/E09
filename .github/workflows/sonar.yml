@@ -13,6 +13,35 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          
+      # Generating coverage
+      - name: Use Node.js 19.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+          cache: 'npm'
+          cache-dependency-path: 'server/package.json' 
+          #cache-dependency-path: 'package.json' 
+      - name: Installing dependencies
+        run: npm install
+      - name: Installing server dependencies
+        run: cd server && npm install
+
+        # Ver como ejecutar varios comandos en un mismo working-directory
+      - name: Generating coverage information
+        working-directory: ./server
+        run: npm run coverage
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Changes lcov path
+        run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
+      - name: Evaluates coverage information
+        uses: coverallsapp/github-action@master
+        with:
+          # ruta a lcov
+          path-to-lcov: ./server/coverage/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # Sonar cloud
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
