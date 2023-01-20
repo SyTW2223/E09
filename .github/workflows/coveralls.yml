@@ -46,4 +46,4 @@ jobs:
       with:
         # ruta a lcov
         path-to-lcov: ./server/coverage/lcov.info
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.COVERALLS_TOKEN }}
