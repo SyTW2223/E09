@@ -1,5 +1,5 @@
 import Vuex from 'vuex';
-import { juiceModel } from '@/store/modules/juicesModel';
+import { juiceModel } from '@/store/modules/juiceModel';
 import { expect } from "chai";
 
 describe('Juice model', () => {
