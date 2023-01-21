@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter } from 'vue-router'
 import HomeView from '../views/homeView.vue'
 import SignInView from '../views/signinView.vue'
 import SignUpView from '../views/signupView.vue'
@@ -11,7 +11,7 @@ const mode = 'history';
 const routes = [
   {
     path: '/',
-    redirect: { name: 'Home'}
+    redirect: {name: 'Home'}
   },
   {
     path: '/E09/',
@@ -46,7 +46,7 @@ const routes = [
 ]
 const router = createRouter({
   //history: createWebHistory(process.env.BASE_URL),
-  history: createWebHistory('/E09/'),
+  //history: createWebHistory('/E09/'),
   routes,
   mode
 })
