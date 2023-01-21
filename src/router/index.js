@@ -6,47 +6,44 @@ import ForgotView from '../views/forgotView.vue'
 import ResetView from '../views/resetView.vue'
 import ProfileView from '../views/profileView.vue'
 
-//const mode = 'history';
+const mode = 'history';
 
 const routes = [
   {
     path: '/',
-    redirect: {name: 'Home'}
-  },
-  {
-    path: '/E09/',
     name: 'Home',
     component: HomeView
   },
   {
-    path: '/E09/signin',
+    path: '/signin',
     name: 'SignIn',
     component: SignInView
   },
   {
-    path: '/E09/signup',
+    path: '/signup',
     name: 'SignUp',
     component: SignUpView
   },
   {
-    path: '/E09/forgot',
+    path: '/forgot',
     name: 'Forgot',
     component: ForgotView
   },
   {
-    path: '/E09/reset/:token',
+    path: '/reset/:token',
     name: 'Reset',
     component: ResetView
   },
   {
-    path: '/E09/profile/:userName',
+    path: '/profile/:userName',
     name: 'Profile',
     component: ProfileView
   }
 ]
 const router = createRouter({
   //history: createWebHistory(process.env.BASE_URL),
-  history: createWebHistory(),
-  routes
+  history: createWebHistory('/E09/'),
+  routes,
+  mode
 })
 export default router
