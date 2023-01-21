@@ -40,7 +40,7 @@ jobs:
       run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
     - name: Merging lcov info
       run: cat server/coverage/lcov.info >> coverage/lcov.info
-    - name: Evaluates coverage information
+    - name: Coveralls Scan
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
