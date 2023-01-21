@@ -28,8 +28,12 @@ jobs:
         run: npm run coverage
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Generating coverage information
+        run: npm run coverage
       - name: Changes lcov path
         run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
+      - name: Merging lcov path
+        run: cat coverage/lcov.info >> server/coverage/lcov.info
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
