@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+.nyc_output
+coverage
 
 /server/node_modules
 /server/dist

@@ -72,10 +72,8 @@
       changePasswordVisibility() {
         if (document.getElementById('password').type === 'password') {
           document.getElementById('password').type = 'text';
-          document.getElementById('confirm_password').type = 'text';
         } else {
           document.getElementById('password').type = 'password';
-          document.getElementById('confirm_password').type = 'password';
         }
       }
     },

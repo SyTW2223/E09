@@ -112,7 +112,8 @@ export const userModel = {
     },
     async resetPassword({ getters, dispatch }, token) {
       try {
-        await axios.patch('users',{
+        console.log(getters.password);
+        await axios.patch('password-reset',{
           password: getters.password
         }, {
           headers: {
