@@ -3,7 +3,7 @@ export function handleErrors(err: any, res: any) {
   if(err.name === 'ValidationError') {
     return res.status(400).send({error: "La contraseña debe contener al menos ocho caracteres, un número y una mayúscula", fields: 'password'});
   }
-  else if(err.code && err.code == 11000) return err = handleDuplicateKeyError(err, res);
+  else if(err.code && err.code == 11000) handleDuplicateKeyError(err, res);
   else res.status(500).send({error: 'Error desconocido'});
 }
   
