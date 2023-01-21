@@ -11,31 +11,35 @@ import ProfileView from '../views/profileView.vue'
 const routes = [
   {
     path: '/',
+    redirect: {name: 'Home'}
+  },
+  {
+    path: '/E09/',
     name: 'Home',
     component: HomeView
   },
   {
-    path: '/signin',
+    path: '/E09/signin',
     name: 'SignIn',
     component: SignInView
   },
   {
-    path: '/signup',
+    path: '/E09/signup',
     name: 'SignUp',
     component: SignUpView
   },
   {
-    path: '/forgot',
+    path: '/E09/forgot',
     name: 'Forgot',
     component: ForgotView
   },
   {
-    path: '/reset/:token',
+    path: '/E09/reset/:token',
     name: 'Reset',
     component: ResetView
   },
   {
-    path: '/profile/:userName',
+    path: '/E09/profile/:userName',
     name: 'Profile',
     component: ProfileView
   }
