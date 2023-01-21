@@ -10,7 +10,7 @@ const cors = require('cors');
  * 'app' variable de tipo Express
  */
 export const app = express();
-app.use(cors({origin: 'https://sytw2223.github.io/E09/'}));
+app.use(cors({origin: 'https://sytw2223.github.io'}));
 
 /**
  * Parsea el cuerpo de la petición
