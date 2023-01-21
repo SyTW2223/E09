@@ -34,10 +34,6 @@ jobs:
     - name: Testing front and generating coverage information
       run: npm i && npm run coverage
 
-  coveralls:
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Changes lcov info server
       run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
     - name: Changes lcov info
@@ -49,13 +45,9 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
     
-  
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Creando secreto en el repositorio 
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Creando secreto en el repositorio 
 
