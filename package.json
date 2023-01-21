@@ -7,7 +7,6 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "mv-server": "mv server ../server && mv ../server server",
     "test": "vue-cli-service test:unit",
     "coverage": "nyc npm run test && nyc report --reporter=lcov"
   },
