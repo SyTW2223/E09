@@ -10,13 +10,9 @@ on:
     branches: [ "develop", "main" ]
 
 jobs:
-  stages:
-    - test
-    - coveralls
-    - sonarcloud
-
   test:
-    stage: test
+    name: Run tests
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -39,82 +35,3 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: npm i && npm test
     # - run: npm run build --if-present
-
-  coveralls:
-    stage: coveralls
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Cloning repo
-      uses: actions/checkout@v3
-    - name: Use Node.js 19.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 19.x
-        cache: 'npm'
-        cache-dependency-path: 'server/package.json' 
-        #cache-dependency-path: 'package.json' 
-    - name: Installing dependencies
-      run: npm install
-    - name: Installing server dependencies
-      run: cd server && npm install
-
-      # Ver como ejecutar varios comandos en un mismo working-directory
-    - name: Generating server coverage information
-      working-directory: ./server
-      run: npm run coverage
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Changes lcov info server
-      run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
-    - name: Generating coverage information
-      run: npm run coverage
-    - name: Changes lcov info
-      run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
-    - name: Merging lcov info
-      run: cat server/coverage/lcov.info >> coverage/lcov.info
-    - name: Evaluates coverage information
-      uses: coverallsapp/github-action@master
-      with:
-        # ruta a lcov
-        #path-to-lcov: ./server/coverage/lcov.info
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-
-  
-  sonarcloud:
-    stage: sonarcloud
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cloning repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Use Node.js 19.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 19.x
-          cache: 'npm'
-          cache-dependency-path: 'server/package.json' 
-      - name: Installing dependencies
-        run: npm install
-      - name: Installing server dependencies
-        run: cd server && npm install
-      - name: Generating server coverage information
-        working-directory: ./server
-        run: npm run coverage
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      - name: Changes lcov info server
-        run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
-      - name: Generating coverage information
-        run: npm run coverage
-      - name: Changes lcov info
-        run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
-      - name: Merging lcov info
-        run: cat server/coverage/lcov.info >> coverage/lcov.info
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Creando secreto en el repositorio 
-
