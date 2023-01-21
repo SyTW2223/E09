@@ -78,7 +78,7 @@ export class AppCRUD {
 
       jwt.verify(bearerToken, 'secretkey', async (err: any) => {
         if (err){
-          return res.status(403).send({error: 'La sesión ha expirado'});
+          return res.status(403).send({error: 'La sesión ha expirado.'});
         } else {
           try {
             const element = await model.findByIdAndDelete(req.query.id);
