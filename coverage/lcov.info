@@ -10,7 +10,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:dist/js/webpack:/juicer/src/router/index.js
+SF:src/router/index.js
 FNF:0
 FNH:0
 DA:1,1
@@ -31,7 +31,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:dist/js/webpack:/juicer/src/store/modules/userModel.js
+SF:src/store/modules/userModel.js
 FN:5,(anonymous_1341)
 FN:17,(anonymous_1342)
 FN:24,(anonymous_1343)
@@ -194,7 +194,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:dist/js/webpack:/juicer/tests/unit/User.spec.js
+SF:tests/unit/User.spec.js
 FN:5,(anonymous_2)
 FN:8,(anonymous_3)
 FN:16,(anonymous_4)
