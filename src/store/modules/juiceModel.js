@@ -14,6 +14,7 @@ export const juiceModel = {
     deleteMsg: false,
     likedPage: false,
     number_of_juices: 0,
+    info: null
   }),
   mutations: {
     SET_JUICE(state, juice) {
@@ -25,6 +26,9 @@ export const juiceModel = {
     },
     SET_NEW_JUICE(state, value) {
       state.newJuice = value;
+    },
+    SET_INFO(state, info) {
+      state.info = info;
     },
     SET_DELETE_MSG(state, value) {
       state.deleteMsg = value;
@@ -64,6 +68,9 @@ export const juiceModel = {
     setNewJuice({commit}, value) {
       commit('SET_NEW_JUICE', value);
     },
+    setInfo({commit}, info) {
+      commit('SET_INFO', info);
+    },
     setDeleteMsg({commit}, value) {
       commit('SET_DELETE_MSG', value);
     },
@@ -94,7 +101,6 @@ export const juiceModel = {
     setLikes({commit}, likes) {
       commit('SET_LIKES', likes);
     },
-    // BEGIN-NOSCAN
     async postJuice({ getters, dispatch }) {
       try {
         await axios.post('juice', {
@@ -206,7 +212,6 @@ export const juiceModel = {
         dispatch('setError', err.response.data.error);
       }
     }
-    // END-NOSCAN
   },
   getters: {
     newJuice: state => state.newJuice,
@@ -220,5 +225,6 @@ export const juiceModel = {
     likes: state => state.likes,
     likedPage: state => state.likedPage,
     number_of_juices: state => state.number_of_juices,
+    info: state => state.info
   }
 }

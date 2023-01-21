@@ -142,4 +142,21 @@ describe('Juice model', () => {
         // assert
         expect(store.getters.date).to.eql("10/10/2010 10:10");
     });
+
+    it ('Set info', () => {
+        // arrange
+        const info = {
+           userName: "user1",
+           text: "Test text",
+           date: "10/10/2010 10:10"
+        }
+        // act
+        store.dispatch('setInfo', info);
+        // assert
+        expect(store.getters.info).to.eql({
+            userName: "user1",
+            text: "Test text",
+            date: "10/10/2010 10:10"
+        });
+    });
 });
