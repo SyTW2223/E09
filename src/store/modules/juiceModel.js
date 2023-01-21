@@ -141,50 +141,50 @@ export const juiceModel = {
     async getJuices({ dispatch }) {
       try {
         const response = await axios.get('juices');
-        dispatch('setJuices', response.data);
-      } catch (err) {
-        if(err.response.status === 404) {
-          dispatch('setJuices', []);
+        if (response.data.length !== 0) {
+          dispatch('setJuices', response.data);
         } else {
-          dispatch('setError', err.response.data.error);
+          dispatch('setJuices', []);
         }
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
     },
     async getFollowingJuices({ dispatch, getters }) {
       try {
         const response = await axios.get(`juices/following?names=*${getters.loggedUser.following.join('*')}`);
-        dispatch('setJuices', response.data);
-      } catch (err) {
-        if(err.response.status === 404) {
-          dispatch('setJuices', []);
+        if (response.data.length !== 0) {
+          dispatch('setJuices', response.data);
         } else {
-          dispatch('setError', err.response.data.error);
+          dispatch('setJuices', []);
         }
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
     },
     async getJuicesByUserName({ dispatch }, userName) {
       try {
         const response = await axios.get(`juices/user?userName=${userName}`);
-        dispatch('setJuices', response.data);
+        if (response.data.length !== 0) {
+          dispatch('setJuices', response.data);
+        } else {
+          dispatch('setJuices', []);
+        }
         dispatch('setNumberOfJuices', response.data.length);
       } catch (err) {
-        if(err.response.status === 404) {
-          dispatch('setJuices', []);
-        } else {
-          dispatch('setError', err.response.data.error);
-        }
+        dispatch('setError', err.response.data.error);
       }
     },
     async getJuicesLikedByUserName({ dispatch }, userName) {
       try {
         const response = await axios.get(`juices/user/liked?userName=${userName}`);
-        dispatch('setJuices', response.data);
-      } catch (err) {
-        if(err.response.status === 404) {
-          dispatch('setJuices', []);
+        if (response.data.length !== 0) {
+          dispatch('setJuices', response.data);
         } else {
-          dispatch('setError', err.response.data.error);
+          dispatch('setJuices', []);
         }
+      } catch (err) {
+        dispatch('setError', err.response.data.error);
       }
     }
   },

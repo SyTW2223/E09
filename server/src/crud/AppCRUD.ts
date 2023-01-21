@@ -32,10 +32,7 @@ export class AppCRUD {
   public static async get(res: any, filter: any, model: any) {
     try {
       const elements = await model.find(filter);
-      if (elements.length !== 0) {
-        return res.status(200).send(elements);
-      }
-      return res.status(404).send('Elemento no encontrado');
+      return res.status(200).send(elements);
     } catch (error) {
       return res.status(500).send({error: error});
     }
