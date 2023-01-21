@@ -29,16 +29,22 @@ jobs:
       run: cd server && npm install
 
       # Ver como ejecutar varios comandos en un mismo working-directory
-    - name: Generating coverage information
+    - name: Generating server coverage information
       working-directory: ./server
       run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Changes lcov path
+    - name: Changes lcov info server
       run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
+    - name: Generating coverage information
+      run: npm run coverage
+    - name: Changes lcov info
+      run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
+    - name: Merging lcov info
+      run: cat server/coverage/lcov.info >> coverage/lcov.info
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
         # ruta a lcov
-        path-to-lcov: ./server/coverage/lcov.info
+        #path-to-lcov: ./server/coverage/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}

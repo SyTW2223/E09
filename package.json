@@ -5,16 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "mv-server": "mv server ../server && mv ../server server"
+    "test": "vue-cli-service test:unit",
+    "coverage": "nyc npm run test && nyc report --reporter=lcov"
   },
   "dependencies": {
-    "axios": "^1.0.0",
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-router": "^4.1.6",
-    "vuex": "^4.0.0",
-
     "@types/chai": "^4.3.4",
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
@@ -25,31 +21,40 @@
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "axios": "^1.0.0",
     "chai": "^4.3.7",
+    "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "coveralls": "^3.1.1",
     "env-cmd": "^10.1.0",
     "express": "^4.18.2",
+    "jsdom": "^21.0.0",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^10.2.0",
     "mongodb": "^4.3.0",
     "mongoose": "^5.13.14",
     "nodemailer": "^6.8.0",
+    "nyc": "^15.1.0",
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "tsc-watch": "^5.0.3",
     "typedoc": "^0.23.21",
     "typescript": "^4.9.4",
     "validator": "^13.7.0",
-    "nyc": "^15.1.0"
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-unit-mocha": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "chai": "^4.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3"
   },
@@ -67,7 +72,18 @@
     },
     "rules": {
       "no-mixed-spaces-and-tabs": 0
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
