@@ -75,6 +75,16 @@ describe('User model', () => {
         expect(store.getters.email).to.be.not.equal("notExampleEmail@email.com");
     });
 
+    it('Set name', () => {
+        // arrange
+        const name = 'user1';
+        // act
+        store.dispatch('setName', name);
+        // assert
+        expect(store.getters.name).to.be.equal("user1");
+        expect(store.getters.name).to.be.not.equal("user2");
+    });
+
     it('Set password', () => {
         // arrange
         const password = 'examplePassword';
@@ -93,6 +103,26 @@ describe('User model', () => {
         // assert
         expect(store.getters.followers).to.be.equal(99);
         expect(store.getters.followers).to.be.not.equal(100);
+    });
+
+    it('Set following', () => {
+        // arrange
+        const following = ['user1'];
+        // act
+        store.dispatch('setFollowing', following);
+        // assert
+        expect(store.getters.following).to.eql(['user1']);
+        expect(store.getters.following).to.not.eql(['user2']);
+    });
+
+    it('Set id', () => {
+        // arrange
+        const id = '1234';
+        // act
+        store.dispatch('setId', id);
+        // assert
+        expect(store.getters.id).to.be.equal('1234');
+        expect(store.getters.id).to.be.not.equal('123456');
     });
 
     it('Sign in', () => {

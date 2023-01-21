@@ -42,6 +42,12 @@ export const userModel = {
     SET_FOLLOWERS(state, followers) {
       state.followers = followers;
     },
+    SET_ID(state, id) {
+      state.id = id;
+    },
+    SET_FOLLOWING(state, following) {
+      state.following = following;
+    },
     SIGN_IN(state, user) {
       state.email = user.email;
       state.password = user.password;
@@ -177,6 +183,12 @@ export const userModel = {
     },
     setFollowers({commit}, followers) {
       commit('SET_FOLLOWERS', followers);
+    },
+    setFollowing({commit}, following) {
+      commit('SET_FOLLOWING', following);
+    },
+    setId({commit}, id) {
+      commit('SET_ID', id);
     },
   },
   getters: {
