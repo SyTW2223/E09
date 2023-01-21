@@ -24,10 +24,10 @@ jobs:
       - name: Installing server dependencies
         run: cd server && npm install
       - name: Generating server coverage information
-      working-directory: ./server
-      run: npm run coverage
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        working-directory: ./server
+        run: npm run coverage
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Changes lcov info server
         run: echo "$(sed -i 's,SF:,SF:server/,g' ./server/coverage/lcov.info)"
       - name: Generating coverage information
