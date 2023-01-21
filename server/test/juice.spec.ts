@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import   { app } from '../src/app';
 import { Juice } from '../src/models/juice';
 import { User } from '../src/models/user';
+import { expect } from 'chai';
 
 const testUser = {
   name: "test",
@@ -70,8 +71,9 @@ describe('POST /api/juice', () => {
 * Juice GET
 */
 describe('GET /api/juices', () => {
-  it('Should get an error for not found', async () => {
-    await request(app).get('/api/juices?id=41224d776a326fb40f000001').expect(404);
+  it('Should get an empty juices list', async () => {
+    const response = await request(app).get('/api/juices?id=41224d776a326fb40f000001').expect(200);
+    expect(response.body).to.eql([]);
   });
   it('Should get an error for server error', async () => {
     await request(app).get('/api/juices?id=1234').expect(500);
