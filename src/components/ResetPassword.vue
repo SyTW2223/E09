@@ -71,7 +71,7 @@
     methods: {
       resetPassword() {
         if (this.user.confirm_password === this.user.password) {
-          this.$store.dispatch('setPassword', this.password);
+          this.$store.dispatch('setPassword', this.user.password);
           this.$store.dispatch('resetPassword', this.$route.params.token);
         } else {
           this.$store.dispatch('setError', 'Contraseñas distintas');
