@@ -1,10 +1,12 @@
-import { createRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/homeView.vue'
 import SignInView from '../views/signinView.vue'
 import SignUpView from '../views/signupView.vue'
 import ForgotView from '../views/forgotView.vue'
 import ResetView from '../views/resetView.vue'
 import ProfileView from '../views/profileView.vue'
+
+const mode = 'history';
 
 const routes = [
   {
@@ -40,8 +42,8 @@ const routes = [
 ]
 const router = createRouter({
   //history: createWebHistory(process.env.BASE_URL),
-  mode: 'history',
-  base: '/E09/',
-  routes
+  history: createWebHistory('https://sytw2223.github.io/E09/'),
+  routes,
+  mode
 })
 export default router
