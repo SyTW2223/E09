@@ -42,7 +42,7 @@ const routes = [
 ]
 const router = createRouter({
   //history: createWebHistory(process.env.BASE_URL),
-  history: createWebHistory('https://sytw2223.github.io/E09/'),
+  history: createWebHistory('/E09/'),
   routes,
   mode
 })
