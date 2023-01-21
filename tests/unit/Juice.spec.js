@@ -115,4 +115,31 @@ describe('Juice model', () => {
         // assert
         expect(store.getters.likes).to.eql(["user1"]);
     });
+
+    it ('Set user name', () => {
+        // arrange
+        const name = "user1";
+        // act
+        store.dispatch('setUserName', name);
+        // assert
+        expect(store.getters.userName).to.eql("user1");
+    });
+
+    it ('Set text', () => {
+        // arrange
+        const text = "Test text";
+        // act
+        store.dispatch('setText', text);
+        // assert
+        expect(store.getters.text).to.eql("Test text");
+    });
+
+    it ('Set date', () => {
+        // arrange
+        const date = "10/10/2010 10:10";
+        // act
+        store.dispatch('setDate', date);
+        // assert
+        expect(store.getters.date).to.eql("10/10/2010 10:10");
+    });
 });

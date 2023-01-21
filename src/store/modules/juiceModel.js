@@ -35,6 +35,15 @@ export const juiceModel = {
     SET_JUICES(state, juices) {
       state.juices = juices.reverse();
     },
+    SET_USER_NAME(state, name) {
+      state.userName = name;
+    },
+    SET_TEXT(state, text) {
+      state.text = text;
+    },
+    SET_DATE(state, date) {
+      state.date = date;
+    },
     SET_LIKED_PAGE(state, value) {
       state.likedPage = value;
     },
@@ -63,6 +72,15 @@ export const juiceModel = {
     },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
+    },
+    setUserName({commit}, name) {
+      commit('SET_USER_NAME', name);
+    },
+    setText({commit}, text) {
+      commit('SET_TEXT', text);
+    },
+    setDate({commit}, date) {
+      commit('SET_DATE', date);
     },
     setLikedPage({commit}, value) {
       commit('SET_LIKED_PAGE', value);
