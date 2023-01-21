@@ -9,6 +9,13 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
+      - name:  Wait for coveralls action
+        uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Coveralls'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
       - name: Cloning repo
         uses: actions/checkout@v3
         with:
