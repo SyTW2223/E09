@@ -97,4 +97,22 @@ describe('Juice model', () => {
         // assert
         expect(store.getters.number_of_juices).to.be.equal(numOfJuices);
     });
+
+    it ('Set juice id', () => {
+        // arrange
+        const juice_id = '1234';
+        // act
+        store.dispatch('setJuiceId', juice_id);
+        // assert
+        expect(store.getters.juice_id).to.be.equal('1234');
+    });
+
+    it ('Set likes', () => {
+        // arrange
+        const likes = ["user1"];
+        // act
+        store.dispatch('setLikes', likes);
+        // assert
+        expect(store.getters.likes).to.eql(["user1"]);
+    });
 });

@@ -40,6 +40,12 @@ export const juiceModel = {
     },
     SET_NUMBER_OF_JUICES(state, value) {
       state.number_of_juices = value;
+    },
+    SET_JUICE_ID(state, juice_id) {
+      state.juice_id = juice_id;
+    },
+    SET_LIKES(state, likes) {
+      state.likes = likes;
     }
   },
   actions: {
@@ -63,6 +69,12 @@ export const juiceModel = {
     },
     setNumberOfJuices({commit}, value) {
       commit('SET_NUMBER_OF_JUICES', value);
+    },
+    setJuiceId({commit}, juice_id) {
+      commit('SET_JUICE_ID', juice_id);
+    },
+    setLikes({commit}, likes) {
+      commit('SET_LIKES', likes);
     },
     async postJuice({ getters, dispatch }) {
       try {
