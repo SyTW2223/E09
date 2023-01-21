@@ -10,6 +10,10 @@ const mode = 'history';
 
 const routes = [
   {
+    path: '/',
+    redirect: { name: 'Home'}
+  },
+  {
     path: '/E09/',
     name: 'Home',
     component: HomeView
