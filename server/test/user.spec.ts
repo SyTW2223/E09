@@ -203,7 +203,7 @@ describe('POST password-reset', () => {
     }).set({
       Authorization:'Bearer ' + token
     }).expect(200);
-    expect(response.body.mssg).to.be.eq('email sent successfully');
+    expect(response.text).to.be.eq('Correo enviado correctamente');
   });
   it('Should get an error because the email does not exist', async () => {
     const response = await request(app).post('/api/password-reset').send({
