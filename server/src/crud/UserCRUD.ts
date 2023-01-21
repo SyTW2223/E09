@@ -65,8 +65,8 @@ export class UserCRUD {
           return res.status(200).send([]);
         } else {
           try {
-          const element = await User.findById(authData.element._id);
-          return res.status(200).send(element);
+            const element = await User.findById(authData.element._id);
+            return res.status(200).send(element);
           } catch(err) {
             return res.status(404).send('Usuario no encontrado');
           }
