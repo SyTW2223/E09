@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "mv-server": "mv server ../server && mv ../server server",
-    "test": "vue-cli-service test:unit"
+    "test": "vue-cli-service test:unit",
+    "coverage": "nyc npm run test && nyc report --reporter=lcov"
   },
   "dependencies": {
     "@types/chai": "^4.3.4",
