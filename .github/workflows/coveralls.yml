@@ -41,10 +41,10 @@ jobs:
     - name: Changes lcov info
       run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
     - name: Merging lcov info
-      run: cat coverage/lcov.info >> server/coverage/lcov.info && cat server/coverage/lcov.info
+      run: cat server/coverage/lcov.info >> coverage/lcov.info
     - name: Evaluates coverage information
       uses: coverallsapp/github-action@master
       with:
         # ruta a lcov
-        path-to-lcov: ./server/coverage/lcov.info
+        #path-to-lcov: ./server/coverage/lcov.info
         github-token: ${{ secrets.GITHUB_TOKEN }}

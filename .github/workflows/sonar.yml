@@ -35,7 +35,7 @@ jobs:
       - name: Changes lcov info
         run: echo "$(sed -i 's,dist/js/webpack:/juicer/,,g' ./coverage/lcov.info)"
       - name: Merging lcov info
-        run: cat coverage/lcov.info >> server/coverage/lcov.info && cat server/coverage/lcov.info
+        run: cat server/coverage/lcov.info >> coverage/lcov.info
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
