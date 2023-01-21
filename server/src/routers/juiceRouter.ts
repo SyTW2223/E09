@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { AppCRUD } from '../crud/AppCrud';
+import { AppCRUD } from '../crud/AppCRUD';
 import { Juice } from '../models/juice';
 
 export const juiceRouter = express.Router();

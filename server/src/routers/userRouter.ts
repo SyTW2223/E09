@@ -1,7 +1,7 @@
 import * as express from 'express';
 import {User} from '../models/user';
-import {UserCRUD} from '../crud/UserCrud';
-import { AppCRUD } from '../crud/AppCrud';
+import {UserCRUD} from '../crud/UserCRUD';
+import { AppCRUD } from '../crud/AppCRUD';
 
 export const userRouter = express.Router();
 
