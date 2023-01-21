@@ -152,4 +152,19 @@ describe('User model', () => {
         expect(store.getters.email).to.be.equal("exampleEmail@email.com");
         expect(store.getters.password).to.be.equal("examplePassword");
     });
+
+    it ('Set default user', () => {
+        // act
+        store.dispatch('setDefaultUser');
+        // assert
+        expect(store.getters.loggedUser).to.be.equal(null);
+        expect(store.getters.error).to.be.equal(null);
+        expect(store.getters.success).to.be.equal(null);
+        expect(store.getters.name).to.be.equal('');
+        expect(store.getters.email).to.be.equal('');
+        expect(store.getters.password).to.be.equal('');
+        expect(store.getters.id).to.eql('');
+        expect(store.getters.following).to.eql([]);
+        expect(store.getters.followers).to.be.equal(0);
+    });
 });

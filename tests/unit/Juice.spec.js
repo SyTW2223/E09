@@ -159,4 +159,22 @@ describe('Juice model', () => {
             date: "10/10/2010 10:10"
         });
     });
+
+    it ('Set default juice', () => {
+        // act
+        store.dispatch('setDefaultJuice');
+        // assert
+        expect(store.getters.userName).to.be.equal('');
+        expect(store.getters.text).to.be.equal('');
+        expect(store.getters.date).to.be.equal('');
+        expect(store.getters.juice_id).to.be.equal('');
+        expect(store.getters.likes).to.eql([]);
+        expect(store.getters.juices).to.eql([]);
+        expect(store.getters.newJuice).to.be.equal(false);
+        expect(store.getters.juicePage).to.be.equal(false);
+        expect(store.getters.deleteMsg).to.be.equal(false);
+        expect(store.getters.likedPage).to.be.equal(false);
+        expect(store.getters.number_of_juices).to.be.equal(0);
+        expect(store.getters.info).to.be.equal(null);
+    });
 });

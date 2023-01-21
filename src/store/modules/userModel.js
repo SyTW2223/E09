@@ -56,6 +56,17 @@ export const userModel = {
       state.name = user.name;
       state.email = user.email;
       state.password = user.password;
+    },
+    SET_DEFAULT_USER(state) {
+      state.loggedUser = null,
+      state.error = null,
+      state.success = null,
+      state.name = '',
+      state.email = '',
+      state.password = '',
+      state.id = '',
+      state.following = [],
+      state.followers = 0
     }
   },
   actions: {
@@ -190,6 +201,9 @@ export const userModel = {
     },
     setId({commit}, id) {
       commit('SET_ID', id);
+    },
+    setDefaultUser({commit}) {
+      commit('SET_DEFAULT_USER');
     },
   },
   getters: {

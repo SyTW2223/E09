@@ -59,6 +59,20 @@ export const juiceModel = {
     },
     SET_LIKES(state, likes) {
       state.likes = likes;
+    },
+    SET_DEFAULT_JUICE(state) {
+      state.userName = '',
+      state.text = '',
+      state.date = '',
+      state.juice_id = '',
+      state.likes = [],
+      state.juices = [],
+      state.newJuice = false,
+      state.juicePage = false,
+      state.deleteMsg = false,
+      state.likedPage = false,
+      state.number_of_juices = 0,
+      state.info = null
     }
   },
   actions: {
@@ -100,6 +114,9 @@ export const juiceModel = {
     },
     setLikes({commit}, likes) {
       commit('SET_LIKES', likes);
+    },
+    setDefaultJuice({commit}) {
+      commit('SET_DEFAULT_JUICE');
     },
     async postJuice({ getters, dispatch }) {
       try {
