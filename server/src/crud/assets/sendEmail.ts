@@ -21,8 +21,8 @@ export async function sendEmail(res: any, req: any, token: string) {
       from: USER,
       to: req.body.email,
       subject: 'Password reset',
-      text: `Haz click en el siguiente enlace para restablecer tu contraseña: http://10.6.130.29/reset/${token}`,
-      html: `<h1>Juicer</h1><h2>Correo de restablecimiento de contraseña:</h2><h3><a href="http://10.6.130.29/reset/${token}">Restablecer contraseña</a></h3>`,
+      text: `Haz click en el siguiente enlace para restablecer tu contraseña:https://sytw2223.github.io/E09/reset/${token}`,
+      html: `<h1>Juicer</h1><h2>Correo de restablecimiento de contraseña:</h2><h3><a href="https://sytw2223.github.io/E09/reset/${token}">Restablecer contraseña</a></h3>`,
     });
     return res.status(200).send("Correo enviado correctamente");
 

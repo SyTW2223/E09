@@ -12,9 +12,9 @@
       <div class="body">
         <ErrorMsg v-if="error"/>
         <SuccessMsg v-if="success"/>
-        <h3 class="title">¿Has olvidado tu cuenta?</h3>
+        <h3 class="title">¿Has olvidado tu contrase&ntilde;a?</h3>
         <p>
-          Introduce tu correo electr&oacute;nico para cambiar tu contrase&ntilde;a.
+          Introduce tu correo electr&oacute;nico para restablecer tu contrase&ntilde;a.
         </p>
         <div>
           <div class="form-group">

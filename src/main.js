@@ -6,7 +6,6 @@ import './axios'
 
 
 const app = createApp(App)
-//Vue.use(BootstrapVue)
 app.use(router)
 app.use(store)
 app.mount('#app')
