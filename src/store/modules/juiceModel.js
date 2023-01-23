@@ -150,15 +150,11 @@ export const juiceModel = {
           }
         });
         if (router.currentRoute.value.path === '/') {
-          if (getters.followingPage) {
-            dispatch('getFollowingJuices');
-          } else {
+          if (!getters.followingPage) {
             dispatch('getJuices');
           }
         } else {
-          if(getters.likedPage) {
-            dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
-          } else {
+          if(!getters.likedPage) {
             dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
           }
         }
@@ -175,9 +171,7 @@ export const juiceModel = {
           }
         });
         if (router.currentRoute.value.path === '/') {
-          if (getters.followingPage) {
-            dispatch('getFollowingJuices');
-          } else {
+          if (!getters.followingPage) {
             dispatch('getJuices');
           }
         } else {
