@@ -28,10 +28,12 @@ export default {
   methods: {
     showAllJuices() {
       this.homeTab = true;
+      this.$store.dispatch('setFollowingPage', false);
       this.$store.dispatch('getJuices');
     },
     showFollowingJuices() {
       this.homeTab = false;
+      this.$store.dispatch('setFollowingPage', true);
       this.$store.dispatch('getFollowingJuices');
     },
   }

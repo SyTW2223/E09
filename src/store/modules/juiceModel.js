@@ -13,6 +13,7 @@ export const juiceModel = {
     juicePage: false,
     deleteMsg: false,
     likedPage: false,
+    followingPage: false,
     number_of_juices: 0,
     info: null
   }),
@@ -50,6 +51,9 @@ export const juiceModel = {
     },
     SET_LIKED_PAGE(state, value) {
       state.likedPage = value;
+    },
+    SET_FOLLOWING_PAGE(state, value) {
+      state.followingPage = value;
     },
     SET_NUMBER_OF_JUICES(state, value) {
       state.number_of_juices = value;
@@ -91,6 +95,9 @@ export const juiceModel = {
     setJuicePage({commit}, value) {
       commit('SET_JUICE_PAGE', value);
     },
+    setFollowingPage({commit}, value) {
+      commit('SET_FOLLOWING_PAGE', value);
+    },
     setJuices({commit}, juices) {
       commit('SET_JUICES', juices);
     },
@@ -131,7 +138,19 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        dispatch('getJuices');
+        if (router.currentRoute.value.path === '/') {
+          if (getters.followingPage) {
+            this.$store.dispatch('getFollowingJuices');
+          } else {
+            this.$store.dispatch('getJuices');
+          }
+        } else {
+          if(getters.likedPage) {
+            dispatch('getJuicesLikedByUserName', this.$route.params.userName);
+          } else {
+            dispatch('getJuicesByUserName', this.$route.params.userName);
+          }
+        }
         dispatch('setNewJuice', false);
       } catch (err) {
         dispatch('setError', err.message);
@@ -241,6 +260,7 @@ export const juiceModel = {
     juice_id: state => state.juice_id,
     likes: state => state.likes,
     likedPage: state => state.likedPage,
+    followingPage: state => state.followingPage,
     number_of_juices: state => state.number_of_juices,
     info: state => state.info
   }

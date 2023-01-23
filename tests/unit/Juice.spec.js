@@ -89,6 +89,15 @@ describe('Juice model', () => {
         expect(store.getters.likedPage).to.be.true;
     });
 
+    it ('Set following page', () => {
+        // arrange
+        const followingPage = true;
+        // act
+        store.dispatch('setFollowingPage', followingPage);
+        // assert
+        expect(store.getters.followingPage).to.be.true;
+    });
+
     it ('Set number of juices', () => {
         // arrange
         const numOfJuices = 2;
