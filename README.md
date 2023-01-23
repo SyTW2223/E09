@@ -2,7 +2,7 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SyTW2223_E09&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SyTW2223_E09)[![Coverage Status](https://coveralls.io/repos/github/SyTW2223/E09/badge.svg?branch=main)](https://coveralls.io/github/SyTW2223/E09?branch=main) 
 
-Juicer es una red social al estilo Twitter que permite al usuario crear publicaciones llamadas "juices", dar me gustas y seguir a otros usuarios. Para acceder, es posible hacerlo sin registrarse, pero en este caso únicamente será posible visualizar "juices" y perfiles de usuarios. Para poder interactuar con estos, será necesario registrarse e iniciar sesión.
+Juicer es una red social al estilo Twitter que permite al usuario crear publicaciones llamadas "juices", dar me gustas y seguir a otros usuarios. Para acceder, es posible hacerlo sin registrarse, pero en este caso únicamente será posible visualizar juices y perfiles de usuarios. Para poder interactuar con estos, será necesario registrarse e iniciar sesión.
 
 Enlace de despliegue -> [Juicer](https://sytw2223.github.io/E09/)
 
@@ -20,7 +20,7 @@ También tenemos un apartado para nuestro perfil de usuario. Vemos nuestro nick 
 
 ![Captura de pantalla_20230123_122704](https://user-images.githubusercontent.com/116951558/214039508-f4474d51-286f-4270-a6be-1fff7293e68a.png)
 
-Haciendo click sobre el nombre del usuario de un juice, nos llevará a su perfil, y podremos seguirle o ver sus juices y likes.
+Haciendo click sobre el nombre del usuario de un juice, nos llevará a su perfil, y podremos seguirle y ver sus juices y me gustas.
 
 ![Captura de pantalla_20230123_122711](https://user-images.githubusercontent.com/116951558/214039510-c3713f1d-f683-405c-92dd-066fa96b1bc0.png)
 
