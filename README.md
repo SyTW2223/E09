@@ -6,6 +6,8 @@ Juicer es una red social al estilo Twitter que permite al usuario crear publicac
 
 Enlace de despliegue -> [Juicer](https://sytw2223.github.io/E09/)
 
+! [Importante] Si se dejan de enviar peticiones al servidor backend, desplegado en Render, durante un cierto periodo de tiempo, éste detiene su ejecución, por lo que, una vez se realiza una nueva petición, es necesario esperar unos minutos para que este se inicie de nuevo.
+
 # Funcionalidad
 
 Las funcionalidades que ofrece la aplicación son varias, lo primero que encontrará el usuario será la página principal de la aplicación en la que se verán los "juices" que han creado los usuarios, pudiendo pulsar del botón recargar "↺" para ver refrescar la lista. Desde ella, se podrá acceder a las páginas de inicio de sesión y registro.
