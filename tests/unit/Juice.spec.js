@@ -186,4 +186,15 @@ describe('Juice model', () => {
         expect(store.getters.number_of_juices).to.be.equal(0);
         expect(store.getters.info).to.be.equal(null);
     });
+
+    it ('Set juice flags to false', () => {
+        // act
+        store.dispatch('setToFalse');
+        // assert
+        expect(store.getters.newJuice).to.be.equal(false);
+        expect(store.getters.juicePage).to.be.equal(false);
+        expect(store.getters.deleteMsg).to.be.equal(false);
+        expect(store.getters.likedPage).to.be.equal(false);
+        expect(store.getters.followingPage).to.be.equal(false);
+    });
 });

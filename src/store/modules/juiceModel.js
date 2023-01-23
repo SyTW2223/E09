@@ -74,9 +74,17 @@ export const juiceModel = {
       state.newJuice = false,
       state.juicePage = false,
       state.deleteMsg = false,
-      state.likedPage = false,
+      state.likedPage = false, 
+      state.followingPage = false,
       state.number_of_juices = 0,
       state.info = null
+    },
+    SET_TO_FALSE(state) {
+      state.newJuice = false,
+      state.juicePage = false,
+      state.deleteMsg = false,
+      state.likedPage = false,
+      state.followingPage = false
     }
   },
   actions: {
@@ -124,6 +132,9 @@ export const juiceModel = {
     },
     setDefaultJuice({commit}) {
       commit('SET_DEFAULT_JUICE');
+    },
+    setToFalse({commit}) {
+      commit('SET_TO_FALSE');
     },
     async postJuice({ getters, dispatch }) {
       try {
