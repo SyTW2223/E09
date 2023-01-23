@@ -140,15 +140,15 @@ export const juiceModel = {
         });
         if (router.currentRoute.value.path === '/') {
           if (getters.followingPage) {
-            this.$store.dispatch('getFollowingJuices');
+            dispatch('getFollowingJuices');
           } else {
-            this.$store.dispatch('getJuices');
+            dispatch('getJuices');
           }
         } else {
           if(getters.likedPage) {
-            dispatch('getJuicesLikedByUserName', this.$route.params.userName);
+            dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
           } else {
-            dispatch('getJuicesByUserName', this.$route.params.userName);
+            dispatch('getJuicesByUserName', router.currentRoute.value.params.userName);
           }
         }
         dispatch('setNewJuice', false);
@@ -163,8 +163,12 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        if(router.currentRoute.value.path === '/') {
-          dispatch('getJuices');
+        if (router.currentRoute.value.path === '/') {
+          if (getters.followingPage) {
+            dispatch('getFollowingJuices');
+          } else {
+            dispatch('getJuices');
+          }
         } else {
           if(getters.likedPage) {
             dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
@@ -186,8 +190,12 @@ export const juiceModel = {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         });
-        if(router.currentRoute.value.path === '/') {
-          dispatch('getJuices');
+        if (router.currentRoute.value.path === '/') {
+          if (getters.followingPage) {
+            dispatch('getFollowingJuices');
+          } else {
+            dispatch('getJuices');
+          }
         } else {
           if(getters.likedPage) {
             dispatch('getJuicesLikedByUserName', router.currentRoute.value.params.userName);
